@@ -191,11 +191,12 @@ This is a diagram explaining the infection cycle:
 \path[chemeq] (S) -- (I2);
 \path[chemeq] (S) -- (I3);
 
-\draw[very thick, ->] (I1) to node[above]{seroconversion} (R);
-\draw[very thick, ->] (I2) to (R);
-\draw[very thick, ->] (I3) to (R);
+\draw[very thick, ->] (I1) to node[above,xshift=3ex]{seropos.} (R);
+\draw[very thick, ->] (I2) to node[above]{seropos.}(R);
+\draw[very thick, ->] (I3) to node[above,xshift=-3ex]{seropos.}(R);
 
-\draw[very thick,->] (R) to[bend left=85] (S);
+%\draw[very thick,->] (R) to[bend left=85] (S);
+\draw[very thick,->] (R) .. controls +(-3.5,-9) and +(3.5,-9) .. node{sero-reversion}(S);
 
 \end{tikzpicture}
 \end{center}
