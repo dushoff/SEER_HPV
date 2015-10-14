@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: COLRECT.sample.Rout 
+target pngtarget pdftarget vtarget acrtarget: example 
 
 ##################################################################
 
@@ -14,17 +14,30 @@ Sources = Makefile .gitignore README.md LICENSE
 ms = ../makestuff
 # -include $(ms)/git.def
 
-data = ~/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/yr1973_2012.seer9 
-
 ##################################################################
 
 Sources += $(wildcard *.R)
 
+## description reads the Positions file and saves a data frame called desc, which describes the variable names and widths
 Sources += SEERPositions.txt
 description.Rout: SEERPositions.txt description.R
 	$(run-R)
 
-%.read.Rout: description.Rout $(data)/%.TXT read.R
+######################################################################
+
+# Crunching. Current idea is to put small stuff here, for convenience, and big stuff in Dropbox, for less remaking.
+
+# It is OK to leave confidential files in the repo _directory_, as long as we don't push them to the repo.
+
+output = ~/Dropbox/HPV_vacc_boys/SEER_output
+
+$(output):
+	mkdir $@
+
+data = ~/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/yr1973_2012.seer9
+
+example: $(output)/COLRECT.read.Rout
+$(output)/COLRECT.read.Rout: description.Rout $(data)/COLRECT.TXT read.R
 	$(run-R)
 
 COLRECT.small.TXT: /home/dushoff/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/yr1973_2012.seer9/COLRECT.TXT
@@ -36,8 +49,6 @@ COLRECT.sample.Rout: description.Rout COLRECT.small.TXT read.R
 %.sample.Rout: description.Rout %.small.TXT read.R
 	$(run-R)
 
-COLRECT.read.Rout: description.Rout /home/dushoff/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/yr1973_2012.seer9/COLRECT.TXT read.R
-	$(run-R)
 
 ### Makestuff
 
@@ -50,7 +61,7 @@ repo = https://github.com/dushoff
 	-cd $(dir $(ms)) && rm -rf $(ms) .$(notdir $(ms))
 	touch $@
 
--include $(ms)/local.mk
+-include ../local/local.mk
 -include local.mk
 -include $(ms)/git.mk
 

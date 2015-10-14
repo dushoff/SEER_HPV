@@ -9,17 +9,17 @@ commit.txt
 *.blg
 *.bbl
 
-*.Rout
-*.Routput
+*out
+*.RData
 *.Rlog
-*.out
 *.r
-*.rout
-
-local.mk
 
 .Rhistory
+
+local.mk
 
 testdir/
 testdir_old/
 subclone_dir/
+
+*.makestuff
