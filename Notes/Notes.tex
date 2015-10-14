@@ -154,21 +154,23 @@ Suprisingly, oropharyngeal and oral cavity cancers are more common in men than i
 
 \section{HPV Transmission Dynamics}
 
+Here we discuss some of the assumptions about HPV transmission in the population.  Queer populations are often neglected in studies examining sexually transmitted diseases, which develop models that solely consider heterosexual encounters.  To better understand the effects of HPV transmission and the protective effects of the vaccine, we consider populations of solely heterosexual men (MSW) and women (WSM), but also queer men (MSM) and women (WSW).  The queer populations contain men and women who have sex with both men and women (to consider bisexual and pansexual individuals).  
 
+We also consider HPV infections and HPV-related diseases at four different anatomical sites: vagina, penis, anus, and oropharynx.  Men can have infections at the penis, anus, and oropharynx, while women have infections at the vagina, anus, and oropharynx.
 
-There are some interesting dynamics regarding HPV transmission and vaccination that should be considered when developing these cost-effectiveness models. 
-\begin{enumerate}
-\item Transmission occurs when an infected individual comes into successful contact with a susceptible person.  
-\item Infections may progress to disease.
-\item A disease my regress back to a regular infection.
-\item Infections and diseases may also be fully cleared and the individual may or may not seroconvert following clearance. 
-\item Those who seroconvert have some protection against subsequent infection, while those who do not seroconvert have no added protection. 
-\item Seroconverted individuals may lose their protection as they serorevert.  (I think it is important to consider these populations differently than susceptible for vaccination catch-up). 
-\item Vaccination programs should occur before entering the susceptible class (before sexual debut), but catch-up rates may occur in later years. 
-\item Catch-up vaccination for susceptible individuals moves them into the vaccinated class.
-\item Catch-up vaccination for previously infected individuals moves them into 
-\item If someone who is vaccinated and clear the infection should probably go back to ``vaccinated'' class because they most likely have better protection than those recover from natural infection.  
-\end{enumerate}
+Skin to skin contact is required for HPV transmission, and site transmission can occur in a variety of ways:
+\begin{itemize}
+\item genital to genital
+\item genital to anus
+\item anus to genital
+\item genital to oropharynx
+\item oropharynx to genital
+\end{itemize}
+We do not consider oropharynx to oropharynx and anus to anus transmission because mechanistically this is unlikely.  
+
+Individuals are classified based on their infection status.  Individuals start out as susceptible, and may become infected $I_{\text site}$ at a particular site after successful contact with a sexual partner.  These infected individuals can develop diseases at these particular sites, and these diseases may also regress.  Similarly, infected individuals can clear an infection.  Some individuals seroconvert and develop protection against subsequent infection.  These individuals move into the $R+$ class.  Otherwise, these individuals remain seronegative and move back into the susceptible class $S$. Seropositive individuals also may undergo sero-reversion, where they lose their protective effects and move back into the susceptible class.  
+
+I assume that seroconversion is not site specific, because an established antibody response provides protection at a variety of sites against that specific HPV type.  
 
 This is a diagram explaining the infection cycle:
 \begin{figure}[h!]
@@ -176,22 +178,24 @@ This is a diagram explaining the infection cycle:
 \begin{tikzpicture}
 \node (S) [bigcompartment,bottom color=blue!30] {{$S$}};
 \node (SI) [right=of S]{{}};
-\node (I) [right=of SI,bigcompartment,bottom color=red!30]{{$I_i$}};
-\node (ID) [right=of I]{};
-\node (D) [bigcompartment,right=of ID,bottom color=violet!30]{{$D_i$}};
-\node (DR+) [above=of D]{};
-\node (DR-) [below=of D]{};
-\node (R+) [above=of DR+,bigcompartment,bottom color=green!30]{$R_+$};
-%\node (R-) [below=of DR-,bigcompartment,bottom color=yellow!30]{$R_-$};
+\node (I2) [right=of SI,bigcompartment,bottom color=red!30]{{$I_{gen}$}};
+\node (I12) [above=of I2]{};
+\node (I23) [below=of I2]{};
+\node (I1) [bigcompartment,bottom color=red!30,above=of I12] {{$I_{anus}$}};
+\node (I3) [bigcompartment,bottom color=red!30,below=of I23] {{$I_{oro}$}};
+\node (IR) [right=of I2]{};
+\node (R) [right=of IR,bigcompartment,bottom color=yellow!30]{$R+$};
 
-\draw[->,very thick] (S) to (I);
-\draw[->,very thick] (I) to  (R+);
 
-\draw[->,very thick] (R+) to[bend right=45]  (I);
-\draw[->,very thick] (D) to  (R+);
-\draw[->,very thick] (R+) to[bend right=45] node[above,xshift=-10ex,yshift=-2ex]{sero-reversion}(S);
+\path[chemeq] (S) -- (I1);
+\path[chemeq] (S) -- (I2);
+\path[chemeq] (S) -- (I3);
 
-\path[chemeq] (I) node[below,xshift=13ex,yshift=-0.5ex]{progression} -- (D) node[above,xshift=-13ex,yshift=1ex] {regression};
+\draw[very thick, ->] (I1) to node[above]{seroconversion} (R);
+\draw[very thick, ->] (I2) to (R);
+\draw[very thick, ->] (I3) to (R);
+
+\draw[very thick,->] (R) to[bend left=85] (S);
 
 \end{tikzpicture}
 \end{center}
