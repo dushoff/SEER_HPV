@@ -13,6 +13,7 @@ commit.txt
 *.RData
 *.Rlog
 *.r
+
 .Rhistory
 
 local.mk
