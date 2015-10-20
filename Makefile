@@ -49,6 +49,7 @@ COLRECT.sample.TXT: $(data)/COLRECT.TXT
 	perl -nE "BEGIN{srand(42)} print if rand()<1/500" $< > $@
 
 COLRECT.sample.Rout: description.Rout COLRECT.sample.TXT read.R
+	$(run-R)
 %.sample.Rout: description.Rout %.sample.TXT read.R
 	$(run-R)
 
