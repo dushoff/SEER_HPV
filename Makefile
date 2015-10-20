@@ -32,25 +32,24 @@ description.Rout: SEERPositions.txt description.R
 
 # It is OK to leave confidential files in the repo _directory_, as long as we don't push them to the repo.
 
-output = ~/Dropbox/HPV_vacc_boys/SEER_output
+output = $(Dropbox)/HPV_vacc_boys/SEER_output
 
 $(output):
 	mkdir $@
 
-data = ~/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/yr1973_2012.seer9
+data = $(Dropbox)/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/yr1973_2012.seer9
 
 example: $(output)/COLRECT.read.Rout
 $(output)/COLRECT.read.Rout: description.Rout $(data)/COLRECT.TXT read.R
 	$(run-R)
 
 ## Make a smaller data set; right now it picks 1/500th of the data at random
-COLRECT.sample.TXT: ~/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/yr1973_2012.seer9/COLRECT.TXT
+COLRECT.sample.TXT: $(data)/COLRECT.TXT
+%.sample.TXT: $(data)/COLRECT.TXT
 	perl -nE "BEGIN{srand(42)} print if rand()<1/500" $< > $@
 
 COLRECT.sample.Rout: description.Rout COLRECT.sample.TXT read.R
-	$(run-R)
-
-%.sample.Rout: description.Rout %.small.TXT read.R
+%.sample.Rout: description.Rout %.sample.TXT read.R
 	$(run-R)
 
 seerdic:
