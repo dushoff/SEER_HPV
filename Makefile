@@ -53,6 +53,9 @@ COLRECT.sample.Rout: description.Rout COLRECT.sample.TXT read.R
 %.sample.Rout: description.Rout %.small.TXT read.R
 	$(run-R)
 
+seerdic:
+	$(MAKE) /home/dushoff/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/seerdic.pdf.go
+
 ### Makestuff
 
 Makefile: start.makestuff
