@@ -22,3 +22,4 @@ testdir_old/
 subclone_dir/
 
 *.makestuff
+*.sample.TXT
