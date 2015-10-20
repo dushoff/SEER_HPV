@@ -209,12 +209,12 @@ MSM and WSW may have sexual intercourse with both men and women, but homosexual 
 
 The following system of differential equations outlines the movement out of the susceptible class due to HPV transmission. 
 \begin{align}
-\D{S_{xM}}{t} & = - \beta_{fm}S_{xM}I_{xW} - (1-p_w)\beta_{fm}S_{xM}I_{WSW}\\
-\D{S_{xW}}{t} & = - \beta_{mf}S_{xW}I_{xM} - (1-p_m)\beta_{mf}S_{xW}I_{MSM}\\
-\D{S_{MSM}}{t} & = -p_m\beta_{mm}S_{MSM}I_{MSM} - (1-p_m)S_{MSM}[\beta_{fm}I_{xW} + (1-p_w)\beta_{fm}I_{WSW}]\\
-\D{S_{WSW}}{t} & = -p_f\beta_{ff}S_{WSW}I_{WSW} - (1-p_w)S_{WSW}[\beta_{mf}I_{xM} + (1-p_m)\beta_{mf}I_{MSM}]
+\D{S_{MSW}}{t} & = - \beta_{fm}S_{MSW}I_{WSM} - (1-p_w)\beta_{fm}S_{MSW}I_{WSW}\\
+\D{S_{xW}}{t} & = - \beta_{mf}S_{WSM}I_{MSW} - (1-p_m)\beta_{mf}S_{WSM}I_{MSM}\\
+\D{S_{MSM}}{t} & = -p_m\beta_{mm}S_{MSM}I_{MSM} - (1-p_m)S_{MSM}[\beta_{fm}I_{WSM} + (1-p_w)\beta_{fm}I_{WSW}]\\
+\D{S_{WSW}}{t} & = -p_f\beta_{ff}S_{WSW}I_{WSW} - (1-p_w)S_{WSW}[\beta_{mf}I_{MSW} + (1-p_m)\beta_{mf}I_{MSM}]
 \end{align}
-
+ 
 
 \subsection{Vaccination Programme Strategies}
 
