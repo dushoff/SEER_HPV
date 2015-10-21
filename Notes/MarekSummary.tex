@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath,amsthm,xspace,multirow}
+%\input{preamble.tex}
+\input{sirmodellingmacros.tex}
+
+\newcommand{\D}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\newcommand{\ie}{\emph{i.e., }}
+\newcommand{\eg}{\emph{e.g., }}
+
+\usepackage{tikz}
+\newdimen\mylw
+\tikzset{chemeq/.style={draw,thick,double distance=2pt,onearc-onearc,/chemeq/size={#1}}}
+\tikzset{chemeq/.default={.4pt 6pt}}
+\pgfkeys{/chemeq/size/.code={\pgfsetarrowoptions{onearc}{#1}}}
+\def\parseopts#1 #2{\xdef\myalw{#1}\xdef\myasize{#2}}
+\pgfarrowsdeclare{onearc}{onearc}{%
+  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
+  \mylw=\myalw
+  \pgfarrowsleftextend{-\myasize-.5\mylw}
+  \pgfarrowsrightextend{0pt}
+}{%
+  \pgfsetdash{}{0pt}
+  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
+  \mylw=\pgflinewidth
+  \pgfsetlinewidth{\myalw}
+  \pgfpathmoveto{\pgfpoint{-\myasize}{-\myasize-.5\mylw}}%
+  \pgfpatharc{180}{90}{\myasize}
+  \pgfusepathqstroke
+}
+
+\title{Summary of Workshop Study by Smieja et al.}
+
+\begin{document}
+\maketitle
+
+hello
+
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{NotesBib}
+
+\end{document}
