@@ -49,14 +49,19 @@ COLRECT.sample.TXT: $(data)/COLRECT.TXT
 	perl -nE "BEGIN{srand(42)} print if rand()<1/500" $< > $@
 
 COLRECT.sample.Rout: description.Rout COLRECT.sample.TXT read.R
-	$(run-R)
 %.sample.Rout: description.Rout %.sample.TXT read.R
 	$(run-R)
 
 seerdic:
 	$(MAKE) /home/dushoff/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/seerdic.pdf.go
 
+Sources += SEERdicDescription.txt
+
+##################################################################
+
 ### Makestuff
+
+gitroot=../
 
 Makefile: start.makestuff
 
@@ -67,8 +72,8 @@ repo = https://github.com/dushoff
 	-cd $(dir $(ms)) && rm -rf $(ms) .$(notdir $(ms))
 	touch $@
 
--include ../local.mk
 -include local.mk
+-include $(gitroot)/local.mk
 -include $(ms)/git.mk
 
 -include $(ms)/visual.mk

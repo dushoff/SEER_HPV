@@ -10,9 +10,11 @@ commit.txt
 *.bbl
 
 *out
+*.Routput
 *.RData
 *.Rlog
 *.r
+*.rout
 
 .Rhistory
 

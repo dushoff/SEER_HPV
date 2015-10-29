@@ -4,6 +4,7 @@ dat <- with(desc, read.fwf(input_files[[1]]
 	, col.names=varName
 ))
 
+names(dat) <- desc$varName
 print(summary(dat))
 
 # rdsave(dat)
