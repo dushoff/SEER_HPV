@@ -88,26 +88,23 @@ Furthermore, this model does not consider vaccination catch-up, but rather proba
 
 \section{Updates to this Model}
 
-I particularly liked that you considered queer sexual interactions, albeit it doesn't distinguish between MSM/WSW exclusively, bisexual individuals, and exclusively heterosexual individuals.  We could separate by these sexual interactions.  Where exclusive MSM and WSW interact only with MSM and bisexual men, and WSW and bisexual women, respectively.  Exclusively MSW and WSM men and women will only interact with WSM and bi-women, and MSW and bi-men, respectively. Bi-men and -women interact with all men and women at particular rates.
+I particularly liked that you considered queer sexual interactions, albeit it doesn't distinguish between MSM/WSW exclusively, bisexual individuals, and exclusively heterosexual individuals.  We could separate by these sexual interactions.  We consider two groups of boys, those who engage in same sex interactions, and those who don't.  We denote men who have sex with men as queer, $Q$, and all other boys as $B$.  Because we are considered the potential for an HPV reservoir in MSM, we include both queer and strait women in the group of girls, denoted $G$.  
  
-\spenny{Jonathan and I have discussed this previously and proposed to combine bi individuals and MSM/WSW into the same categories, and have rates of same-sex and opposite-sex interactions.  I like this idea more as it may make it easier to estimate mixing rates and also doesn't isolate certain groups.}
-
-If we consider the second scenario, we have the following groups:
-\begin{itemize}
-\item Susceptible MSM, MSWx, WSW, WSMx (x denotes exclusivity)
-\item Infectious MSM, MSWx, WSW, WSMx
-\item Vaccinated MSM, MSWx, WSW, WSMx
-\end{itemize}
-
-Transmission between MSWx (and analogously WSMx)
+Transmission between straight boys
 \begin{equation}
-\beta_{mf}S_{MSWx}\left(\frac{I_{WSMx}}{N_{WSMx}}+(1-q)\frac{I_{WSW}}{N_{WSW}}\right)
+\beta_{mf}S_{B}\left(q\frac{I_{G}}{N_{G}}\right)
 \end{equation}
-where $q$ is the proportion of same-sex interactions for women who have sex with women. When considering same-sex interactions for MSM (and analogously for WSW) we have transmission modelled by.
+where $q$ is the proportion of same-sex interactions for women who have sex with women. When considering same-sex interactions for MSM we have transmission modelled by.
 \begin{equation}
-p\beta_{mm}S_{MSM}\frac{I_{MSM}}{N_{MSM}}
+p^2\beta_{mm}S_{Q}\frac{I_{Q}}{N_{Q}}+(1-p)q\beta_{mf}S_Q\left(\frac{IG}{NG}\right)
 \end{equation}
-where $p$ is the proportion of sam-sex interactions for men who have sex with men.  
+where $p$ is the proportion of sam-sex interactions for men who have sex with men.  Considering the transmission of HPV in women, we include same-sex and opposite-sex interactions.  
+\begin{equation}
+S_G\left(q\frac{\beta_{fm}I_B}{N_B}+q(1-p)\frac{\beta_{fm}I_Q}{N_Q}+(1-q)^2\frac{\beta_{ff}I_G}{N_G}\right)
+\end{equation}
+where $q$ is the proportion of opposite-sex acts in women, and thus $(1-q)$ is the proportion of same-sex interactions in women.  
+
+\spenny{Does $(1-q)$ have to be squared because both the susceptible and the infected girls are both engaging in same-sex sex, similar with $p$ in MSM?}
 
 Considering this model, we can understand what the effects of vaccinating all boys, or boys who identify as MSM.  Recently, British Columbia has opened up their HPV vaccination program to boys at risk: those who identify as gay or bisexual, street involved boys, etc. This is to combat the lack of protective effects from herd immunity induced by solely vaccinating girls.  There are a number of issues that can be linked to this new vaccination program including lack of uptake in these groups of boys due to social stigma of identifying oneself as gay or bisexual and also physically outreaching those who are street involved for the required three doses. Furthermore, there are issues with social stigma when vaccinating (or treating) MSM for a particular disease, (HIV issues much) that potentially downplay the risks for other groups.  Outside of the queer perspective, it doesn't necessarily protect other men from HPV related diseases such as oropharyngeal cancers which are on the rise in men who have sex with women.  By isolating this group, we can compare the effects of a variety of vaccination programs. 
 

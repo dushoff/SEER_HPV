@@ -56,6 +56,22 @@ COLRECT.sample.Rout: description.Rout COLRECT.sample.TXT read.R
 seerdic:
 	$(MAKE) /home/dushoff/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/seerdic.pdf.go
 
+
+############## Sim stuff
+
+parameter-test.Rout: parameter-test.R
+	$(run-R)
+	
+SimpleModel.Rout: parameter-test.Rout SimpleModel.R
+	$(run-R)
+
+test.sim.Rout: parameter-test.Rout SimpleModel.Rout sim.R
+	$(run-R)
+
+test.init-plot.Rout: test.sim.Rout parameter-test.Rout SimpleModel.Rout init-plot.R
+	$(run-R)
+
+
 ### Makestuff
 
 Makefile: start.makestuff

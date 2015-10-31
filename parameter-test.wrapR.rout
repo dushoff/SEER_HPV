@@ -1,0 +1,83 @@
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # This file was generated automatically by wrapR.pl
+> # You probably don't want to edit it
+> 
+> pdfname <- "parameter-test.Rout.pdf"
+> csvname <- "parameter-test.Rout.csv"
+> pdf(pdfname)
+> # End RR preface
+> 
+> source('parameter-test.R', echo=TRUE)
+
+> b <- c(0.005, 0.005)
+
+> d <- c(0.005, 0.005)
+
+> v <- c(0, 0, 0)
+
+> w <- c(0, 0)
+
+> eps <- 1 - 0.9
+
+> beta.mf <- 0.08
+
+> beta.fm <- 0.0845
+
+> beta.mm <- 0.09
+
+> beta.ff <- 0.07
+
+> gamma <- c(1/16, 1/16)
+
+> p <- 0.9
+
+> q <- 0.95
+
+> NB <- 1330000
+
+> NB <- 0.7 * NB
+
+> IB <- 1
+
+> VB <- 0
+
+> SB <- NB - IB - VB
+
+> NQ <- 0.3 * NB
+
+> IQ <- 1
+
+> VQ <- 0
+
+> SQ <- NQ - IQ - VQ
+
+> NG <- 1280000
+
+> IG <- 1
+
+> VG <- 0
+
+> SG <- NG - IG - VG
+> # Begin RR postscript
+> 
+> # If you see this in your terminal, the R script parameter-test.wrap.R (or something it called) did not close properly
+> save.image(file="parameter-test.RData")
+> 

@@ -1,0 +1,53 @@
+> 
+> source('parameter-test.R', echo=TRUE)
+
+> b <- c(0.005, 0.005)
+
+> d <- c(0.005, 0.005)
+
+> v <- c(0, 0, 0)
+
+> w <- c(0, 0)
+
+> eps <- 1 - 0.9
+
+> beta.mf <- 0.08
+
+> beta.fm <- 0.0845
+
+> beta.mm <- 0.09
+
+> beta.ff <- 0.07
+
+> gamma <- c(1/16, 1/16)
+
+> p <- 0.9
+
+> q <- 0.95
+
+> NB <- 1330000
+
+> NB <- 0.7 * NB
+
+> IB <- 1
+
+> VB <- 0
+
+> SB <- NB - IB - VB
+
+> NQ <- 0.3 * NB
+
+> IQ <- 1
+
+> VQ <- 0
+
+> SQ <- NQ - IQ - VQ
+
+> NG <- 1280000
+
+> IG <- 1
+
+> VG <- 0
+
+> SG <- NG - IG - VG
+> 
