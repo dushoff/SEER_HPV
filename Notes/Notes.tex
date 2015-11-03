@@ -1,12 +1,13 @@
 \documentclass[12pt]{article}
 
 \usepackage{amsmath,amsthm,xspace,multirow}
-%\input{preamble.tex}
+\usepackage[margin=1in]{geometry}
+\input{preamble.tex}
 \input{sirmodellingmacros.tex}
 
-\newcommand{\D}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
-\newcommand{\ie}{\emph{i.e., }}
-\newcommand{\eg}{\emph{e.g., }}
+%\newcommand{\D}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+%\newcommand{\ie}{\emph{i.e., }}
+%\newcommand{\eg}{\emph{e.g., }}
 
 \usepackage{tikz}
 \newdimen\mylw
@@ -34,197 +35,136 @@
 \begin{document}
 \maketitle
 
-\section{Introduction}
+\section*{Previous Work - Marek's Work}
 
+Marek Smieja and a small research group because examining this problem during a workshop.  They set up a simple HPV transmission model in men and women.  They consider three infection status groups for both men and women: susceptible, infected, and vaccinated.  Individuals enter the model when they become sexually active (they assume age 15) at a rate $b_iN_i$, where $b_i$ is the birthrate for gender $i$ and $N_i$ is the number of individuals of gender $i$.  Individuals are separated into vaccinated or susceptible at a particular vaccination rate $v_i$ for gender $i$.  
 
-The human papillomavirus (HPV) is a DNA virus that infects the squamous epithelial cells.  There are over 100 different types of HPV, over 40 of which infect the anogenital and oropharygeal tracts.  HPV types are further differentiated into low-risk and high-risk types based on their association with carcinoma development.  The two types which are most highly associated with cancer are HPV types 16 and 18.  They account for approximately 70\% of HPV related cancer cases.  Typically, HPV is associated with the development of cervical cancer in women.  However, HPV has also been linked to anal cancer (90\% of which), penile cancer, vaginal cancer, and throat and neck cancers.  In particular, cancers infecting the oropharyngeal tracts are increasing in many countries.  
+Transmission is considered based on sexual interactions between men and women.  They consider same-sex interactions in men and women, but due to the lack of same-sex data, they set these parameters to zero when fitting the data.  The transmission of HPV in women is expressed as follows (analogously for men):
+\begin{equation}
+S_{W}\left(\beta_{fm}\frac{I_M}{N_M} + \beta_{ff}\frac{I_W}{N_W}\right)
+\end{equation}
+where $\beta_{fm}$ and $\beta_{ff}$ is the transmission of HPV onto women from men and women, respectively.  When an individuals is infected, they can clear the infection at a rate $\gamma_i$ after which the individual becomes susceptible again.  There is evidence that natural infections do not provide much protection from subsequent re-infection and does not protect significantly from infections of other HPV types.  
 
-Because HPV has traditionally been associated with cervical cancer, many vaccination programs only consider vaccinating girls and not boys.  However, because HPV is associated with many other cancers, the inclusive of boys in vaccination programs have been explored. Many cost-effectiveness analysis models have been constructed.  In summary, the inclusion of boys and men in the vaccination program is more cost-effective when considering HPV-related diseases in men, and when the vaccine provides protection against these diseases.  Furthermore, many of these models show that if vaccination in women is high, then vaccinating men may not be as beneficial due to protection from herd immunity.  However, there remain some issues with these models.  
+They also consider the vaccination isn't 100\% effective or long lasting. Vaccinated individuals' protection wanes at a rate of $w_i$ for gender $i$, after which they become fully susceptible.  Vaccinated individuals also have a protective factor of $\eps\in[0,1]$, which scales HPV transmission.  That is $\eps=0$ is full protection and $\eps=1$ is no protection.  
 
-The main goals of our cost-effectiveness model are:
-\begin{enumerate}
-\item Showcasing that men also provide some herd immunity effects for women
-\item Including the effects of the MSM (and potentially the WSW) community into the model
-\item Reconciling the impacts of HPV on men
-\end{enumerate} 
+We adapt this model by separating the male group into two different subgroups: straight males $M$ and men who have sex with men (queer men) $Q$. In this way we can examine the effects of vaccination strategies on men and queer men.  There is a concern that the female-only vaccination strategies provide little to no herd immunity to MSM and thus they may become a reservoir for HPV. 
 
-\subsubsection*{Male-induced Herd Immunity}
+\section*{Adaptations to the Model}
 
-I don't really know why.  We would have to explore this.  It's pretty obvious, if there are some women that are not immunized, they are at risk to acquire HPV from an infected man/woman and then continue to spread it.  Because men act as a vector in this situation, vaccinating women to produce herd immunity may be difficult.  In other vector-bourne illnesses, vector-control is a method by which to help prevent the spread of disease.  While we cannot do population control on men, we can vaccinate them preventing them from acting as a vector between infected and susceptible women.  
+As previously mentioned we separate the men into straight men $M$ and queer men $Q$.  Queer men have sexual interactions with both men and and women.  The proportion of same-sex interactions in men is $p$ and the proportion of same-sex interactions in women is $q$.  In this way we set up three different HPV transmission terms:
 
-%Another nuanced issue, which would be tricky to quantify, but may be interesting mathematically or socially, is the idea that by partitioning groups for vaccination, we attribute a negative connotation with that vaccination strategy.  
-%
-%HPV is a sexually transmitted disease, and many individuals believe that by vaccinating their children against HPV, it supports risky behaviour later in life.  Is the effects of the negative connotation exacerbated by isolating vaccination to one group?  That is, we know that 
-
-\subsubsection*{Queer Perspective}
-
-One particular area that researchers are aware of but currently has been neglected is the effects of including MSM in the cost-effectiveness models for HPV vaccination.  It is known that men who have sex with men (MSM) are at risk for acquiring HPV infections at various sites: penis, anus, oropharyngeal tracts.  These infections also may lead to persistent infections and progress to pre-malignancies and cancers.  It has been show that MSM, like women, are more likely to acquire anal HPV infections than heterosexual men~\cite{Beachler:2013}.  Furthermore, anal HPV infections present a higher risk of being persistent than oral HPV infections, a requirement for the progression to cancer~\cite{Beachler:2013}.  Because of these effects, not including MSM in the cost-effectiveness models may be under-estimating the protective effects of the HPV vaccine on men.  
-
-Furthermore, MSM do not receive any benefits, or minimal benefits, from the herd immunity presented in female only HPV vaccination strategies.  These concerns have been discussed in a number of opinion editorials to various scientific journals. 
-
-We aim to include MSM into the transmission and cost-effectiveness models to understand the protective effects of vaccinating all boys and men or just the target vaccination of MSM boys along side girls and women.
-
-\subsubsection*{Impacts of HPV on Men}
-
-We have already discussed that HPV infections can present themselves in men at a number of sites, and these infections can develop into persistent infections and subsequently into cancers.  Specifically, we highlighted the MSM can be affected by anal HPV infections and how these effects may have been missing from previous cost-effectiveness models.  
-
-Here we highlight some of the more general effects of HPV on men and discuss in some more detail some of the concerns with HPV infections in heterosexual men.  It is known that there is a rise in oropharyngeal cancer cases in both men and women.  However, men are disproportionately affected by these HPV infections.  A study by Beachler et al.\ actually showed that heterosexual men had a higher risk of oropharyngeal HPV infections than homosexual men~\cite{Beachler:2013}.  They discuss that this may be due to the method of transmission from vagina to mouth.  However, these results were not confirmed by comparing it to WSW or MSM exclusively.  
-
-If the rates of HPV-related oropharyngeal cancers in men are on the rise, then the current models may not be capturing the protective effects of vaccine for boys and men.  
-
-\section{Canada's HPV Vaccination Programme}
-
-Currently, Canada provides free vaccination against HPV for girls aged 12-13 and is administered in schools.  The inclusion of boys in this vaccination programme varies by province.  Currently only two provinces (P.E.I. and Alberta) provide free vaccination against HPV for boys aged 12-13, and Nova Scotia will be rolling out their vaccination programme for boys in the future.  Other provinces such as Ontario are currently reviewing whether vaccinating boys against HPV will be beneficial economically.
-
-A similar discussion is currently happening British Columbia as well.  As it stands, boys who are at risk (MSM or those who live on the street) are included in the free vaccination programme.  However, this inclusion has some clear.  Street involved youth may be difficult to initially find and vaccinate.  As well, follow-up will be difficult to implement for these at risk individuals.   Furthermore, gay or bisexual boys in high school may not feel comfortable or safe disclosing this information.  That's also assuming that these boys identify as queer at this age, which for some men does not occur until later in life.  Moreover, by only targeting these specific groups of boys, there is limited vaccination to boys and men in general, which could put them at risk of HPV infection and subsequently developing HPV related cancers, particularly in the neck and throat region.  
-
-\section{HPV Epidemiology}
-
-\subsection*{Disease Burden}
-
-HPV is known to be the cause of all cases of cervical cancer.  Furthermore, HPV types 16 and 18 together case 70\% of all cervical cancer cases.  In addition to cervical cancer, HPV is also associated with cancers of various sites including the vagina, vulva, anus, penis, oral cavity, and oropharynx.  As well, HPV types 16 and 18 are some of the most oncogenic types at these other sites as well.  
-
-The following is a table outlining the Canadian average annual incidence (per 100,000) and number of cases, but also contains the estimated proportion of cases attributable to HPV and more specifically HPV-16 and -18.  
-
-\begin{table}[h!]
-\begin{tabular}{l | l | c | c | c | c}
-\multirow{3}{*}{Sex} & \multirow{3}{*}{Site} & Average annual & Average annual & \multicolumn{2}{c}{\multirow{2}{*}{Estimated Attributable (\%)}} \\
-
- & & incidence & number of cases & \multicolumn{2}{c}{} \\
- \cline{5-6}
- & & (per 100 000) & & Any HPV & HPV-16,-18\\
- \hline\hline
- \multirow{4}{*}{Males} & Penis & 1.0 & 127.4 & 50 & 63\\
- & Anus & 1.6 & 208.2 & 90 & 92\\
- & Oral Cavity & 6.5 & 853.1 & 25 & 89 \\
- & Oropharynx & 0.64 & 84.3 & 35 & 89\\
- \hline
- \multirow{4}{*}{Females} & Cervix & 10.1 & 1356.8 & 100 & 70\\
- & Vagina/Vulva & 4.2 & 651.8 & 40 & 80 \\
- & Anus & 1.7 & 267.0 & 90 & 92 \\
- & Oral Cavity & 3.3 & 501.2 & 25 & 89\\
- & Oropharynx & 0.18 & 27.2 & 35 & 89\\
-\end{tabular}
-\caption{Average annual number of cases and age-standardized incidence of HPV-associated cancers among persons aged 15 years and older in Canada (1997-2006) and estimated attributable proportion due to HPV taken from the PHAC website.}
-\end{table}
-Here we can see that a significant portion of HPV-related cancers are caused by the HPV-16 and -18, which supports vaccination against these particular types.  
-
-The cases for HPV vaccination for girls and women to protect against cervical cancer and other cancers is robust and well supported.  Here we will discuss some of issues surrounding men and HPV infections.  
-
-Men in general have lower rates of anal cancer than women do.  However, incidence of anal cancer has increased for both men and women over the past several decades, and increasing more rapidly in men.  Factors related to anal cancer in men include lifetime number of sexual partners, receptive anal intercourse, human immunodeficiency virus (HIV), and cigarette smoking. There is some evidence as well that men have a lower five-year survival percentage than women (58\% versus 64\% using the SEER data). 
-
-Penile cancer is quite rare. Rates increase with age and aside from HPV infection, risk factors include smoking, lack of circumcision, phimosis, chronic penile inflammation, and immunosuppression.   
-
-Suprisingly, oropharyngeal and oral cavity cancers are more common in men than in women.  The factors most highly associated with these cancers is alcohol and tobacco usage.  However, recently it has been shown that HPV is becoming a strong factor for the development of these cancers. It is believed that about 35\% of all oropharyngeal cancers are caused by HPV, predominately HPV-16.  However, a study by Chaturvedi et al. in 2011 shows that HPV related cancers of the oral cavity and oropharynx are on the rise, especially in men~\cite{Chaturvedi:2011}.  This, coupled with the decrease of tobacco use, means that HPV could be the leading cause of oral cancers in the near future.  As well, we could be underestimating the future burden of HPV-related oral cancers if we do not consider how rapidly these rates are increasing.  
-%\section{Current Modelling of Vaccinating Boys}
-%
-%There is a good summary paper that looks at various mathematical models of boy/men vaccination un to 2012~\cite{Canfell:2012}.  This summary paper compares three different cost-effectiveness assessment models that examine the inclusion of boys and men in vaccination strategies.  
-%
-%Furthermore, the paper does a good job of outlining some of the different models that are used for cost-effectiveness assessment of the HPV vaccine.  They discuss three important factors that should considered when developing such models:
-%\begin{enumerate}
-%\item HPV transmission, infection, and vaccination dynamics;
-%\item Outcome of infection: anogenital warts, pre-cancerous afflictions of various sites, cancers of various sites, recurrent respiratory papillmatosis (RRP), etc.
-%\item Cancer screening strategies.  Currently women are screened for cervical abnormalities and this has important implications on detection and treatment of cervical cancer.  
-%\end{enumerate}
-%I believe that there are other considerations that are also important:
-%\begin{enumerate}
-%\item Demographic population: who is being vaccinated?  Are there catch-up vaccinations for older or at-risk populations?
-%\item What are the effects of and on the MSM community?  They don't benefit necessarily from the direct protection of herd immunity in women only vaccination strategies. 
-%\item How are the rates of cancer development calculated?  Do they consider the increase or decrease of rates of non-cervical cancers caused by HPV?  In particular, oropharyngeal cancer.
-%\end{enumerate}
-%
-%They summary study looked at three different models in particular.  
-%
-%\subsubsection{Merck study (2014) presented in Vaccine}
-%
-%One study conducted by Merck~\cite{Elbasha:2014}, looked at the effects of including boys and men in the vaccination program.  They consider vaccination of boys and men from 13-26 years of age, the same age range for girls and women.  Their model is very detailed.  They consider an age-stratified model with 23 different age groups.  And individuals are categorized by sexual activity (low, medium, and high).  Furthermore, they consider the effects of four different HPV types 6, 11, 16, 18 on the development of different health outcomes: genital warts; recurrent respiratory pallimatosis (RRP); pre-cancers (\eg CIN); cancers of the cervix, vulva, vagina, penis, anus, and head/neck.  They created separate and independent models for each HPV-type/disease combination.  HPV-6 with RRP, genital warts, and CIN 1.  HPV-11 with RRP and genital wars.  For both HPV-16 and -18 they looked at 6 conditions: CIN and cervical cancer, vulvar intraepithelial neoplasia and vulvar cancer, vaginal intraepithelial neoplasia and vaginal cancer, anal intraepithelial neoplasia and anal cancer, penile intraepithelial neoplasia and penile cancer, and head/neck cancer.  So in total, they created 14 models.  One for each of the low risk types, and 6 for each of the high risk types.  
-%
-%They show that by vaccinating men, there is a benefit to do so.  It reduces cancer incidence in every case.  
-%
-%\subsubsection{Chesson et al. (2011) presented in Vaccine}
-%
-%This model uses spreadsheet software to model transmission based on incidence.  They assume a non recovery model of HPV; and also consider many different outcomes including; CIN 1-3, Genital warts, various cancers (cervix, penis, anus, vagina, vulva, oropharyngeal); and RRP.  
-%
-%This is a Markov model, but one that adjusts for the effects of herd immunity on transmission.  They keep track of the age and sex of the individual at different times.  Obviously sex doesn't change in this model, but age does. They track individuals from year 8 to year 99. 
-%
-%They found that including boys in the vaccination system can be cost-effective when the vaccination rate of girls is low. Including multiple different HPV-related outcomes also directly affects the cost-effectiveness analysis, decreasing the ICER when the number of outcomes increases.  This is because as you add more outcomes, herd immunity becomes less effective at preventing these illnesses, particularly those that affect men only or disproportionately.  
-%
-%
-%\subsubsection{Kim (2008) NEJM}
-
-\section{HPV Transmission Dynamics}
-
-Here we discuss some of the assumptions about HPV transmission in the population.  Queer populations are often neglected in studies examining sexually transmitted diseases, which develop models that solely consider heterosexual encounters.  To better understand the effects of HPV transmission and the protective effects of the vaccine, we consider populations of solely heterosexual men (MSW) and women (WSM), but also queer men (MSM) and women (WSW).  The queer populations contain men and women who have sex with both men and women (to consider bisexual and pansexual individuals).  
-
-We also consider HPV infections and HPV-related diseases at four different anatomical sites: vagina, penis, anus, and oropharynx.  Men can have infections at the penis, anus, and oropharynx, while women have infections at the vagina, anus, and oropharynx.
-
-Skin to skin contact is required for HPV transmission, and site transmission can occur in a variety of ways:
-\begin{itemize}
-\item genital to genital
-\item genital to anus
-\item anus to genital
-\item genital to oropharynx
-\item oropharynx to genital
-\end{itemize}
-We do not consider oropharynx to oropharynx and anus to anus transmission because mechanistically this is unlikely.  
-
-Individuals are classified based on their infection status.  Individuals start out as susceptible, and may become infected $I_{\text site}$ at a particular site after successful contact with a sexual partner.  These infected individuals can develop diseases at these particular sites, and these diseases may also regress.  Similarly, infected individuals can clear an infection.  Some individuals seroconvert and develop protection against subsequent infection.  These individuals move into the $R+$ class.  Otherwise, these individuals remain seronegative and move back into the susceptible class $S$. Seropositive individuals also may undergo sero-reversion, where they lose their protective effects and move back into the susceptible class.  
-
-I assume that seroconversion is not site specific, because an established antibody response provides protection at a variety of sites against that specific HPV type.  
-
-This is a diagram explaining the infection cycle:
+We examine the transmission of HPV in straight males.  These individuals can be infected by women solely.  
+\begin{equation}
+S_M\left(\frac{(1-q)\beta_{mf}I_W}{N_W}\right)
+\end{equation}
+Queer men can be infected by both other MSM and also women.
+\begin{equation}
+S_Q\left(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}\right)
+\end{equation}
+Women can be infected by both straight and queer men, and we also consider same sex interactions in women. 
+\begin{equation}
+S_W\left(\frac{(1-q)\beta_{fm}I_M}{N_M}+\frac{(1-q)(1-p)\beta_{fm}I_Q}{N_Q}+\frac{q^2\beta_{ff}I_W}{N_W}\right)
+\end{equation}
+We set up the entire model as a flow diagram.  The flow diagram for straight men is illustrated in Figure~\ref{fig:flowMen} and in MSM in Figure~\ref{fig:flowQueer}.  
 \begin{figure}[h!]
 \begin{center}
+\resizebox{0.7\textwidth}{!}{
 \begin{tikzpicture}
-\node (S) [bigcompartment,bottom color=blue!30] {{$S$}};
-\node (SI) [right=of S]{{}};
-\node (I2) [right=of SI,bigcompartment,bottom color=red!30]{{$I_{gen}$}};
-\node (I12) [above=of I2]{};
-\node (I23) [below=of I2]{};
-\node (I1) [bigcompartment,bottom color=red!30,above=of I12] {{$I_{anus}$}};
-\node (I3) [bigcompartment,bottom color=red!30,below=of I23] {{$I_{oro}$}};
-\node (IR) [right=of I2]{};
-\node (R) [right=of IR,bigcompartment,bottom color=yellow!30]{$R+$};
+%compartments
+\node (SM)[bigcompartment, bottom color=blue!30] {{$S_M$}};
+\node (SIM) [right=of SM,xshift=3cm]{{}};
+\node (SVM) [above=of SM]{};
 
+\node (IM) [bigcompartment,right=of SIM,bottom color=red!30]{{$I_M$}};
+\node (VM) [bigcompartment,above=of SVM,bottom color=green!30]{{$V_M$}};
+\node (leftSM) [left=of SM]{{}};
+\node (leftVM) [left=of VM]{};
 
-\path[chemeq] (S) -- (I1);
-\path[chemeq] (S) -- (I2);
-\path[chemeq] (S) -- (I3);
+%arrows
+\draw[very thick, ->] (leftSM) node[left]{$(1-v_m)b_mN_M$} to  (SM);
+\draw[very thick, ->] (leftVM) node[left]{$v_mb_mN_M$} to  (VM);
 
-\draw[very thick, ->] (I1) to node[above,xshift=3ex]{seropos.} (R);
-\draw[very thick, ->] (I2) to node[above]{seropos.}(R);
-\draw[very thick, ->] (I3) to node[above,xshift=-3ex]{seropos.}(R);
+\draw[very thick,->] (VM) to node[left]{$w_m$} (SM);
 
-%\draw[very thick,->] (R) to[bend left=85] (S);
-\draw[very thick,->] (R) .. controls +(-3.5,-9) and +(3.5,-9) .. node{sero-reversion}(S);
+\draw[very thick,->] (SM) to node[above]{$(1-q)\frac{\beta_{fm}I_W}{N_W}$} (IM);
+\draw[very thick,->] (VM) to[bend left=35] node[above,yshift=3ex]{$\eps(1-q)\frac{\beta_{fm}I_W}{N_W}$} (IM);
+\draw[very thick,->] (IM) to[bend left=45] node[below] {$\gamma_m$} (SM);
+\end{tikzpicture}
+}% end resize box
+\end{center}
+\caption{HPV Transmission flow diagram for straight men.}
+\label{fig:flowMen}
+\end{figure}
+%
+\begin{figure}[h!]
+\begin{center}
+\resizebox{0.7\textwidth}{!}{
+\begin{tikzpicture}
+%compartments
+\node (S)[bigcompartment, bottom color=blue!30] {{$S_Q$}};
+\node (SI) [right=of S,xshift=3cm]{{}};
+\node (SV) [above=of S]{};
+
+\node (I) [bigcompartment,right=of SIM,bottom color=red!30]{{$I_Q$}};
+\node (V) [bigcompartment,above=of SVM,bottom color=green!30]{{$V_Q$}};
+\node (leftSQ) [left=of S]{{}};
+\node (leftVQ) [left=of V]{};
+
+%arrows
+\draw[very thick, ->] (leftSQ) node[left]{$(1-v_m)b_mN_Q$} to  (S);
+\draw[very thick, ->] (leftVQ) node[left]{$v_mb_mN_Q$} to  (V);
+
+\draw[very thick,->] (V) to node[left]{$w_m$} (S);
+
+\draw[very thick,->] (S) to node[above]{$\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}$} (I);
+\draw[very thick,->] (V) to[bend left=35] node[above,yshift=3ex]{$\eps(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W})$} (I);
+\draw[very thick,->] (I) to[bend left=45] node[below] {$\gamma_m$} (S);
+\end{tikzpicture}
+}% end resize box
+\end{center}
+\caption{HPV Transmission flow diagram for men who have sex with men.}
+\label{fig:flowQueer}
+\end{figure}
+The diagram for women is similar to these with the appropriate transmission terms and parameters outlined above. This translates to a system of differential equations:
+\begin{align}
+\D{S_M}{t}&=(1-v_m)b_mN_M + w_mV_M - S_M\left(\frac{(1-q)\beta_{mf}I_W}{N_W}\right) + \gamma_mI_M - d_mS_M,\\
+\D{I_M}{t}&=\left(\frac{(1-q)\beta_{mf}I_W}{N_W}\right)(S_M+\eps V_M)-\gamma_mI_M - d_mI_M,\\
+\D{V_M}{t}&=v_mb_mN_M - w_mV_M - \eps V_M\left(\frac{(1-q)\beta_{mf}I_W}{N_W}\right) - d_mV_M,\\[2ex]
+\D{S_Q}{t}&=(1-v_m)b_mN_Q + w_mV_Q - S_Q\left(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}\right) + \gamma_mI_Q - d_mS_Q,\\
+\D{I_Q}{t}&=\left(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}\right)(S_Q+\eps V_Q)-\gamma_mI_Q - d_mI_Q,\\
+\D{V_Q}{t}&=v_mb_mN_Q - w_mV_Q - \eps V_Q\left(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}\right) - d_mV_Q,\\[2ex]
+\D{S_W}{t}&=(1-v_f)b_fN_W + w_fV_W - S_W\left(\frac{(1-q)\beta_{fm}I_M}{N_M}+\frac{(1-q)(1-p)\beta_{fm}I_Q}{N_Q}+\frac{q^2\beta_{ff}I_W}{N_W}\right) + \gamma_fI_W - d_fS_W,\\
+\D{I_W}{t}&=\left(\frac{(1-q)\beta_{fm}I_M}{N_M}+\frac{(1-q)(1-p)\beta_{fm}I_Q}{N_Q}+\frac{q^2\beta_{ff}I_W}{N_W}\right)(S_W+\eps V_W)-\gamma_fI_W - d_fI_W,\\
+\D{V_W}{t}&=v_fb_fN_W - w_fV_W - \eps V_W\left(\frac{(1-q)\beta_{fm}I_M}{N_M}+\frac{(1-q)(1-p)\beta_{fm}I_Q}{N_Q}+\frac{q^2\beta_{ff}I_W}{N_W}\right) - d_fV_W.
+\end{align}
+
+\section*{Code Pipeline}
+
+The following information outlines the code pipeline for running these simulations.  Currently, I am using estimates from Smieja et al.'s preliminary research and altering them slightly based on relative knowledge of male-female, female-female, and male-male HPV transmission.  We will need to fit the model to data to get an accurate estimate of these transmsission parameters.  
+
+The following is a 
+\begin{figure}[h!]
+\begin{center}
+\resizebox{0.2\linewidth}{!}{
+\begin{tikzpicture}
+\node (P) [bigcompartment,bottom color=red!30]{param.R};
+\node (PVF) [below=of P]{};
+\node (VF) [bigcompartment,bottom color=orange!30,below=of PVF]{vectorField.R};
+\node (VFS) [below=of VF]{};
+\node (S) [bigcompartment,bottom color=yellow!30,below=of VFS]{sim.R};
+\node (SPl) [below=of S]{};
+\node (Pl) [bigcompartment,bottom color=green!30,below=of SPl]{plot.R};
+\node (SPnew) [right=of S]{};
+\node (Pnew) [right=of S,bigcompartment, bottom color=blue!30]{VaccParam.R};
+\node (PnewSnew) [below=of Pnew]{};
+\node (Snew) [bigcompartment,bottom color=green!30,below=of SPl]{.R};
 
 \end{tikzpicture}
+}% end resizebox
 \end{center}
-\caption{Compartmental diagram for the disease progression of site specific HPV infections.  We have individuals in the susceptible $S$ class when they are infection free.  Individuals move into the infection class after they come into contact with another infected individual.  They move into a site specific infection class $I_i$ based on gender (vagina vs. penis) and based on probability of infection in a particular site (oropharynx, anus, and genitals).   These infected individuals may progress to disease $D_i$ or they may clear the infection.  If the individual seroconverts, they move into the $R+$ category, which provides them some protection from subsequent infection, otherwise, they move back to the $S$ class.  Seroconverted individuals may also sero-revert and move into the $S$ class, losing protective effects against subsequent infection.  }
 \end{figure}
 
-Because these oncogenic HPV types are sexually transmitted and because we are concerned with the effects of vaccination on both men and women, we separate the population by gender.  Many HPV models consider solely heterosexual transmission.  Because MSM have limited benefits from the female herd immunity, we also consider MSM and exclusively heterosexual men (xM), and WSW and exclusively heterosexual women (xW).  
-
-MSM and WSW may have sexual intercourse with both men and women, but homosexual interactions are averaged over the spectrum.  For example, $p_m$ is the probability that a man has sexual intercourse with a man and $p_w$ is the probability that a woman has sex with a woman.  
-
-The following system of differential equations outlines the movement out of the susceptible class due to HPV transmission. 
-\begin{align}
-\D{S_{MSW}}{t} & = - \beta_{fm}S_{MSW}I_{WSM} - (1-p_w)\beta_{fm}S_{MSW}I_{WSW}\\
-\D{S_{xW}}{t} & = - \beta_{mf}S_{WSM}I_{MSW} - (1-p_m)\beta_{mf}S_{WSM}I_{MSM}\\
-\D{S_{MSM}}{t} & = -p_m\beta_{mm}S_{MSM}I_{MSM} - (1-p_m)S_{MSM}[\beta_{fm}I_{WSM} + (1-p_w)\beta_{fm}I_{WSW}]\\
-\D{S_{WSW}}{t} & = -p_f\beta_{ff}S_{WSW}I_{WSW} - (1-p_w)S_{WSW}[\beta_{mf}I_{MSW} + (1-p_m)\beta_{mf}I_{MSM}]
-\end{align}
- 
-
-\subsection{Vaccination Programme Strategies}
-
-Currently, there is a vaccination program for pre-pubescent adolescent girls, around the age of 12 years.  Vaccination prior to first sexual experience provides ideal efficacy of the vaccine. There is current a debate about whether to include pre-pubescent adolescent boys in the vaccination programme. 
-
-In 2015, British Columbia has approved vaccination programme for at-risk boys which include the following groups.  BC has defined at-risk boys as identifying as gay or questioning (MSM) and those who are ``street involved''.
-{itemize}
-
-
-
+\end{document}
 \newpage
 \bibliographystyle{plain}
 \bibliography{NotesBib}
