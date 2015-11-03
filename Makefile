@@ -69,6 +69,15 @@ test.sim.Rout: parameter-test.Rout SimpleModel.Rout sim.R
 test.init-plot.Rout: test.sim.Rout parameter-test.Rout SimpleModel.Rout init-plot.R
 	$(run-R)
 
+vaccParam.R: parameter-test.Rout test.sim.Rout SimpleModel.Rout vaccParam.R
+	$(run-R)
+
+vaccSim.Rout: vaccParam.R SimpleModel.Rout test.sim.Rout vaccSim.R
+	$(run-R)
+
+vaccPlot.Rout: vaccParam.R SimpleModel.Rout test.sim.Rout vaccSim.Rout vaccPlot.R
+	$(run-R)
+
 Sources += SEERdicDescription.txt
 
 ##################################################################
