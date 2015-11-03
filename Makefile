@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: test.sim.Rout 
+target pngtarget pdftarget vtarget acrtarget: vaccPlot.Rout 
 
 ##################################################################
 
@@ -65,19 +65,20 @@ parameter-test.Rout: parameter-test.R
 SimpleModel.Rout: parameter-test.Rout SimpleModel.R
 	$(run-R)
 
-test.sim.Rout: parameter-test.Rout SimpleModel.Rout sim.R
+test.sim.Rout: SimpleModel.Rout sim.R
 	$(run-R)
 
-test.init-plot.Rout: test.sim.Rout parameter-test.Rout SimpleModel.Rout init-plot.R
+test.init-plot.Rout: test.sim.Rout init-plot.R
 	$(run-R)
 
-vaccParam.R: parameter-test.Rout test.sim.Rout SimpleModel.Rout vaccParam.R
+## Work on pipeline logic here; why do the new params depend on the previous sim?
+vaccParam.Rout: test.sim.Rout vaccParam.R
 	$(run-R)
 
-vaccSim.Rout: vaccParam.R SimpleModel.Rout test.sim.Rout vaccSim.R
+vaccSim.Rout: vaccParam.Rout vaccSim.R
 	$(run-R)
 
-vaccPlot.Rout: vaccParam.R SimpleModel.Rout test.sim.Rout vaccSim.Rout vaccPlot.R
+vaccPlot.Rout: vaccSim.Rout vaccPlot.R
 	$(run-R)
 
 Sources += SEERdicDescription.txt
