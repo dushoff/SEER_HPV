@@ -13,8 +13,7 @@ commit.txt
 *.Routput
 *.RData
 *.Rlog
-*.r
-*.rout
+*.wrapR.r
 
 .Rhistory
 

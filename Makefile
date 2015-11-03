@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: COLRECT.sample.Rout 
+target pngtarget pdftarget vtarget acrtarget: test.sim.Rout 
 
 ##################################################################
 
@@ -54,6 +54,8 @@ COLRECT.sample.Rout: description.Rout COLRECT.sample.TXT read.R
 
 seerdic:
 	$(MAKE) /home/dushoff/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/seerdic.pdf.go
+
+######################################################################
 
 ############## Sim stuff
 
