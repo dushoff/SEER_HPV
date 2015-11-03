@@ -1,6 +1,10 @@
 HPV.vf<-function(t,y,parms,...){
 	with(as.list(c(y,parms)),{
-		dSB<- ((1-v[1])*b[1]*(NB) + w[1]*VB - beta.mf*SB*(q*IG/NG)
+		if(!is.null(vaccStart)){
+			if(t<vaccStart) v <- 0*v
+		}
+		dSB<- ((1-v[1])*b[1]*(NB) 
+			+ w[1]*VB - beta.mf*SB*(q*IG/NG)
 			+ gamma[1]*IB - d[1]*SB
 		)
 

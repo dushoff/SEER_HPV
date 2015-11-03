@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: vaccPlot.Rout 
+target pngtarget pdftarget vtarget acrtarget: model.Rout 
 
 ##################################################################
 
@@ -63,6 +63,9 @@ parameter-test.Rout: parameter-test.R
 	$(run-R)
 	
 SimpleModel.Rout: parameter-test.Rout SimpleModel.R
+	$(run-R)
+
+model.Rout: parameter-test.Rout model.R
 	$(run-R)
 
 test.sim.Rout: SimpleModel.Rout sim.R
