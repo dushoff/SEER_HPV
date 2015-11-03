@@ -55,8 +55,6 @@ COLRECT.sample.Rout: description.Rout COLRECT.sample.TXT read.R
 seerdic:
 	$(MAKE) /home/dushoff/Dropbox/HPV_vacc_boys/SEER_1973_2012_TEXTDATA/incidence/seerdic.pdf.go
 
-<<<<<<< HEAD
-
 ############## Sim stuff
 
 parameter-test.Rout: parameter-test.R
@@ -71,11 +69,9 @@ test.sim.Rout: parameter-test.Rout SimpleModel.Rout sim.R
 test.init-plot.Rout: test.sim.Rout parameter-test.Rout SimpleModel.Rout init-plot.R
 	$(run-R)
 
-=======
 Sources += SEERdicDescription.txt
 
 ##################################################################
->>>>>>> c9e0e51bc0c6ac37e97d3e34642c819c3e9605c9
 
 ### Makestuff
 
