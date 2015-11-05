@@ -59,19 +59,19 @@ seerdic:
 
 ############## Sim stuff
 
-parameter-test.Rout: parameter-test.R
+parameterTest.Rout: parameterTest.R
 	$(run-R)
 	
-SimpleModel.Rout: parameter-test.Rout SimpleModel.R
+SimpleModel.Rout: parameterTest.Rout SimpleModel.R
 	$(run-R)
 
-model.Rout: parameter-test.Rout model.R
+model.Rout: parameterTest.Rout model.R
 	$(run-R)
 
 test.sim.Rout: SimpleModel.Rout sim.R
 	$(run-R)
 
-test.init-plot.Rout: test.sim.Rout init-plot.R
+test.initPlot.Rout: test.sim.Rout initPlot.R
 	$(run-R)
 
 ## Work on pipeline logic here; why do the new params depend on the previous sim?
