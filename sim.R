@@ -14,10 +14,12 @@ for(i in scenario){
 	soln[[i]]<-ode(y=init,times=times,
 				func=HPV.vf,
 				parms=c(NB=NB,NQ=NQ,NG=NG,
-						beta.mf=beta.mf,beta.fm=beta.fm,beta.mm=beta.mm,beta.ff=beta.ff,
-						gamma=gamma,
-						b=b,d=d,
-						v=v,w=w,eps=eps,
-						p=p,q=q)
+						betaM=betaM,gam=gam,d=d,
+						v=v,w=w,eps=eps,vaccStart=vaccStart
+					)
 	)
 }
+
+HPV.vf(y=init,t=times,parms=c(NB=NB,NQ=NQ,NG=NG,
+						betaM=betaM,gam=gam,d=d,
+						v=v,w=w,eps=eps,vaccStart=vaccStart))

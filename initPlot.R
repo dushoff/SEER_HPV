@@ -3,7 +3,8 @@ status<-c(1,1,3)
 #set up in initial plot
 
 with(as.data.frame(soln[[1]]),{
-		max.inf<-max(IG,IB,IQ)*1.1 # the factof for 1.1 is to provide nice plotting window
+		max.inf<-max(IG,IB,IQ)
+		#max.inf<-200000
 	plot(0,0,type="n",xlim<-c(0,tmax),ylim<-c(0,max.inf),
 		las=1,
 		xlab="time",
