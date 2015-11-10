@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: test.initPlot.Rout 
+target pngtarget pdftarget vtarget acrtarget: simpleModel.Rout 
 
 ##################################################################
 
@@ -68,7 +68,7 @@ simpleModel.Rout: parameterTest.Rout simpleModel.R
 model.Rout: parameterTest.Rout model.R
 	$(run-R)
 
-test.sim.Rout: SimpleModel.Rout sim.R
+test.sim.Rout: simpleModel.Rout sim.R
 	$(run-R)
 
 test.initPlot.Rout: test.sim.Rout initPlot.R
