@@ -12,6 +12,21 @@ w<-c(0,0)       #rate of vaccination decay (boy, girl)
 eps<-c(1-0.9)         # protection by vaccine 0 is perfect, 1 is no protection
 vaccStart<-1500 #in days
 
+#List testing for solutions
+v.list<-list(
+	c(0,0,0.3),
+	c(0,0,0.5)
+)
+w.list<-list(
+	c(0,0),
+	c(0,0)
+)
+eps.list<-list(
+	c(1-0.9),
+	c(1-0.9)
+)
+
+
 # transmission parameters
 
 beta.mf<- 0.0800     #transmission from female to male
