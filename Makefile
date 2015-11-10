@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: model.Rout 
+target pngtarget pdftarget vtarget acrtarget: test.initPlot.Rout 
 
 ##################################################################
 
@@ -62,7 +62,7 @@ seerdic:
 parameterTest.Rout: parameterTest.R
 	$(run-R)
 	
-SimpleModel.Rout: parameterTest.Rout SimpleModel.R
+simpleModel.Rout: parameterTest.Rout simpleModel.R
 	$(run-R)
 
 model.Rout: parameterTest.Rout model.R

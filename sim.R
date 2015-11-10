@@ -7,7 +7,6 @@ init<-c(SB=SB,IB=IB,VB=VB,SQ=SQ,IQ=IQ,VQ=VQ,SG=SG,IG=IG,VG=VG)
 scenario<-1:length(v.list)
 soln<-list()
 for(i in scenario){
-	
 	v<-v.list[[i]]
 	w<-w.list[[i]]
 	eps<-eps.list[[i]]
@@ -22,8 +21,3 @@ for(i in scenario){
 						p=p,q=q)
 	)
 }
-
-# lapply() is super annoying because I cannot redefine parms within the function
-# it doesn't seem to understand that v is a variable that will be filled later
-# 
-
