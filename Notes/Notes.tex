@@ -127,42 +127,59 @@ We set up the entire model as a flow diagram.  The flow diagram for straight men
 \end{figure}
 The diagram for women is similar to these with the appropriate transmission terms and parameters outlined above. This translates to a system of differential equations:
 \begin{align}
-\D{S_M}{t}&=(1-v_m)b_mN_M + w_mV_M - S_M\left(\frac{(1-q)\beta_{mf}I_W}{N_W}\right) + \gamma_mI_M - d_mS_M,\\
-\D{I_M}{t}&=\left(\frac{(1-q)\beta_{mf}I_W}{N_W}\right)(S_M+\eps V_M)-\gamma_mI_M - d_mI_M,\\
-\D{V_M}{t}&=v_mb_mN_M - w_mV_M - \eps V_M\left(\frac{(1-q)\beta_{mf}I_W}{N_W}\right) - d_mV_M,\\[2ex]
-\D{S_Q}{t}&=(1-v_m)b_mN_Q + w_mV_Q - S_Q\left(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}\right) + \gamma_mI_Q - d_mS_Q,\\
-\D{I_Q}{t}&=\left(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}\right)(S_Q+\eps V_Q)-\gamma_mI_Q - d_mI_Q,\\
-\D{V_Q}{t}&=v_mb_mN_Q - w_mV_Q - \eps V_Q\left(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}\right) - d_mV_Q,\\[2ex]
-\D{S_W}{t}&=(1-v_f)b_fN_W + w_fV_W - S_W\left(\frac{(1-q)\beta_{fm}I_M}{N_M}+\frac{(1-q)(1-p)\beta_{fm}I_Q}{N_Q}+\frac{q^2\beta_{ff}I_W}{N_W}\right) + \gamma_fI_W - d_fS_W,\\
-\D{I_W}{t}&=\left(\frac{(1-q)\beta_{fm}I_M}{N_M}+\frac{(1-q)(1-p)\beta_{fm}I_Q}{N_Q}+\frac{q^2\beta_{ff}I_W}{N_W}\right)(S_W+\eps V_W)-\gamma_fI_W - d_fI_W,\\
-\D{V_W}{t}&=v_fb_fN_W - w_fV_W - \eps V_W\left(\frac{(1-q)\beta_{fm}I_M}{N_M}+\frac{(1-q)(1-p)\beta_{fm}I_Q}{N_Q}+\frac{q^2\beta_{ff}I_W}{N_W}\right) - d_fV_W.
+\D{S_i}{t}&=(1-v_i)d_iN_i + w_iV_I - \lambda_iS_i + \gamma_iI_i - d_iS_i,\\
+\D{I_i}{t}&= \lambda_iS_i - \gamma_iI_i- d_iI_i,\\
+\D{V_i}{t}&= v_id_iN_i - w_iV_i - \eps \lambda_iV_i - d_iV_i.
+\end{align}
+where $i$ refers to either straight men, queer men, or women.  The parameter $\lambda_i$ is the force of transmission and is a function of mixing rates.  
+
+\subsection*{Sexual Mixing}
+
+We consider that straight men have sex with women solely, while queer men have sex with both women and men.  The group of women contain both straight and queer women, and thus have sex with both men and women.  
+
+We construct a transmission matrix $B$ that includes information in regards to the rate of transmission given a sexual encounter, and also the probability of sexual mixing with another member:
+\begin{align}
+B&=M\beta\\
+&=\left(\begin{array}{c c c}
+0 & 0 & (1-q) \\
+0 & p^2 & (1-p)(1-q) \\
+(1-q) & (1-p)(1-q) & q^2
+\end{array}\right)\left(\begin{array}{c c c}
+\beta_{mm} & \beta_{mm} & \beta_{mf}\\
+\beta_{mm} & \beta_{mm} & \beta_{mf}\\
+\beta_{fm} & \beta_{fm} & \beta_{ff}
+\end{array}\right)\\
+&=\left(\begin{array}{c c c}
+0 & 0 & (1-q)\beta_{mf} \\
+0 & p^2\beta_{mm} & (1-p)(1-q)\beta_{mf}\\
+(1-q)\beta_{fm} & (1-p)(1-q)\beta_{fm} & q^2\beta_{ff} 
+\end{array}\right)
 \end{align}
 
-\section*{Code Pipeline}
-
-The following information outlines the code pipeline for running these simulations.  Currently, I am using estimates from Smieja et al.'s preliminary research and altering them slightly based on relative knowledge of male-female, female-female, and male-male HPV transmission.  We will need to fit the model to data to get an accurate estimate of these transmsission parameters.  
-
-The following is a 
-\begin{figure}[h!]
+The mixing matrix $M$ isn't quite right.  That was my first attempt at sexual mixing, where $p$ is the proportion of sexual encounters that a queer man has with another man, and $q$ is the proportion of sexual encounters that a woman has with another woman.  I have done a little bit of reading on mixing matrices, but this is all I have found.  They analyze data and the number of instances of sexual mixing.  Here is an example I found.  The rows indicate the sample participant, and the columns represent the reported partner by the sample participants.  This is a dummy example I found with just male and female mixing:
+\begin{table}[h!]
 \begin{center}
-\resizebox{0.2\linewidth}{!}{
-\begin{tikzpicture}
-\node (P) [bigcompartment,bottom color=red!30]{param.R};
-\node (PVF) [below=of P]{};
-\node (VF) [bigcompartment,bottom color=orange!30,below=of PVF]{vectorField.R};
-\node (VFS) [below=of VF]{};
-\node (S) [bigcompartment,bottom color=yellow!30,below=of VFS]{sim.R};
-\node (SPl) [below=of S]{};
-\node (Pl) [bigcompartment,bottom color=green!30,below=of SPl]{plot.R};
-\node (SPnew) [right=of S]{};
-\node (Pnew) [right=of S,bigcompartment, bottom color=blue!30]{VaccParam.R};
-\node (PnewSnew) [below=of Pnew]{};
-\node (Snew) [bigcompartment,bottom color=green!30,below=of SPl]{.R};
-
-\end{tikzpicture}
-}% end resizebox
+\begin{tabular} {c |c | c |  c c c }
+ & M & F & Pairs & Persons & Contact Rate\\
+ \hline
+ M & 1 & 4 & 5 & 3 & 5/3=1.7\\
+ \hline
+ F & 4 & 1 & 5 & 2 & 5/2=2.5\\
+ \hline
+ & & & 10 & 5 & 2.0
+\end{tabular}
+\caption{Dummy example for mixing matrices just between men and women.  The sampled individual is listed on the rows and the reported partners is listed on the columns.  This was an example I got from online, so I don't know if this makes sense or is what you had in mind.}
 \end{center}
-\end{figure}
+\end{table}
+
+\section*{Parameter Values}
+
+I have taken the parameter values from the model that Marek et al. used in their project, and adapted them slightly. They set the parameter $\gamma$ based on prior knowledge about HPV clearance times, and fit the model to data to estimate $\beta$. They let vaccination parameters $v$, $w$, and $\eps$ be variable parameters in the model to examine the effects of various vaccination strategies on the prevalence of HPV in the population.
+
+Most HPV infections are fully cleared after an average of 16 months.  Thus they set $\gamma=1/16$ month\textsuperscript{-1}.  By fitting the model to population level data in Ontario they estimate a $\beta=0.0845$ month\textsuperscript{-1}.  They don't differentiate between male-to-female or female-to-male transmission, so I assume that this is male-to-female transmission, and thus $\beta_{fm}=0.0845$ in the dummy model.  Because we consider various sexual mixing scenarios, I altered the transmission rates based on prior knowledge about HPV disease dynamics.  It has been shown that female-to-male HPV transmission is less common (apart from oropharyngeal HPV) thus I set $\beta_{mf}=0.0800$ month\textsuperscript{-1}.  Furthermore, female-to-female transmission is thought to be even less common, so I set $\beta_{ff}=0.0700$.  It is also thought that male-to-male transmission is greater than that of $\beta_{fm}$ so I set this value to be $\beta_{mm}=0.0900$ month\textsuperscript{-1}.  Because these values are anecdotal guesses, not much weight should be put into the accuracy of these values.  They purely provide a means by which to develop a skeletal model for fitting at a later date. 
+
+In terms of sexual mixing, I have also anecdotally guess the proportion of same-sex interactions for women and queer men. 
+
 
 \end{document}
 \newpage
