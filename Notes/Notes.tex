@@ -37,7 +37,7 @@
 
 \section*{Previous Work - Marek's Work}
 
-Marek Smieja and a small research group because examining this problem during a workshop.  They set up a simple HPV transmission model in men and women.  They consider three infection status groups for both men and women: susceptible, infected, and vaccinated.  Individuals enter the model when they become sexually active (they assume age 15) at a rate $b_iN_i$, where $b_i$ is the birthrate for gender $i$ and $N_i$ is the number of individuals of gender $i$.  Individuals are separated into vaccinated or susceptible at a particular vaccination rate $v_i$ for gender $i$.  
+Marek Smieja and a small research group began examining this problem during a workshop.  They set up a simple HPV transmission model in men and women.  They consider three infection status groups for both men and women: susceptible, infected, and vaccinated.  Individuals enter the model when they become sexually active (they assume age 15) at a rate $b_iN_i$, where $b_i$ is the birthrate for gender $i$ and $N_i$ is the number of individuals of gender $i$.  Individuals are separated into vaccinated or susceptible at a particular vaccination rate $v_i$ for gender $i$.  
 
 Transmission is considered based on sexual interactions between men and women.  They consider same-sex interactions in men and women, but due to the lack of same-sex data, they set these parameters to zero when fitting the data.  The transmission of HPV in women is expressed as follows (analogously for men):
 \begin{equation}
@@ -135,42 +135,28 @@ where $i$ refers to either straight men, queer men, or women.  The parameter $\l
 
 \subsection*{Sexual Mixing}
 
-We consider that straight men have sex with women solely, while queer men have sex with both women and men.  The group of women contain both straight and queer women, and thus have sex with both men and women.  
+In our model, we consider both straight and queer individuals.  Because women are vaccinated against HPV in the current immunization program, we combine straight women and queer women in the same group, referred to as women.  Because men are not included in the immunization program, and because queer men may not benefit from women-vaccinated herd immunity, we keep these two groups separate, denoted as heterosexual men and queer men.  Queer men have sex with both men and women, while heterosexual men have sex with solely women.  
 
-We construct a transmission matrix $B$ that includes information in regards to the rate of transmission given a sexual encounter, and also the probability of sexual mixing with another member:
-\begin{align}
-B&=M\beta\\
-&=\left(\begin{array}{c c c}
-0 & 0 & (1-q) \\
-0 & p^2 & (1-p)(1-q) \\
-(1-q) & (1-p)(1-q) & q^2
-\end{array}\right)\left(\begin{array}{c c c}
-\beta_{mm} & \beta_{mm} & \beta_{mf}\\
-\beta_{mm} & \beta_{mm} & \beta_{mf}\\
-\beta_{fm} & \beta_{fm} & \beta_{ff}
-\end{array}\right)\\
-&=\left(\begin{array}{c c c}
-0 & 0 & (1-q)\beta_{mf} \\
-0 & p^2\beta_{mm} & (1-p)(1-q)\beta_{mf}\\
-(1-q)\beta_{fm} & (1-p)(1-q)\beta_{fm} & q^2\beta_{ff} 
-\end{array}\right)
-\end{align}
-
-The mixing matrix $M$ isn't quite right.  That was my first attempt at sexual mixing, where $p$ is the proportion of sexual encounters that a queer man has with another man, and $q$ is the proportion of sexual encounters that a woman has with another woman.  I have done a little bit of reading on mixing matrices, but this is all I have found.  They analyze data and the number of instances of sexual mixing.  Here is an example I found.  The rows indicate the sample participant, and the columns represent the reported partner by the sample participants.  This is a dummy example I found with just male and female mixing:
-\begin{table}[h!]
-\begin{center}
-\begin{tabular} {c |c | c |  c c c }
- & M & F & Pairs & Persons & Contact Rate\\
- \hline
- M & 1 & 4 & 5 & 3 & 5/3=1.7\\
- \hline
- F & 4 & 1 & 5 & 2 & 5/2=2.5\\
- \hline
- & & & 10 & 5 & 2.0
-\end{tabular}
-\caption{Dummy example for mixing matrices just between men and women.  The sampled individual is listed on the rows and the reported partners is listed on the columns.  This was an example I got from online, so I don't know if this makes sense or is what you had in mind.}
-\end{center}
-\end{table}
+We set up a mixing rate of an individual in group $i$ with those in group $j$ as $m_{ij}$.  Mixing here must be symmetrical; that is $m_{ij}=m_{ji}$.  The mixing rate is calculated as such
+\begin{equation}
+m_{ij} = c_i n_i p_{ij}
+\end{equation}
+where $c_i$ is the average contact rate of group $i$, $n_i$ is the relative number of individuals in group $i$, and $p_{ij}$ is the probability of and individual in group $i$ mixing with someone from group $j$.  Because mixing is symmetric, we have the following constraint
+\begin{equation}
+m_{ij} = c_i n_i p_{ij} = c_j n_j p_{ji} = m_{ji}
+\end{equation}
+We also have the following constraint in that the sum of the mixing probabilities over all groups $j$ must equal 1. 
+\begin{equation}
+\sum_j p_{ij} = 1
+\end{equation}
+To simplify solving the this system, we set $r_{ij}=c_ip_{ij}$ and choose values of $r_{ij}$ that work based on given values of $n_i$.  Then from the previous constraint we have:
+\begin{equation}
+\sum_j r_{ij} = c_i \sum_j p_{ij} = c_i
+\end{equation}
+And thus we have that 
+\begin{equation}
+p_{ij}=\frac{r_{ij}}{c_i}
+\end{equation}
 
 \section*{Parameter Values}
 
