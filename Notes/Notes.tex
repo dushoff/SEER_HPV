@@ -35,6 +35,17 @@
 \begin{document}
 \maketitle
 
+\section{Introduction}
+
+The human papillomavirus (HPV) is a virus which infects epithelial and mucosal cells.  There are over 100 different types of HPV, over 40 of which are sexually transmitted.  HPV types are categorized as high-risk or low-risk based on their association with various cancers.  HPV-16 and HPV-18 are two of the most oncogenic HPV types and are associated with a number of cancers in the anogenital and oropharyngeal tracts.  To combat the burden of these two HPV types, two vaccines have been developed to protect against these two types.  Cervarix is a bivalent vaccine (HPV2) manufactured by GlaxoSmithKlein.  Gardasil is a quadravalent vaccine (HPV4), and in addition to protecting against HPV-16 and -18, it also protects against HPV-6 and -11, two HPV types highly associated with genital warts.  While these vaccines are relatively young, studies show that these vaccines have high efficacy in protecting against these specific HPV types and are believed to relieve the burden of cervical cancer and other associated cancers.  
+
+According to the Canada Communicable Disease Report developed by the Public Health Agency of Canada, Health Canada has authorized the use of HPV4 and HPV2 in female populations aged 9-26 years to protect against cancers associated with HPV-16 and -18.  HPV4 has reported protective effects against vaginal, vulvar, and cervical cancers and precursors up to age 45 in women.  Only HPV4 (Gardasil) approved for use in males (9-26 years) to protect against infections of HPV types 6, 11, 16, and 18.  Furthermore, vaccination recommendations from PHAC include vaccinating females aged 9-13 years  with either vaccine to protect against these HPV types before the onset of sexual activity.  The PHAC also recommends vaccinating males with HPV4 between the ages of 9 and 26 years to prevent associated anal and penile diseases.  PHAC also makes a specific recommendation to vaccinate MSM greater than 9 years of age.  
+
+While the PHAC has recommended vaccinating men with HPV4 to protect against diseases associated with HPV types 6, 11, 16, and 18, only few provinces have included boys in their routine vaccination programme.  Currently, only three provinces administer the HPV vaccine routinely to both boys and girls.  In 2016, Manitoba will include boys in their routine HPV vaccination schedule of grade 6 students, with a catch-up vaccination of boys in grade 9.  Some provinces provide vaccination of boys with HIV such as Quebec and British Columbia.  As of September 2015, British Columbia include at risk males in their vaccination programme.  This includes boys who identify as MSM or questioning, boys who are street-involved, or those who have HIV. While this particular program targets at risk boys, vaccine uptake will be based on self-reported identification within these groups, and thus could result in significant under vaccination.  Moreover, many boys who may identify as MSM or questioning their sexuality may not realize at this age and could miss the vaccine entirely.  See Table~\ref{tab:ImmuneSched} for the entire list of HPV vaccination procedures for each province and territory.  
+
+Studies have shown that the HPV4 vaccine has significant and efficacious protective effects against HPV infection and related diseases in men.  Despite federal, provincial, and territorial government health organizations recommending boys be vaccinated with HPV4, only three provinces currently include all boys in their routine immunization schedule (4 provinces starting in September 2016).  While British Columbia is included at-risk boys in their routine schedule, the potential for low vaccine uptake is high, given that many boys are not comfortable disclosing information of this kind at that age, or could even be unaware at that point in their sexual development.  
+
+We develop a simple transmission model for HPV, including both boys and girls in the transmission mechanism.  We also consider a queer perspective in this model by including same-sex transmission of HPV.  To disentangle the specific effects of HPV transmission of MSM, we have separated the males into exclusive heterosexual (denoted $h$) and queer (denoted $q$).  We consider a variety of vaccination strategies with variable vaccine efficacy to examine these effects on HPV prevalence.  
 \section*{Previous Work - Marek's Work}
 
 Marek Smieja and a small research group began examining this problem during a workshop.  They set up a simple HPV transmission model in men and women.  They consider three infection status groups for both men and women: susceptible, infected, and vaccinated.  Individuals enter the model when they become sexually active (they assume age 15) at a rate $b_iN_i$, where $b_i$ is the birthrate for gender $i$ and $N_i$ is the number of individuals of gender $i$.  Individuals are separated into vaccinated or susceptible at a particular vaccination rate $v_i$ for gender $i$.  
@@ -203,6 +214,49 @@ Most HPV infections are fully cleared after an average of 16 months.  Thus they 
 
 In terms of sexual mixing, I have also anecdotally guess the proportion of same-sex interactions for women and queer men. 
 
+
+\section{Additional Information}
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{l | l | l }
+Province/Territory & Routine &  As of (year)\\
+\hline
+\hline
+\multirow{2}{*}{British Columbia} & Grade 6 girls & \multirow{2}{*}{2015}\\
+& At Risk Boys\textsuperscript{*} & \\
+\hline
+Alberta & Grade 5 girls and boys & 2014\\
+\hline
+Saskatchewan & Grade 6 girls & 2015\\
+\hline
+\multirow{2}{*}{Manitoba} & Grade 6 girls & 2015\\
+& Grade 6 girls and boys & Starting 2016\\
+\hline 
+Ontario & Grade 8 girls & 2015\\
+\hline
+Qu\'{e}bec & Grade 4 girls & 2015\\
+\hline 
+New Brunswick & Grade 7 girls & 2015 \\
+\hline 
+Nova Scotia & Grade 7 girls and boys & 2015\\
+\hline
+Prince Edward Island & Grade 8 girls and boys & 2015\\
+\hline
+NFLD and Labrador & Grade 6 girls & 2015\\
+\hline
+Yukon & Grade 6 girls & 2014\\
+\hline
+Northwest Territories & Grade 4-6 girls & 2015\\
+\hline 
+Nunavut & Grade 6 girls & NA\\
+\hline
+\end{tabular}
+
+\caption{Current immunization schedule by province and territory for HPV.  Gathered from provincial and territorial health websites.  \newline
+{\footnotesize \textsuperscript{*} At risk boys includes MSM or those questioning their sexuality, street-involved, or HIV-infected}}
+\label{tab:ImmuneSched}
+\end{center}
+\end{table}
 
 \end{document}
 \newpage
