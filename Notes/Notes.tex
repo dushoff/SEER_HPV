@@ -150,14 +150,51 @@ We also have the following constraint in that the sum of the mixing probabilitie
 \sum_j p_{ij} = 1
 \end{equation}
 To simplify solving the this system, we set $r_{ij}=c_ip_{ij}$ and choose values of $r_{ij}$ that work based on given values of $n_i$.  Then from the previous constraint we have:
-\begin{equation}
+\begin{equation}\label{eq:ContRateEq}
 \sum_j r_{ij} = c_i \sum_j p_{ij} = c_i
 \end{equation}
 And thus we have that 
-\begin{equation}
+\begin{equation}\label{eq:ProbEq}
 p_{ij}=\frac{r_{ij}}{c_i}
 \end{equation}
 
+\subsection*{Dummy Value Example}
+
+The following is a dummy example calculation.  I consider the proportional number of individuals.  That is that $n_w=n_m=0.5$ where the number of men $n_m=n_h+n_q$ is the sum of all heterosexual and queer men.  Under the assumption that about 20\% of men are queer, we solve for $n_h$ and $n_q$ accordingly
+\begin{align}
+n_h&=0.8n_m = 0.8(0.5) = 0.4\\
+n_q&=0.2n_m = 0.2(0.5) = 0.1
+\end{align}
+Because we know that $m_{ij}=m_{ji}$ so we can solve for some values of $r_{ij}$ by choosing other values.  Based on the structure of our model, we separate men into heterosexual exclusive and queer men.  Thus heterosexual men only sexually interact with women, and not other heterosexual men or queer men. Thus, $r_{hh}=r_{hq}=r_{qh}=0$.  We also start setting some $r_{ij}$ values and solving for others that maintain $m_{ij}=m_{ji}$, that is
+\begin{equation}
+r_{ji}=\frac{n_ir_{ij}}{n_j}
+\end{equation}
+So I chose $r_{hw}=3$, $r_{qq}=5$, and $r_{qw}=1$, and $r_{ww}=0.25$.  Then I solved for the $R$ matrix
+\begin{equation}
+R=\left(\begin{array}{c c c}
+0 & 0 & 3 \\
+0 & 5 & 1 \\
+2.4 & 0.2 & 0.25
+\end{array}\right)
+\end{equation}
+which gives a mixing matrix of 
+\begin{equation}
+M=\left(\begin{array}{c c c}
+0 & 0 & 1.2 \\
+0 & 0.5 & 0.1 \\
+1.2 & 0.1 & 0.125
+\end{array}\right)
+\end{equation}
+We can then solve for the contact rates for each group using Equation \eqref{eq:ContRateEq}, which gives $c_h=3$, $c_q=6$, and $c_w=2.85$. And we can use Equation \eqref{eq:ProbEq} and we obtain the matrix $P$ which gives the probability of interaction of someone from group $i$ mixing with someone in group $j$. 
+\begin{equation}
+P=\left(\begin{array}{c c c}
+0 & 0 & 1 \\
+0 & 0.833 & 0.167 \\
+0.842 & 0.070 & 0.088
+\end{array}\right)
+\end{equation}
+
+\spenny{I don't really know if this is what you had in mind.  We would most likely calculate this from data, so I would like to see how this model translates to data and then try to figure out how to calculate it back.  That is what I would like to discuss.  }
 \section*{Parameter Values}
 
 I have taken the parameter values from the model that Marek et al. used in their project, and adapted them slightly. They set the parameter $\gamma$ based on prior knowledge about HPV clearance times, and fit the model to data to estimate $\beta$. They let vaccination parameters $v$, $w$, and $\eps$ be variable parameters in the model to examine the effects of various vaccination strategies on the prevalence of HPV in the population.
