@@ -31,11 +31,11 @@ n<-c(n.h,n.q,n.w)
 #choose random rates (test values)
 r.h<-c(0,0,2.5)
 m.h<-n.h*r.h
-r.q<-c(0,4,1)
+r.q<-c(0,10,0.5)
 m.q<-n.q*r.q
 
 #solve for the values
-r.w<-c(m.h[3],m.q[3],0.25*n.w)/n.w
+r.w<-c(m.h[3],m.q[3],0.5*n.w)/n.w
 m.w<-n.w*r.w
 R.mat<-matrix(c(r.h,r.q,r.w),nrow=3,byrow=T)
 M.mat<-matrix(c(m.h,m.q,m.w),nrow=3,byrow=T)
@@ -57,7 +57,7 @@ SB<-NB-IB-VB
 
 #MSM initial conditions
 NQ<-0.3*NB
-IQ<-1
+IQ<-10
 VQ<-0
 SQ<-NQ-IQ-VQ
 

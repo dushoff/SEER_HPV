@@ -80,6 +80,8 @@ test.sim.Rout: simpleModel.Rout sim.R
 test.initPlot.Rout: test.sim.Rout initPlot.R
 	$(run-R)
 
+test.panelPlot.Rout: test.sim.Rout panelPlot.R
+	$(run-R)
 
 Sources += SEERdicDescription.txt
 
