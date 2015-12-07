@@ -61,8 +61,14 @@ seerdic:
 
 parameterTest.Rout: parameterTest.R
 	$(run-R)
+
+paramTrans.Rout: paramTrans.R
+	$(run-R)
+
+paramVacc.Rout: paramVacc.R
+	$(run-R)
 	
-simpleModel.Rout: parameterTest.Rout simpleModel.R
+simpleModel.Rout: paramTrans.Rout paramVacc.Rout simpleModel.R
 	$(run-R)
 
 model.Rout: parameterTest.Rout model.R
@@ -74,15 +80,6 @@ test.sim.Rout: simpleModel.Rout sim.R
 test.initPlot.Rout: test.sim.Rout initPlot.R
 	$(run-R)
 
-## Work on pipeline logic here; why do the new params depend on the previous sim?
-vaccParam.Rout: test.sim.Rout vaccParam.R
-	$(run-R)
-
-vaccSim.Rout: vaccParam.Rout vaccSim.R
-	$(run-R)
-
-vaccPlot.Rout: vaccSim.Rout vaccPlot.R
-	$(run-R)
 
 Sources += SEERdicDescription.txt
 

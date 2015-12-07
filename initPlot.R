@@ -29,8 +29,8 @@ legend("topright",legend=c("Girls","Straight Boys","Queer Boys"),
 	)
 with(as.data.frame(soln[[1]]),{
 	monthToYear<-seq(0,tmax,by=52)
-	max.inf<-300000
-	popAxis<-round(seq(0,max.inf,by=max.inf/10))
+	max.inf<-signif(max(IG,IB,IQ),digits=3)
+	popAxis<-seq(0,max.inf,by=max.inf/10)
 
 	axis(1,monthToYear,(1:length(monthToYear)))
 	mtext("time (years)",side=1,line=2.5)
