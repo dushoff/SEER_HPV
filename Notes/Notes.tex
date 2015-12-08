@@ -206,6 +206,32 @@ P=\left(\begin{array}{c c c}
 \end{equation}
 
 \spenny{I don't really know if this is what you had in mind.  We would most likely calculate this from data, so I would like to see how this model translates to data and then try to figure out how to calculate it back.  That is what I would like to discuss.  }
+
+\subsection*{Dummy Example Simulation Results}
+
+The effectiveness of various vaccination interventions depends on a number of factors.  One such factor is the relative same-sex contact rate versus the opposite-sex contact rate in MSM.  If the relative same-sex contact rate is large enough, then MSM will not benefit much from the girls-only vaccination program due to the fact that MSM in this scenario are most likely to contract HPV from other MSM.  
+
+This is illustrated in Figure~\ref{fig:example1}.  We set some basic dummy values for the parameters.  Here the MSM same-sex:opposite sex contact rate is set to 10:1.  We observe that with just only girl vaccination, HPV prevalence decreases significantly!  This is because enough HPV transmission events in MSM come from women.  
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{exampleFig/example1.png}
+\caption{Here we consider four different vaccination scenarios.  No vaccination, vaccinating only girls at 50\%, vaccinating queer men and women at 50\%, and vaccinating everyone at 50\%.  This case considers a relatively low same-sex to opposite-sex contact rate for MSM, 10:1.  In this case, women-only vaccination is sufficient to reduce HPV rates in all groups.}
+\label{fig:example1}
+\end{figure}
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{exampleFig/example2.png}
+\caption{We consider the same vaccination scenarios: no vaccination, vaccinating only girls at 50\%, vaccinating queer men and women at 50\%, and vaccinating everyone at 50\%.  In this case, we consider a higher ratio of same-sex to opposite-sex contacts in MSM, 20:1.  In this case, vaccinating only women is not sufficient to decrease HPV in the MSM group as not enough HPV cases are caused from sexual contacts with women, thus they are not protected by herd immunity.}
+\label{fig:example2}
+\end{figure}
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{exampleFig/example3.png}
+\caption{The case considers the previous relative contact rates for MSM, 20:1 for same:opposite sex contacts.  However, we have considered a different vaccine uptake rate for queer men in the third panel (50\% vaccine uptake in women, 10\% vaccine uptake in queer men).  This is to reflect the potential lack of vaccine uptake when targeting queer men due to low disclosure rates for pre-adolescent boys.}
+\label{fig:example3}
+\end{figure}
+
+
 \section*{Parameter Values}
 
 I have taken the parameter values from the model that Marek et al. used in their project, and adapted them slightly. They set the parameter $\gamma$ based on prior knowledge about HPV clearance times, and fit the model to data to estimate $\beta$. They let vaccination parameters $v$, $w$, and $\eps$ be variable parameters in the model to examine the effects of various vaccination strategies on the prevalence of HPV in the population.

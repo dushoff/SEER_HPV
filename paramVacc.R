@@ -8,9 +8,9 @@ vaccStart<-1500		# in months (125 years)
 #List testing for solutions
 v.list<-list(
 	c(0,0,0),
-	c(0,0,0.8),
-	c(0,0.1,0.8),
-	c(0.8,0.8,0.8)
+	c(0,0,0.5),
+	c(0,0.1,0.5),
+	c(0.5,0.5,0.5)
 )
 w.list<-list(
 	c(0,0,0),
