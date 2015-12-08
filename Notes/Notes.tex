@@ -46,21 +46,21 @@ While the PHAC has recommended vaccinating men with HPV4 to protect against dise
 Studies have shown that the HPV4 vaccine has significant and efficacious protective effects against HPV infection and related diseases in men.  Despite federal, provincial, and territorial government health organizations recommending boys be vaccinated with HPV4, only three provinces currently include all boys in their routine immunization schedule (4 provinces starting in September 2016).  While British Columbia is included at-risk boys in their routine schedule, the potential for low vaccine uptake is high, given that many boys are not comfortable disclosing information of this kind at that age, or could even be unaware at that point in their sexual development.  
 
 We develop a simple transmission model for HPV, including both boys and girls in the transmission mechanism.  We also consider a queer perspective in this model by including same-sex transmission of HPV.  To disentangle the specific effects of HPV transmission of MSM, we have separated the males into exclusive heterosexual (denoted $h$) and queer (denoted $q$).  We consider a variety of vaccination strategies with variable vaccine efficacy to examine these effects on HPV prevalence.  
-\section*{Previous Work - Marek's Work}
+%\section*{Previous Work - Marek's Work}
+%
+%Marek Smieja and a small research group began examining this problem during a workshop.  They set up a simple HPV transmission model in men and women.  They consider three infection status groups for both men and women: susceptible, infected, and vaccinated.  Individuals enter the model when they become sexually active (they assume age 15) at a rate $b_iN_i$, where $b_i$ is the birthrate for gender $i$ and $N_i$ is the number of individuals of gender $i$.  Individuals are separated into vaccinated or susceptible at a particular vaccination rate $v_i$ for gender $i$.  
+%
+%Transmission is considered based on sexual interactions between men and women.  They consider same-sex interactions in men and women, but due to the lack of same-sex data, they set these parameters to zero when fitting the data.  The transmission of HPV in women is expressed as follows (analogously for men):
+%\begin{equation}
+%S_{W}\left(\beta_{fm}\frac{I_M}{N_M} + \beta_{ff}\frac{I_W}{N_W}\right)
+%\end{equation}
+%where $\beta_{fm}$ and $\beta_{ff}$ is the transmission of HPV onto women from men and women, respectively.  When an individuals is infected, they can clear the infection at a rate $\gamma_i$ after which the individual becomes susceptible again.  There is evidence that natural infections do not provide much protection from subsequent re-infection and does not protect significantly from infections of other HPV types.  
+%
+%They also consider the vaccination isn't 100\% effective or long lasting. Vaccinated individuals' protection wanes at a rate of $w_i$ for gender $i$, after which they become fully susceptible.  Vaccinated individuals also have a protective factor of $\eps\in[0,1]$, which scales HPV transmission.  That is $\eps=0$ is full protection and $\eps=1$ is no protection.  
+%
+%We adapt this model by separating the male group into two different subgroups: straight males $M$ and men who have sex with men (queer men) $Q$. In this way we can examine the effects of vaccination strategies on men and queer men.  There is a concern that the female-only vaccination strategies provide little to no herd immunity to MSM and thus they may become a reservoir for HPV. 
 
-Marek Smieja and a small research group began examining this problem during a workshop.  They set up a simple HPV transmission model in men and women.  They consider three infection status groups for both men and women: susceptible, infected, and vaccinated.  Individuals enter the model when they become sexually active (they assume age 15) at a rate $b_iN_i$, where $b_i$ is the birthrate for gender $i$ and $N_i$ is the number of individuals of gender $i$.  Individuals are separated into vaccinated or susceptible at a particular vaccination rate $v_i$ for gender $i$.  
-
-Transmission is considered based on sexual interactions between men and women.  They consider same-sex interactions in men and women, but due to the lack of same-sex data, they set these parameters to zero when fitting the data.  The transmission of HPV in women is expressed as follows (analogously for men):
-\begin{equation}
-S_{W}\left(\beta_{fm}\frac{I_M}{N_M} + \beta_{ff}\frac{I_W}{N_W}\right)
-\end{equation}
-where $\beta_{fm}$ and $\beta_{ff}$ is the transmission of HPV onto women from men and women, respectively.  When an individuals is infected, they can clear the infection at a rate $\gamma_i$ after which the individual becomes susceptible again.  There is evidence that natural infections do not provide much protection from subsequent re-infection and does not protect significantly from infections of other HPV types.  
-
-They also consider the vaccination isn't 100\% effective or long lasting. Vaccinated individuals' protection wanes at a rate of $w_i$ for gender $i$, after which they become fully susceptible.  Vaccinated individuals also have a protective factor of $\eps\in[0,1]$, which scales HPV transmission.  That is $\eps=0$ is full protection and $\eps=1$ is no protection.  
-
-We adapt this model by separating the male group into two different subgroups: straight males $M$ and men who have sex with men (queer men) $Q$. In this way we can examine the effects of vaccination strategies on men and queer men.  There is a concern that the female-only vaccination strategies provide little to no herd immunity to MSM and thus they may become a reservoir for HPV. 
-
-\section*{Adaptations to the Model}
+\section*{The Model}
 
 As previously mentioned we separate the men into straight men $M$ and queer men $Q$.  Queer men have sexual interactions with both men and and women.  The proportion of same-sex interactions in men is $p$ and the proportion of same-sex interactions in women is $q$.  In this way we set up three different HPV transmission terms:
 
@@ -82,61 +82,31 @@ We set up the entire model as a flow diagram.  The flow diagram for straight men
 \resizebox{0.7\textwidth}{!}{
 \begin{tikzpicture}
 %compartments
-\node (SM)[bigcompartment, bottom color=blue!30] {{$S_M$}};
-\node (SIM) [right=of SM,xshift=3cm]{{}};
-\node (SVM) [above=of SM]{};
+\node (S)[bigcompartment, bottom color=blue!30] {{$S_i$}};
+\node (SI) [right=of S,xshift=3cm]{{}};
+\node (SV) [above=of S]{};
 
-\node (IM) [bigcompartment,right=of SIM,bottom color=red!30]{{$I_M$}};
-\node (VM) [bigcompartment,above=of SVM,bottom color=green!30]{{$V_M$}};
-\node (leftSM) [left=of SM]{{}};
-\node (leftVM) [left=of VM]{};
+\node (I) [bigcompartment,right=of SI,bottom color=red!30]{{$I_i$}};
+\node (V) [bigcompartment,above=of SV,bottom color=green!30]{{$V_i$}};
+\node (leftS) [left=of S]{{}};
+\node (leftV) [left=of V]{};
 
 %arrows
-\draw[very thick, ->] (leftSM) node[left]{$(1-v_m)b_mN_M$} to  (SM);
-\draw[very thick, ->] (leftVM) node[left]{$v_mb_mN_M$} to  (VM);
+\draw[very thick, ->] (leftS) node[left]{$(1-v_i)b_iN_i$} to  (S);
+\draw[very thick, ->] (leftV) node[left]{$v_ib_iN_i$} to  (V);
 
-\draw[very thick,->] (VM) to node[left]{$w_m$} (SM);
+\draw[very thick,->] (V) to node[left]{$w_i$} (S);
 
-\draw[very thick,->] (SM) to node[above]{$(1-q)\frac{\beta_{fm}I_W}{N_W}$} (IM);
-\draw[very thick,->] (VM) to[bend left=35] node[above,yshift=3ex]{$\eps(1-q)\frac{\beta_{fm}I_W}{N_W}$} (IM);
-\draw[very thick,->] (IM) to[bend left=45] node[below] {$\gamma_m$} (SM);
+\draw[very thick,->] (S) to node[above]{$\Lambda_i$} (I);
+\draw[very thick,->] (V) to[bend left=35] node[above,yshift=3ex]{$\eps\Lambda_i$} (I);
+\draw[very thick,->] (I) to[bend left=45] node[below] {$\gamma_i$} (S);
 \end{tikzpicture}
 }% end resize box
 \end{center}
 \caption{HPV Transmission flow diagram for straight men.}
 \label{fig:flowMen}
 \end{figure}
-%
-\begin{figure}[h!]
-\begin{center}
-\resizebox{0.7\textwidth}{!}{
-\begin{tikzpicture}
-%compartments
-\node (S)[bigcompartment, bottom color=blue!30] {{$S_Q$}};
-\node (SI) [right=of S,xshift=3cm]{{}};
-\node (SV) [above=of S]{};
 
-\node (I) [bigcompartment,right=of SIM,bottom color=red!30]{{$I_Q$}};
-\node (V) [bigcompartment,above=of SVM,bottom color=green!30]{{$V_Q$}};
-\node (leftSQ) [left=of S]{{}};
-\node (leftVQ) [left=of V]{};
-
-%arrows
-\draw[very thick, ->] (leftSQ) node[left]{$(1-v_m)b_mN_Q$} to  (S);
-\draw[very thick, ->] (leftVQ) node[left]{$v_mb_mN_Q$} to  (V);
-
-\draw[very thick,->] (V) to node[left]{$w_m$} (S);
-
-\draw[very thick,->] (S) to node[above]{$\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}$} (I);
-\draw[very thick,->] (V) to[bend left=35] node[above,yshift=3ex]{$\eps(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W})$} (I);
-\draw[very thick,->] (I) to[bend left=45] node[below] {$\gamma_m$} (S);
-\end{tikzpicture}
-}% end resize box
-\end{center}
-\caption{HPV Transmission flow diagram for men who have sex with men.}
-\label{fig:flowQueer}
-\end{figure}
-The diagram for women is similar to these with the appropriate transmission terms and parameters outlined above. This translates to a system of differential equations:
 \begin{align}
 \D{S_i}{t}&=(1-v_i)d_iN_i + w_iV_I - \lambda_iS_i + \gamma_iI_i - d_iS_i,\\
 \D{I_i}{t}&= \lambda_iS_i - \gamma_iI_i- d_iI_i,\\
@@ -219,11 +189,15 @@ This is illustrated in Figure~\ref{fig:example1}.  We set some basic dummy value
 \label{fig:example1}
 \end{figure}
 
+However, when the same-sex versus opposite-sex contact rate increases, then we don't see nearly as much of a reduction of HPV prevalence in the MSM group when considering the girl-only vaccination program.  This is because MSM are more likely to contract HPV from other MSM, and thus do not experience herd immunity effects from vaccinating only women.  When including MSM in the vaccination program (50\% coverage), we do see a reduction of HPV prevalence, which may suggest that vaccinating queer or questioning boys alongside girls could be effective at reducing HPV prevalence.  However, this assumes that the uptake rate in MSM will be similar to that in women.   
+
 \begin{figure}[h!]
 \includegraphics[width=\linewidth]{exampleFig/example2.png}
 \caption{We consider the same vaccination scenarios: no vaccination, vaccinating only girls at 50\%, vaccinating queer men and women at 50\%, and vaccinating everyone at 50\%.  In this case, we consider a higher ratio of same-sex to opposite-sex contacts in MSM, 20:1.  In this case, vaccinating only women is not sufficient to decrease HPV in the MSM group as not enough HPV cases are caused from sexual contacts with women, thus they are not protected by herd immunity.}
 \label{fig:example2}
 \end{figure}
+
+There are a number of potential problems with including only at-risk (queer and questioning and street-involved) boys in the routine vaccination program for HPV. Firstly, this requires that these individuals self-report as queer or questioning.  Many boys have not fully realized their sexual identity in high-school, and many more may not feel comfortable disclosing this information to school officials or their peers.  Thus, the uptake rates for these at-risk boys may be very low.  We consider a scenario with 50\% vaccine uptake in girls, but only 10\% in queer boys (panel three in Figure~\ref{fig:example3}.  Here we see that prevalence of HPV has decreased in the group of queer men.  However, this decrease is not enough to eliminate HPV.  When considering 50\% vaccination in all groups we see a significant reduction in the prevalence of HPV.  We consider 50\% coverage in all groups in this case because if everyone is going to be vaccinated, then coverage rates should be similar between the groups. 
 
 \begin{figure}[h!]
 \includegraphics[width=\linewidth]{exampleFig/example3.png}
