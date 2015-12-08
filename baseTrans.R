@@ -1,12 +1,22 @@
 # Parameter file!
 
-#Vital parameters
+#Vital parameters (unit is months)
 
+year <- 12
+month <- year/12
+day <- year/365.25
+week <- day*7
 
-d<-c(0.005,0.005,0.005) #death rate (boy, queer, girl) = birth rate
+L <- 200*month # They stay in our population for 200 months
+D <- 16*month # Average infection period
+
+fProp <- 0.5
+qProp <- 0.2
+
+d<-rep(1/L, 3) #death rate (boy, queer, girl) = birth rate
 
 # transmission parameters
-# transmission matrix
+# transmission matrix (why so specific, where did you get them?)
 beta.mf<- 0.0800     #transmission from female to male
 beta.fm<- 0.0845     #transmission from male to female
 beta.mm<- 0.09     #transmission from male to male
@@ -18,20 +28,20 @@ beta.g<-c(beta.fm,beta.fm,beta.ff)
 
 betaM<-matrix(c(beta.b,beta.q,beta.g),nrow=3)
 
-gam<-c(1/16,1/16,1/16)   #recovery rate of HPV
+gam<-c(1/16,1/16,1/16)   #recovery rate of HPV FIX!!!
 
 #proportion of groups
-n.w<-0.5
-n.m<-0.5
-n.h<-0.5*0.8
-n.q<-0.2*0.5
+n.w <- fProp
+n.m <- 1-fProp
+n.h<- (1-fProp)*(1-qProp)
+n.q<-0.2*0.5 ## FIX!!!
 
 n<-c(n.h,n.q,n.w)
 
-#choose random rates (test values)
+# Effective mixing rates. What are the parameters here?
 r.h<-c(0,0,2.5)
 m.h<-n.h*r.h
-r.q<-c(0,10,0.5)
+r.q<-c(0,5,0.5)
 m.q<-n.q*r.q
 
 #solve for the values

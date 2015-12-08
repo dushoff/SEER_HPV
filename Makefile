@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: test.initPlot.Rout 
+target pngtarget pdftarget vtarget acrtarget: base.panelPlot.Rout 
 
 ##################################################################
 
@@ -59,28 +59,32 @@ seerdic:
 
 ############## Sim stuff
 
+### Older stuff
+
 parameterTest.Rout: parameterTest.R
-	$(run-R)
-
-paramTrans.Rout: paramTrans.R
-	$(run-R)
-
-paramVacc.Rout: paramVacc.R
-	$(run-R)
-	
-simpleModel.Rout: paramTrans.Rout paramVacc.Rout simpleModel.R
-	$(run-R)
-
-model.Rout: parameterTest.Rout model.R
-	$(run-R)
-
-test.sim.Rout: simpleModel.Rout sim.R
 	$(run-R)
 
 test.initPlot.Rout: test.sim.Rout initPlot.R
 	$(run-R)
 
-test.panelPlot.Rout: test.sim.Rout panelPlot.R
+model.Rout: parameterTest.Rout model.R
+	$(run-R)
+
+## Transmission parameters
+paramVacc.Rout: paramVacc.R
+	$(run-R)
+
+naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
+
+base.model.Rout: baseTrans.Rout paramVacc.Rout simpleModel.R
+	$(run-R)
+
+base.sim.Rout: base.model.Rout sim.R
+%.sim.Rout: %.model.Rout sim.R
+	$(run-R)
+
+base.panelPlot.Rout: base.sim.Rout panelPlot.R
+%.panelPlot.Rout: %.sim.Rout panelPlot.R
 	$(run-R)
 
 Sources += SEERdicDescription.txt
