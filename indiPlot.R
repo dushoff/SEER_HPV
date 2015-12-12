@@ -8,12 +8,16 @@ status<-c(1,1,3)
 
 #set up in initial plot
 
-par(mfrow=c(ceiling(length(scenario)/2),2))
+# I need to figure out how to do this locally within the same directory
+script.dir <- dirname(sys.frame(1)$ofile)
+
+
+par(mfrow=c(1,1))	#make each plot
 
 for(i in scenario){
-
+	filename<-paste0(script.dir,"/test.indiPlot.",i,".png")
+	png(filename)
 	# vacc.times<-seq(vaccStart,tmax*month,length.out=1+nstep)
-
 	with(as.data.frame(soln[[1]]),{
 			max.inf<-max(IG,IB,IQ)
 			#max.inf<-200000
@@ -53,7 +57,6 @@ for(i in scenario){
 		# axis(2,popAxis)	
 		mtext("Infected", side=2,line=2.5)
 	})
-
-
+	dev.off()
 }
 

@@ -87,6 +87,12 @@ base.panelPlot.Rout: base.sim.Rout panelPlot.R
 %.panelPlot.Rout: %.sim.Rout panelPlot.R
 	$(run-R)
 
+base.indiPlot.Rout: base.sim.Rout indiPlot.R
+%.indiPlot.Rout: %.sim.Rout indiPlot.R
+	$(run-R)
+
+
+
 Sources += SEERdicDescription.txt
 
 ##################################################################
