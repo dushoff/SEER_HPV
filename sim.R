@@ -20,6 +20,19 @@ for(i in scenario){
 	)
 }
 
+thresh<-1
+pop.min<-10
+
+inf.soln<-soln[[1]][,c("time","IB","IQ","IG")]
+equil.time<-inf.soln[1,1]
+for(i in 2:dim(inf.soln)[1]){
+		if(inf.soln[i,"IB"]-inf.soln[i-1,"IB"]<thresh && inf.soln[i,"IB"]>pop.min){
+			equil.time <- inf.soln[i,1]
+			break
+			
+		}
+}
+
 HPV.vf(y=init,t=times,parms=c(NB=NB,NQ=NQ,NG=NG,
 						betaM=betaM,gam=gam,d=d,
 						v=v,w=w,eps=eps,vaccStart=vaccStart))
