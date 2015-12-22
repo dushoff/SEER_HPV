@@ -1,13 +1,13 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: base.gPlot.Rout 
+target pngtarget pdftarget vtarget acrtarget: base.gPlot.Rout
 
 ##################################################################
 
 # make files
 
-Sources = Makefile .gitignore README.md LICENSE
+Sources = Makefile .gitignore README.md LICENSE mac.mk
 
 ######################################################################
 
