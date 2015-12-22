@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: base.panelPlot.Rout 
+target pngtarget pdftarget vtarget acrtarget: base.gPlot.Rout 
 
 ##################################################################
 
@@ -91,7 +91,8 @@ base.indiPlot.Rout: base.sim.Rout indiPlot.R
 %.indiPlot.Rout: %.sim.Rout indiPlot.R
 	$(run-R)
 
-
+base.gPlot.Rout: base.sim.Rout gPlot.R
+	$(run-R)
 
 Sources += SEERdicDescription.txt
 

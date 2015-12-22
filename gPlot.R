@@ -12,7 +12,7 @@ base <- base %>% gather(key=Group,value=Num,-time)
 for (i in scenario){
 
 	#hardcode for now
-	filename <- paste0("~/Desktop/test.gPlot.",i,".png")
+	# filename <- paste0("~/Desktop/test.gPlot.",i,".png")
 	#filename<-paste0(script.dir,"/test.gPlot.",i,".png")
 	sol.inf <- as.data.frame(soln[[i]][,inf])
 	inf.max<-apply(sol.inf[,2:4],2,max)
@@ -21,7 +21,7 @@ for (i in scenario){
 
 	col.pal<-rep(c("blue","orchid1","red"),1)
 
-	png(filename)
+	# png(filename)
 	print(
 		ggplot(sol.plot, aes(x=time*month, y=Num))
 		+ geom_line(aes(color=Group),linetype="dashed",size=1)
@@ -41,5 +41,5 @@ for (i in scenario){
 		+ geom_vline(xintercept=vaccStart*month,size=1,color="gray",linetype=3)
 		+ xlim(equil.time*month, tmax*month) #omits the first part of the function
 	)
-	dev.off()
+	# dev.off()
 }
