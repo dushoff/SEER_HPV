@@ -71,12 +71,16 @@ model.Rout: parameterTest.Rout model.R
 	$(run-R)
 
 ## Transmission parameters
-paramVacc.Rout: paramVacc.R
+
+%.Trans.Rout: %.Trans.R
+	$(run-R)
+
+paramVacc.Rout: %.Trans.Rout paramVacc.R
 	$(run-R)
 
 naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
 
-base.model.Rout: baseTrans.Rout paramVacc.Rout simpleModel.R
+base.model.Rout: base.Trans.Rout paramVacc.Rout simpleModel.R
 	$(run-R)
 
 base.sim.Rout: base.model.Rout sim.R

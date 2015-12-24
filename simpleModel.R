@@ -20,8 +20,12 @@ HPV.vf<-function(t,y,parms,...){
 		if(!is.null(vaccStart) && t<vaccStart){
 			v<-v*0
 		}
-		iProp <- c(IB/NB, IQ/NQ, IG/NG)
-
+		if(NQ==0){
+			iProp <-c(IB/NB,0,IG/NG)
+		}else{
+			iProp <- c(IB/NB, IQ/NQ, IG/NG)
+		}
+			
 		bvec <- disdyn(S=SB, I=IB, V=VB, N=NB
 			, v=v[b], d=d[b], w=w[b], gam=gam[b], eps=eps[b]
 			, iProp=iProp, betaV = betaM[b, ]
