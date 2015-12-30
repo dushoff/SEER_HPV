@@ -75,12 +75,13 @@ model.Rout: parameterTest.Rout model.R
 %.Trans.Rout: %.Trans.R
 	$(run-R)
 
-paramVacc.Rout: %.Trans.Rout paramVacc.R
+%.paramVacc.Rout: %.Trans.Rout paramVacc.R
 	$(run-R)
 
 naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
 
-base.model.Rout: base.Trans.Rout paramVacc.Rout simpleModel.R
+base.model.Rout: base.paramVacc.Rout simpleModel.R
+%.model.Rout: %.paramVacc.Rout simpleModel.R
 	$(run-R)
 
 base.sim.Rout: base.model.Rout sim.R
@@ -95,7 +96,10 @@ base.indiPlot.Rout: base.sim.Rout indiPlot.R
 %.indiPlot.Rout: %.sim.Rout indiPlot.R
 	$(run-R)
 
+
+
 base.gPlot.Rout: base.sim.Rout gPlot.R
+%.gPlot.Rout: %.sim.Rout gPlot.R
 	$(run-R)
 
 Sources += SEERdicDescription.txt

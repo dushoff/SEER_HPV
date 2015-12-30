@@ -3,9 +3,9 @@
 #Vital parameters (unit is months)
 
 #parameter to state whether we include queer boys in the model
-incl.queer<-TRUE
+incl.queer<-FALSE
 
-qProp<- 0.2
+qProp <- 0.2
 
 
 year <- 1
@@ -24,7 +24,7 @@ r.hw<-2.5
 
 if(incl.queer){
 	r.qq <- 8
-	r.qw <- 0.75	
+	r.qw <- 0.75
 }else{
 	r.qq <- 0
 	r.qw <- 0
@@ -94,7 +94,7 @@ SB<-NB-IB-VB
 #MSM initial conditions
 NQ<-qProp*NB
 if(incl.queer){
-	IQ<-1	
+	IQ<-1
 }else{
 	IQ<-0
 }
