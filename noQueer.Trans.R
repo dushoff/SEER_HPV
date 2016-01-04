@@ -25,12 +25,15 @@ r.hw<-2.5
 if(incl.queer){
 	r.qq <- 8
 	r.qw <- 0.75
+	r.hw<-r.hw
+	r.ww<-0.125
 }else{
 	r.qq <- 0
-	r.qw <- 0
+	r.qw <- 0.75
+	r.hw<-r.hw*(1-qProp)+r.qw*(qProp)
+	r.ww<-0
 }
 
-r.ww<-0.125
 
 d<-rep(1/L, 3) #death rate (boy, queer, girl) = birth rate
 
@@ -58,9 +61,16 @@ gam<-rep(1/D,3)   #recovery rate of HPV
 
 #proportion of groups
 n.w <- fProp
-n.m <- 1-fProp
-n.h<- (1-fProp)*(1-qProp)
-n.q<-qProp*(1-fProp) 
+
+if(incl.queer){
+	#if queer we separate men into heterosexual and queer
+	n.h<- (1-fProp)*(1-qProp)
+	n.q<-qProp*(1-fProp) 
+}else{
+	#if we don't ''include'' queer men, we assume that all men are queer
+	n.h <- (1-fProp)
+	n.q <- 0
+}
 
 n<-c(n.h,n.q,n.w)
 
@@ -86,20 +96,24 @@ betaM<-Beta.mat*M.mat
 
 #boy initial conditions
 NB<-1330000
-NB<-(1-qProp)*NB
-IB<-1
-VB<-0
-SB<-NB-IB-VB
+
 
 #MSM initial conditions
-NQ<-qProp*NB
+NQ <- NB*qProp
+
 if(incl.queer){
+	NB<-(1-qProp)*NB
 	IQ<-1
 }else{
+
 	IQ<-0
 }
 VQ<-0
 SQ<-NQ-IQ-VQ
+
+IB<-1
+VB<-0
+SB<-NB-IB-VB
 
 
 
@@ -110,7 +124,7 @@ VG<-0
 SG<-NG-IG-VG
 
 # time parameters
-tmax<-3000
+tmax<-4000
 nstep<-300
 times<-seq(0,tmax,by=tmax/nstep)
 

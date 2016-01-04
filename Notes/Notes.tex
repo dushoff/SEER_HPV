@@ -46,19 +46,7 @@ While the PHAC has recommended vaccinating men with HPV4 to protect against dise
 Studies have shown that the HPV4 vaccine has significant and efficacious protective effects against HPV infection and related diseases in men.  Despite federal, provincial, and territorial government health organizations recommending boys be vaccinated with HPV4, only three provinces currently include all boys in their routine immunization schedule (4 provinces starting in September 2016).  While British Columbia is included at-risk boys in their routine schedule, the potential for low vaccine uptake is high, given that many boys are not comfortable disclosing information of this kind at that age, or could even be unaware at that point in their sexual development.  
 
 We develop a simple transmission model for HPV, including both boys and girls in the transmission mechanism.  We also consider a queer perspective in this model by including same-sex transmission of HPV.  To disentangle the specific effects of HPV transmission of MSM, we have separated the males into exclusive heterosexual (denoted $h$) and queer (denoted $q$).  We consider a variety of vaccination strategies with variable vaccine efficacy to examine these effects on HPV prevalence.  
-%\section*{Previous Work - Marek's Work}
-%
-%Marek Smieja and a small research group began examining this problem during a workshop.  They set up a simple HPV transmission model in men and women.  They consider three infection status groups for both men and women: susceptible, infected, and vaccinated.  Individuals enter the model when they become sexually active (they assume age 15) at a rate $b_iN_i$, where $b_i$ is the birthrate for gender $i$ and $N_i$ is the number of individuals of gender $i$.  Individuals are separated into vaccinated or susceptible at a particular vaccination rate $v_i$ for gender $i$.  
-%
-%Transmission is considered based on sexual interactions between men and women.  They consider same-sex interactions in men and women, but due to the lack of same-sex data, they set these parameters to zero when fitting the data.  The transmission of HPV in women is expressed as follows (analogously for men):
-%\begin{equation}
-%S_{W}\left(\beta_{fm}\frac{I_M}{N_M} + \beta_{ff}\frac{I_W}{N_W}\right)
-%\end{equation}
-%where $\beta_{fm}$ and $\beta_{ff}$ is the transmission of HPV onto women from men and women, respectively.  When an individuals is infected, they can clear the infection at a rate $\gamma_i$ after which the individual becomes susceptible again.  There is evidence that natural infections do not provide much protection from subsequent re-infection and does not protect significantly from infections of other HPV types.  
-%
-%They also consider the vaccination isn't 100\% effective or long lasting. Vaccinated individuals' protection wanes at a rate of $w_i$ for gender $i$, after which they become fully susceptible.  Vaccinated individuals also have a protective factor of $\eps\in[0,1]$, which scales HPV transmission.  That is $\eps=0$ is full protection and $\eps=1$ is no protection.  
-%
-%We adapt this model by separating the male group into two different subgroups: straight males $M$ and men who have sex with men (queer men) $Q$. In this way we can examine the effects of vaccination strategies on men and queer men.  There is a concern that the female-only vaccination strategies provide little to no herd immunity to MSM and thus they may become a reservoir for HPV. 
+ 
 
 \section*{The Model}
 
@@ -177,33 +165,20 @@ P=\left(\begin{array}{c c c}
 
 \spenny{I don't really know if this is what you had in mind.  We would most likely calculate this from data, so I would like to see how this model translates to data and then try to figure out how to calculate it back.  That is what I would like to discuss.  }
 
-\subsection*{Dummy Example Simulation Results}
+\subsection{No Queer Men - Sexual Mixing}
 
-The effectiveness of various vaccination interventions depends on a number of factors.  One such factor is the relative same-sex contact rate versus the opposite-sex contact rate in MSM.  If the relative same-sex contact rate is large enough, then MSM will not benefit much from the girls-only vaccination program due to the fact that MSM in this scenario are most likely to contract HPV from other MSM.  
-
-This is illustrated in Figure~\ref{fig:example1}.  We set some basic dummy values for the parameters.  Here the MSM same-sex:opposite sex contact rate is set to 10:1.  We observe that with just only girl vaccination, HPV prevalence decreases significantly!  This is because enough HPV transmission events in MSM come from women.  
-
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{exampleFig/example1.png}
-\caption{Here we consider four different vaccination scenarios.  No vaccination, vaccinating only girls at 50\%, vaccinating queer men and women at 50\%, and vaccinating everyone at 50\%.  This case considers a relatively low same-sex to opposite-sex contact rate for MSM, 10:1.  In this case, women-only vaccination is sufficient to reduce HPV rates in all groups.}
-\label{fig:example1}
-\end{figure}
-
-However, when the same-sex versus opposite-sex contact rate increases, then we don't see nearly as much of a reduction of HPV prevalence in the MSM group when considering the girl-only vaccination program.  This is because MSM are more likely to contract HPV from other MSM, and thus do not experience herd immunity effects from vaccinating only women.  When including MSM in the vaccination program (50\% coverage), we do see a reduction of HPV prevalence, which may suggest that vaccinating queer or questioning boys alongside girls could be effective at reducing HPV prevalence.  However, this assumes that the uptake rate in MSM will be similar to that in women.   
-
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{exampleFig/example2.png}
-\caption{We consider the same vaccination scenarios: no vaccination, vaccinating only girls at 50\%, vaccinating queer men and women at 50\%, and vaccinating everyone at 50\%.  In this case, we consider a higher ratio of same-sex to opposite-sex contacts in MSM, 20:1.  In this case, vaccinating only women is not sufficient to decrease HPV in the MSM group as not enough HPV cases are caused from sexual contacts with women, thus they are not protected by herd immunity.}
-\label{fig:example2}
-\end{figure}
-
-There are a number of potential problems with including only at-risk (queer and questioning and street-involved) boys in the routine vaccination program for HPV. Firstly, this requires that these individuals self-report as queer or questioning.  Many boys have not fully realized their sexual identity in high-school, and many more may not feel comfortable disclosing this information to school officials or their peers.  Thus, the uptake rates for these at-risk boys may be very low.  We consider a scenario with 50\% vaccine uptake in girls, but only 10\% in queer boys (panel three in Figure~\ref{fig:example3}.  Here we see that prevalence of HPV has decreased in the group of queer men.  However, this decrease is not enough to eliminate HPV.  When considering 50\% vaccination in all groups we see a significant reduction in the prevalence of HPV.  We consider 50\% coverage in all groups in this case because if everyone is going to be vaccinated, then coverage rates should be similar between the groups. 
-
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{exampleFig/example3.png}
-\caption{The case considers the previous relative contact rates for MSM, 20:1 for same:opposite sex contacts.  However, we have considered a different vaccine uptake rate for queer men in the third panel (50\% vaccine uptake in women, 10\% vaccine uptake in queer men).  This is to reflect the potential lack of vaccine uptake when targeting queer men due to low disclosure rates for pre-adolescent boys.}
-\label{fig:example3}
-\end{figure}
+To compare our simple model to previous results we consider the case where we track exclusively heterosexual contacts.  This includes sexual interactions between straight couples, but also opposite-sex interactions between queer men and women. To account for this, we examine the mixing rate between men and women from the previous model, and set this to be the mixing rate.  We consider the overall mixing rate of men and women. To maintain symmetry we set the mixing rate of males with females to be the same as females with males, then we break-down the mixing into interactions with straight males and interactions with queer males.
+\begin{align}
+m_{mf} &= m_{fm}\\
+m_{hf} + m_{qf} &= m_{fh} + m_{fq}\\
+n_hr_{hf} + n_qr_{qf} &= n_f(r_{fh} + r_{fq})\\
+n_m(n_{m_h}r_{hf} + n_{m_q}r_{qf}) &= n_f(r_{fh} + r_{fq})
+\end{align}
+where $r_{ij}$ is the effective contact rate of individual $i$ with individual $j$ discussed above: $r_{ij}=c_ip_{ij}$.  Furthermore, $n_{m_i}$ is the proportion of men who identify with sexuality $i$.  In our particular model the left hand side is 
+\begin{equation}
+0.5(0.8(2.5) + 0.2(0.75)) = 0.5(2.15)
+\end{equation}
+And thus the effective contact rate of men with women is 2.15.  Because we set the proportion of men and women to be the same, the effective contact rate of women with men $r_{fm}=r_{fh}+r_{fq}$ is also 2.15.  Thus when we consider the ``no queer'' model, we set the mixing rates to be $0.5(2.15) = 1.075$, and run the model.  When we consider this case, we have 
 
 
 \section*{Parameter Values}

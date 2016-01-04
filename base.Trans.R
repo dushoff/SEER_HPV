@@ -25,9 +25,11 @@ r.hw<-2.5
 if(incl.queer){
 	r.qq <- 8
 	r.qw <- 0.75	
+	r.hw<-r.hw
 }else{
 	r.qq <- 0
-	r.qw <- 0
+	r.qw <- 0.75
+	r.hw<-r.hw*(1-qProp)+r.qw*(qProp)
 }
 
 r.ww<-0.125
@@ -58,9 +60,14 @@ gam<-rep(1/D,3)   #recovery rate of HPV
 
 #proportion of groups
 n.w <- fProp
-n.m <- 1-fProp
-n.h<- (1-fProp)*(1-qProp)
-n.q<-qProp*(1-fProp) 
+
+if(incl.queer){
+	n.h<- (1-fProp)*(1-qProp)
+	n.q<-qProp*(1-fProp) 
+}else{
+	n.h <- (1-fProp)
+	n.q <- 0
+}
 
 n<-c(n.h,n.q,n.w)
 
@@ -110,7 +117,7 @@ VG<-0
 SG<-NG-IG-VG
 
 # time parameters
-tmax<-3000
+tmax<-4000
 nstep<-300
 times<-seq(0,tmax,by=tmax/nstep)
 
