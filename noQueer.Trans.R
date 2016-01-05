@@ -39,7 +39,7 @@ d<-rep(1/L, 3) #death rate (boy, queer, girl) = birth rate
 
 # transmission parameters
 # transmission matrix (why so specific, where did you get them?)
-beta.mf<- 0.0800     #transmission from female to male
+beta.mf<- 0.0795     #transmission from female to male
 beta.fm<- 0.0845     #transmission from male to female
 beta.mm<- 0.09     #transmission from male to male
 beta.ff<- 0.07   #transmission from female to female

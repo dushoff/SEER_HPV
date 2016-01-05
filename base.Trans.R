@@ -38,7 +38,7 @@ d<-rep(1/L, 3) #death rate (boy, queer, girl) = birth rate
 
 # transmission parameters
 # transmission matrix (why so specific, where did you get them?)
-beta.mf<- 0.0800     #transmission from female to male
+beta.mf<- 0.0795     #transmission from female to male
 beta.fm<- 0.0845     #transmission from male to female
 beta.mm<- 0.09     #transmission from male to male
 beta.ff<- 0.07   #transmission from female to female
@@ -91,24 +91,28 @@ betaM<-Beta.mat*M.mat
 
 # Initial conditions
 
+# Initial conditions
+
 #boy initial conditions
 NB<-1330000
-NB<-(1-qProp)*NB
-IB<-1
-VB<-0
-SB<-NB-IB-VB
+
 
 #MSM initial conditions
-NQ<-qProp*NB
+NQ <- NB*qProp
+
 if(incl.queer){
-	IQ<-1	
+	NB<-(1-qProp)*NB
+	IQ<-1
 }else{
+
 	IQ<-0
 }
 VQ<-0
 SQ<-NQ-IQ-VQ
 
-
+IB<-1
+VB<-0
+SB<-NB-IB-VB
 
 # girl initial conditions
 NG<-1280000
