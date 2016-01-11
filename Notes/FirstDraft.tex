@@ -1,0 +1,121 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath,amsthm,xspace,multirow}
+\usepackage[margin=1in]{geometry}
+\input{preamble.tex}
+\input{sirmodellingmacros.tex}
+
+\usepackage{tikz}
+\newdimen\mylw
+\tikzset{chemeq/.style={draw,thick,double distance=2pt,onearc-onearc,/chemeq/size={#1}}}
+\tikzset{chemeq/.default={.4pt 6pt}}
+\pgfkeys{/chemeq/size/.code={\pgfsetarrowoptions{onearc}{#1}}}
+\def\parseopts#1 #2{\xdef\myalw{#1}\xdef\myasize{#2}}
+\pgfarrowsdeclare{onearc}{onearc}{%
+  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
+  \mylw=\myalw
+  \pgfarrowsleftextend{-\myasize-.5\mylw}
+  \pgfarrowsrightextend{0pt}
+}{%
+  \pgfsetdash{}{0pt}
+  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
+  \mylw=\pgflinewidth
+  \pgfsetlinewidth{\myalw}
+  \pgfpathmoveto{\pgfpoint{-\myasize}{-\myasize-.5\mylw}}%
+  \pgfpatharc{180}{90}{\myasize}
+  \pgfusepathqstroke
+}
+
+\title{Exploring the Effects of Vaccinating Men and Including Queer Interactions in HPV Transmission Models}
+\author{Spencer Hunt and Dr. Jonathan Dushoff}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\begin{itemize}
+\item brief HPV backgroun: virus that infects the epithelium; many different types spread sexually; associated with cervical cancer and other cancers.
+\item Go into the history of vaccination: Gardasil and Cervarix, protected types, vaccination strategies in Canada (girls only)
+\item Discuss some of the possible holes in this strategy: increased prevalence of oropharyngeal cancer in men with HPV, limited to no protection of queer men. 
+\item Discuss some models previous results
+\end{itemize}
+
+\section{Methods}
+\begin{itemize}
+\item Introduce the model, flow and system of ODEs
+\item Discuss the various types of sexual mixing models:
+	\begin{enumerate}
+	\item Separate men into heterosexual and queer, considers queer interactions
+	\item Include queer men and heterosexual men into one group, still consider queer interactions 
+	\item Only include men and women and heterosexual interactions
+	\end{enumerate}	
+\end{itemize}
+
+\subsection{The Model}
+We set up a mathematical model to illustrate the transmission of HPV.  Our model considers three different infection states: susceptible $S$, infected $I$, and vaccinated $V$.  Individuals are assigned to a state based on their infection status and move through the states due to transmission, vaccination, and recovery.  We consider a variety of different groups including men, women, queer men, and heterosexual men.  We illustrate the movement through the different classes as a flow diagram in figure~\ref{fig:flowDiag}.
+\begin{figure}[h!]
+\begin{center}
+\begin{tikzpicture}
+%compartments
+\node (S)[bigcompartment, bottom color=green!30] {{$S_i$}};
+\node (SI) [right =of S] {{}};
+\node (I) [bigcompartment,right=of SI, bottom color=red!30] {{$I_i$}};
+\node (SV) [above = of S] {{}};
+\node (V) [bigcompartment,above=of SV, bottom color=blue!30] {{$V_i$}};
+
+\node (leftS) [left=of S] {{}};
+\node (leftV) [left=of V] {{}};
+\node (downI) [below=of I] {{}};
+\node (downS) [below=of S] {{}};
+\node (upV) [above=of V] {{}};
+
+%arrows
+\draw[->,very thick] (S) to node[above] {$\Lambda_i$} (I);
+\draw[->,very thick] (leftS) node[left] {$(1-v_i)b_iN_i$}  to (S);
+\draw[->,very thick] (leftV) node[left] {$v_ib_iN_i$} to (V);
+\draw[->,very thick] (V) to node[right] {$w_i$} (S);
+
+\draw[->,very thick] (I) to[bend left=45] node[below] {$\gamma_i$} (S);
+\draw[->, very thick] (V) to[bend left=45] node[right] {$(1-\eps_i)\Lambda_i$} (I);
+\draw[->, very thick] (V) to (upV) node[yshift=1ex] {$d_i$};
+\draw[->, very thick] (S) to (downS) node[yshift=-1ex] {$d_i$};
+\draw[->, very thick] (I) to (downI) node[yshift=-1ex] {$d_i$};
+
+\end{tikzpicture}
+\caption{Flow diagram of the HPV transmsission model.}
+\label{fig:flowDiag}
+\end{center}
+\end{figure}
+The biological parameters $\Lambda_i$ and $\gamma_i$ represent the force of transmission for individuals and the recovery from HPV in group $i$, respectively.  We consider an SIS model here because natural infection with HPV does not prevent reinfection with the same type.  Vital parameters $b_i$ and $d_i$ represent the birth and death rates, respectively.  To simplify our model we consider a constant population and set $b_i=d_i$ for all groups $i$.  The population size of group $i$ is $N_i=S_i+I_i+V_i$.  We also consider various vaccination parameters.  The value of $v_i$ is the proportion of the population that is vaccinated entering the system.  The parameter $w_i$ represents the rate at which vaccination wanes.  Because the HPV vaccines are relatively new, it is not quite clear for how long they provide protection.  Therefore, $1/w_i$ is the average time that the vaccine provides protection.  Lastly, the parameter $\eps_i$ is the protective effects of the vaccine. This values ranges from 0 (no protection) to 1 (complete protection).  This model can also be represented as a system of differential equations below:
+\begin{subequations}
+\begin{align}
+\dot{S_i} &= (1-v_i)b_iN_i + w_iV_i - \Lambda_iS_i + \gamma_i I_i - d_iS_i,\\
+\dot{V_i} &= v_ib_iN_i - w_iV_i - (1-\eps_i)\Lambda_iV_i  - d_iV_i,\\
+\dot{I_i} &=  \Lambda_i(S_i+(1-\eps_i)V_i) - \gamma_i I_i - d_iI_i.\end{align}
+\end{subequations}
+
+
+\subsection{Sexual Mixing}
+
+In our paper, we set up three different scenarios for considering sexual mixing.
+
+In the first scenario, we separate the men group into straight men $h$ and queer men $q$. The straight men have sex with women $w$ and queer men have sex with both other queer men and women.  We include queer women in the same group as straight women. Because vaccination strategies already target women, queer women benefit the greatest from the current vaccination strategies.  For this reason, we do not disentangle sexual interactions of queer women from straight women.  This scenario considers same-sex interactions and also actively tracts the infection of queer men.  
+
+The second scenario still considers same-sex interactions, but queer men and straight men are contained within the same group, just referred to as men $m$.  
+
+The last scenario only considers two groups, men and women, and only considers opposite-sex interactions.  Many HPV models up to this point only consider opposite-sex interactions, and this scenario in our paper is used to parallel the results to previous work.  Both groups of men and women here include queer and straight men and women, but we only consider opposite-sex interactions in the transmission of HPV. 
+\section{Results}
+\begin{itemize}
+\item Discuss main results for each scenario of mixing and various vaccine coverage scenarios
+\item Show pictures
+\end{itemize}
+
+\section{Next Steps}
+\begin{itemize}
+\item access data to estimate transmission parameters, fit to our model
+\item perform a sensitivity analysis on  
+\end{itemize}
+
+
+
+
+\end{document}
