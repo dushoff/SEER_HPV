@@ -2,18 +2,13 @@
 
 #Vital parameters (unit is months)
 
-#parameter to state whether we include queer boys in the model as separate things
-incl.queer <- TRUE #includes queer interactions
-sep.queer <- TRUE #separates queer men from straight men when modelling
-
-
 year <- 1
 month <- year/12
 day <- year/365.25
 week <- day*7
 
-L <- 200 # They stay in our population for 200 months
-D <- 16 # Average infection period
+L <- 200*month # They stay in our population for 200 months
+D <- 16*month # Average infection period
 
 fProp <- 0.5
 qProp<- 0.2

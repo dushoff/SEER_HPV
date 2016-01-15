@@ -83,6 +83,18 @@ RMatrixFunction.Rout: RMatrixFunction.R
 
 naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
 
+## Terminology.
+## Base refers to a set of parameters, not to an implementation.
+## Current base would be base.queers...
+## If we collapse men, we would have base.men...
+## If we eliminate diagonals, we would have base.noQueers...
+
+## If we eventually tune, we're going to need redudancy, as in
+## mBase.men... is tuned to men and applied to men.
+
+## Pipeline: make betas from mixing and transmission assumptions
+## Beta now refers to the matrix that we're going to use to transmit; it includes rate of effective mixing (contact plus partner switching), and transmission probabilities (-ish), which we will call taus.
+
 base.model.Rout: base.paramVacc.Rout simpleModel.R
 %.model.Rout: %.paramVacc.Rout simpleModel.R
 	$(run-R)
@@ -98,8 +110,6 @@ base.panelPlot.Rout: base.sim.Rout panelPlot.R
 base.indiPlot.Rout: base.sim.Rout indiPlot.R
 %.indiPlot.Rout: %.sim.Rout indiPlot.R
 	$(run-R)
-
-
 
 base.gPlot.Rout: base.sim.Rout gPlot.R
 %.gPlot.Rout: %.sim.Rout gPlot.R
