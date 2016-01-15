@@ -6,7 +6,7 @@
 vaccStart<-1500		# in months (125 years)
 
 #List testing for solutions
-if(incl.queer){
+if(sep.queer){
 	v.list<-list(
 		c(0,0,0),
 		c(0,0,0.5),

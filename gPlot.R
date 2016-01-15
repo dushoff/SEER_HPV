@@ -5,7 +5,7 @@ library(ggplot2)
 theme_set(theme_bw())
 
 # If incl.queer == false then remove these groups from the thing
-if(incl.queer){
+if(sep.queer){
 	inf<-c("time","IB","IQ","IG")
 	col.pal<-rep(c("blue","orchid1","red"),1)
 	labs<-c("hetero. boys","queer boys", "girls")
@@ -14,8 +14,8 @@ if(incl.queer){
 }else{
 	inf<-c("time","IB","IG")
 	col.pal<-rep(c("blue","red"),1)
-	labs<-c("hetero. boys", "girls")
-	anno.lab<-lapply(v.list,function(x) paste(c("v_h","v_g"),"=",x[c(1,3)]))
+	labs<-c("boys", "girls")
+	anno.lab<-lapply(v.list,function(x) paste(c("v_b","v_g"),"=",x[c(1,3)]))
 	xvals <- rep((tmax-(tmax-equil.time)/10)*month,2)
 }
 

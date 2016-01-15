@@ -72,7 +72,10 @@ model.Rout: parameterTest.Rout model.R
 
 ## Transmission parameters
 
-%.Trans.Rout: %.Trans.R
+RMatrixFunction.Rout: RMatrixFunction.R
+	$(run-R)
+
+%.Trans.Rout: RMatrixFunction.Rout %.Trans.R
 	$(run-R)
 
 %.paramVacc.Rout: %.Trans.Rout paramVacc.R

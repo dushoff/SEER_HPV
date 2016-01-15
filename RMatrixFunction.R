@@ -1,7 +1,22 @@
 
+
+
+
 make.R.matrix <- function(fProp=0.5,qProp=0.2,incl.queer=TRUE,sep.queer=TRUE,
 	r.hw=2.5,r.qq=8,r.qw=0.75,r.ww=0.125){
 
+	#Generates an R mixing matrix based on female/male populations and proportion
+	#of gay men
+	#Generates a matrix that has three mixing scenarios
+	#(1) Separated queer men from straight men and include queer mixing
+	#(2) Amalgamate queer men and straight men, but still include queer mixing
+	#(3) Only consider heterosexual mixing
+	#
+	#To make these models comparative, I each scenario sets the same average 
+	#Contact rate 
+	
+	
+	
 	if(sep.queer && !incl.queer){
 		warning("Cannot separate queer men but ignore queer interactions")
 	}
@@ -43,8 +58,8 @@ make.R.matrix <- function(fProp=0.5,qProp=0.2,incl.queer=TRUE,sep.queer=TRUE,
 		r.ww <- 0 
 
 	
-		r.wm <- c/(2*n.w)
-		r.mw <- r.wm*(n.w)/(n.m)
+		r.mw <- (1-qProp)*r.hw + qProp*r.qw
+		r.wm <- r.mw*n.m/n.w
 	
 		r.m <- c(r.mm,0,r.mw)
 		r.q <- rep(0,3)

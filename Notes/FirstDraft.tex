@@ -98,16 +98,135 @@ The biological parameters $\Lambda_i$ and $\gamma_i$ represent the force of tran
 
 In our paper, we set up three different scenarios for considering sexual mixing.
 
-In the first scenario, we separate the men group into straight men $h$ and queer men $q$. The straight men have sex with women $w$ and queer men have sex with both other queer men and women.  We include queer women in the same group as straight women. Because vaccination strategies already target women, queer women benefit the greatest from the current vaccination strategies.  For this reason, we do not disentangle sexual interactions of queer women from straight women.  This scenario considers same-sex interactions and also actively tracts the infection of queer men.  
+In the first scenario, we separate the men group into straight men $h$ and queer men $q$. The straight men have sex with women $w$ and queer men have sex with both other queer men and women.  We include queer women in the same group as straight women. Because vaccination strategies already target women, queer women benefit the greatest from the current vaccination strategies.  For this reason, we do not disentangle sexual interactions of queer women from straight women.  This scenario considers same-sex interactions and also actively tracts the infection of queer men.  We set up a sexual mixing scenario where group $i$ mixes with $j$ at a rate $m_{ij}$ defined as such
+\begin{equation}
+m_{ij} = n_ic_i p_{ij}
+\end{equation}
+where $n_i$ is the proportion of individuals in group $i$, $c_i$ is the contact rate for group $i$, and $p_{ij}$ is the probability of an individual in group $i$ mixing with an individual in group $j$.  We observe two restrictions in this model.  The first being symmetry as an individual in group $i$ mixes with individual in group $j$ at the same rate as an individual in group $j$ with someone in group $i$. That is
+\begin{equation}
+m_{ij}=m_{ji}.
+\end{equation}
+The second restriction is that the sum of all mixing probabilities for group $i$ must equal 1
+\begin{equation}
+\sum_j p_{ij} = 1.
+\end{equation}
+To simplify this problem, we set $r_{ij}=c_ip_{ij}$ as the effective contact rate of an individual in group $i$ with an individual in group $j$.  Thus we have that 
+\begin{equation}
+\sum_j r_{ij} = c_i.
+\end{equation}
 
-The second scenario still considers same-sex interactions, but queer men and straight men are contained within the same group, just referred to as men $m$.  
+In the first case, where we track the interactions of queer men separately from straight men, we have three different groups: heterosexual men $h$, queer men $q$, and women $w$.  We set the proportion of men and women to be the same $n_m=n_w=0.5$, and set the proportion of queer men to 20\% of all men.  Considering a basic example we set $n_w=0.5$ and $n_m=0.5$.  The proportion of men who are queer is 20\% and thus $n_q=0.1$ and $n_h=0.4$.  Solve for the following mixing matrix:
+\begin{equation}
+M = \left[\begin{array}{c c c}
+0 & 0 & 1 \\
+0 & 0.8 & 0.075 \\
+1 & 0.075 & 0.0625 
+\end{array}\right]
+\end{equation}
+where heterosexual men is the first row/column, queer men is the second, and women is the third.  We solve for the contact rates $c_h=2.5$, $c_q=8.75$, and $c_w=2.275$.  
 
-The last scenario only considers two groups, men and women, and only considers opposite-sex interactions.  Many HPV models up to this point only consider opposite-sex interactions, and this scenario in our paper is used to parallel the results to previous work.  Both groups of men and women here include queer and straight men and women, but we only consider opposite-sex interactions in the transmission of HPV. 
+The second scenario still considers same-sex interactions, but queer men and straight men are contained within the same group, just referred to as men $m$.  Thus we have that the mixing rate between men and men comes solely from the queer men interactions:
+\begin{equation}
+m_{mm} = m_{qq} = 0.8
+\end{equation}
+and thus the effective contact rate of a man with another man is $r_{mm} = \dfrac{n_q}{n_m} r_{qq} = 8(0.2) = 1.6$.  The mixing rate of men with women come from both the straight men and the queer men. 
+\begin{equation}
+m_{mw} = m_{hw} + m_{qw}
+\end{equation}
+and thus the effective contact rate of a man with a women is $r_{mw} = \frac{n_h}{n_m}r_{hw} + \frac{n_q}{n_m}r_{rq} = 0.8(2.5)+0.2(0.75) = 2.15$.  Therefore, the over all contact rate for men is $c_m=3.75$.  This gives the final mixing matrix in this case
+\begin{equation}
+M = \left[\begin{array}{c c}
+0.8 & 1.075 \\
+1.075 & 0.0625 
+\end{array}\right]
+\end{equation}
+where the first row/column refers to men and the second refers to women.  
+
+The last scenario only considers two groups, men and women, and only considers opposite-sex interactions.  Many HPV models up to this point only consider opposite-sex interactions, and this scenario in our paper is used to parallel the results to previous work.  Both groups of men and women here include queer and straight men and women, but we only consider opposite-sex interactions in the transmission of HPV. And thus the mixing matrix in this case only considers the opposite-sex mixing rates.  And thus the mixing matrix for this scenario is just:
+\begin{equation}
+M=\left[\begin{array}{c c}
+0 & 1.075 \\
+1.075 & 0
+\end{array}\right]
+\end{equation}
 \section{Results}
 \begin{itemize}
 \item Discuss main results for each scenario of mixing and various vaccine coverage scenarios
 \item Show pictures
 \end{itemize}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=\textwidth]{photos/baseGPlot1.pdf}
+\caption{This is the equilibrium for the model that considers queer interactions in men and women, but separates the queer men out as a separate group.}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\textwidth]{photos/noQueerMenGPlot1.pdf}
+\caption{This is the equilibrium for the model that considers queer interactions in men and women, but combines queer and straight men into one group.}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\textwidth]{photos/noQueerGPlot1.pdf}
+\caption{This is the equilibrium for the model that considers no queer interactions in men or women.  It only considers heterosexual interactions.}
+\end{figure}
+%------------------------------------
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=\textwidth]{photos/baseGPlot2.pdf}
+\caption{Considering the case where we have queer interactions and queer men as a separate group, we induce 50\% vaccination in girls only.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=\textwidth]{photos/noQueerMenGPlot2.pdf}
+\caption{Considering the case where we have queer interactions but keep men in one group, we induce 50\% vaccination in girls only.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=\textwidth]{photos/noQueerGPlot2.pdf}
+\caption{Considering the case where we have no queer interactions, we induce 50\% vaccination in girls only.}
+\end{center}
+\end{figure}
+
+%------------------------------------------------
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=\textwidth]{photos/baseGPlot3.pdf}
+\caption{In the case where we have queer interactions and queer men as a separate group, we also consider 50\% vaccination in girls and 10\% vaccination in queer boys only.  This to represent the targeted vaccine strategies including at-risk boys, but also considers limited uptake in this at-risk group.}
+\end{center}
+\end{figure}
+
+%------------------------------------
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=\textwidth]{photos/baseGPlot4.pdf}
+\caption{Considering the case where we have queer interactions and queer men as a separate group, we induce 50\% vaccination in girls and boys.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=\textwidth]{photos/noQueerMenGPlot3.pdf}
+\caption{Considering the case where we have queer interactions but keep men in one group, we induce 50\% vaccination in girls and boys.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=\textwidth]{photos/noQueerGPlot3.pdf}
+\caption{Considering the case where we have no queer interactions, we induce 50\% vaccination in girls and boys.}
+\end{center}
+\end{figure}
+
+
+
+\section{Discussion}
 
 \section{Next Steps}
 \begin{itemize}
