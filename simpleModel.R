@@ -1,6 +1,4 @@
-b <- 1
-q <- 2
-g <- 3
+
 
 disdyn <- function(S, I, V, N
 	, v, d, w, gam, eps

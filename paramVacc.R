@@ -6,31 +6,12 @@
 vaccStart<-1500		# in months (125 years)
 
 #List testing for solutions
-if(sep.queer){
+
 	v.list<-list(
 		c(0,0,0),
 		c(0,0,0.5),
-		c(0,0.1,0.5),
+		c(0,0,0.5),
 		c(0.5,0.5,0.5)
-	)
-	w.list<-list(
-		c(0,0,0),
-		c(0,0,0),
-		c(0,0,0),
-		c(0,0,0)
-	)
-	eps.list<-list(
-		rep(1-0.9,3),
-		rep(1-0.9,3),
-		rep(1-0.9,3),
-		rep(1-0.9,3)
-	)
-}else{
-	v.list<-list(
-		c(0,0,0),
-		c(0,0,0.5),
-		c(0,0,0.5),
-		c(0.5,0,0.5)
 	)
 	w.list<-list(
 		c(0,0,0),
@@ -44,4 +25,11 @@ if(sep.queer){
 		c(1-0.9,0,1-0.9),
 		c(1-0.9,0,1-0.9)
 	)
-}
+
+if(length(v.list)!=length(w.list) || 
+		length(v.list)!=length(eps.list) ||
+		length(w.list)!=length(eps.list)){
+	warning("Number of scenarios for vaccination not the same\n
+		Check the v.list, w.list, or eps.list")
+}	
+	

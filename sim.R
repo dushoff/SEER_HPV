@@ -32,7 +32,3 @@ for(i in 2:dim(inf.soln)[1]){
 			
 		}
 }
-
-HPV.vf(y=init,t=times,parms=c(NB=NB,NQ=NQ,NG=NG,
-						betaM=betaM,gam=gam,d=d,
-						v=v,w=w,eps=eps,vaccStart=vaccStart))

@@ -5,7 +5,7 @@ library(ggplot2)
 theme_set(theme_bw())
 
 # If incl.queer == false then remove these groups from the thing
-if(sep.queer){
+if(plot.queer){
 	inf<-c("time","IB","IQ","IG")
 	col.pal<-rep(c("blue","orchid1","red"),1)
 	labs<-c("hetero. boys","queer boys", "girls")
@@ -45,7 +45,7 @@ for (i in scenario){
 		)
 		+ ylab("Number Infected")
 		+ xlab("time (years)")
-		+ ggtitle("Reduction in HPV Prevalence\nUnder Vaccination Stragety")
+		+ ggtitle("Reduction in HPV Prevalence\nUnder Vaccination Strategy")
 		+ annotate("text",
 			x=xvals,
 			y=inf.max+max(inf.max)/20,

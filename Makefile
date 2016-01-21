@@ -75,11 +75,16 @@ model.Rout: parameterTest.Rout model.R
 RMatrixFunction.Rout: RMatrixFunction.R
 	$(run-R)
 
-%.Trans.Rout: RMatrixFunction.Rout %.Trans.R
+base.Trans.Rout: RMatrixFunction.Rout base.Trans.R
 	$(run-R)
 
-%.paramVacc.Rout: %.Trans.Rout paramVacc.R
+paramVacc.Rout: base.Trans.Rout paramVacc.R
 	$(run-R)
+
+base.%.Rout: base.Trans.Rout paramVacc.Rout base.%.R
+	$(run-R)
+	
+
 
 naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
 
@@ -95,23 +100,23 @@ naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
 ## Pipeline: make betas from mixing and transmission assumptions
 ## Beta now refers to the matrix that we're going to use to transmit; it includes rate of effective mixing (contact plus partner switching), and transmission probabilities (-ish), which we will call taus.
 
-base.model.Rout: base.paramVacc.Rout simpleModel.R
-%.model.Rout: %.paramVacc.Rout simpleModel.R
+queer.model.Rout: base.queer.Rout simpleModel.R
+%.model.Rout: base.%.Rout simpleModel.R
 	$(run-R)
 
-base.sim.Rout: base.model.Rout sim.R
+queer.sim.Rout: queer.model.Rout sim.R
 %.sim.Rout: %.model.Rout sim.R
 	$(run-R)
 
-base.panelPlot.Rout: base.sim.Rout panelPlot.R
+queer.panelPlot.Rout: queer.sim.Rout panelPlot.R
 %.panelPlot.Rout: %.sim.Rout panelPlot.R
 	$(run-R)
 
-base.indiPlot.Rout: base.sim.Rout indiPlot.R
+queer.indiPlot.Rout: queer.sim.Rout indiPlot.R
 %.indiPlot.Rout: %.sim.Rout indiPlot.R
 	$(run-R)
 
-base.gPlot.Rout: base.sim.Rout gPlot.R
+queer.gPlot.Rout: queer.sim.Rout gPlot.R
 %.gPlot.Rout: %.sim.Rout gPlot.R
 	$(run-R)
 
