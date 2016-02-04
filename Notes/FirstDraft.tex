@@ -115,6 +115,8 @@ To simplify this problem, we set $r_{ij}=c_ip_{ij}$ as the effective contact rat
 \sum_j r_{ij} = c_i.
 \end{equation}
 
+\subsubsection{Case 1: Queer and Straight Men Separated}
+
 In the first case, where we track the interactions of queer men separately from straight men, we have three different groups: heterosexual men $h$, queer men $q$, and women $w$.  We set the proportion of men and women to be the same $n_m=n_w=0.5$, and set the proportion of queer men to 20\% of all men.  Considering a basic example we set $n_w=0.5$ and $n_m=0.5$.  The proportion of men who are queer is 20\% and thus $n_q=0.1$ and $n_h=0.4$.  Solve for the following mixing matrix:
 \begin{equation}
 M = \left[\begin{array}{c c c}
@@ -155,40 +157,42 @@ M=\left[\begin{array}{c c}
 \item Show pictures
 \end{itemize}
 
+In the first scenario, we have 
+
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=\textwidth]{photos/baseGPlot1.pdf}
+\includegraphics[width=0.8\textwidth]{photos/queer-gplot-1.pdf}
 \caption{This is the equilibrium for the model that considers queer interactions in men and women, but separates the queer men out as a separate group.}
 \end{center}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=\textwidth]{photos/noQueerMenGPlot1.pdf}
+\includegraphics[width=0.8\textwidth]{photos/men-gplot-1.pdf}
 \caption{This is the equilibrium for the model that considers queer interactions in men and women, but combines queer and straight men into one group.}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=\textwidth]{photos/noQueerGPlot1.pdf}
+\includegraphics[width=0.8\textwidth]{photos/noQueer-gplot-1.pdf}
 \caption{This is the equilibrium for the model that considers no queer interactions in men or women.  It only considers heterosexual interactions.}
 \end{figure}
 %------------------------------------
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=\textwidth]{photos/baseGPlot2.pdf}
+\includegraphics[width=0.8\textwidth]{photos/queer-gplot-2.pdf}
 \caption{Considering the case where we have queer interactions and queer men as a separate group, we induce 50\% vaccination in girls only.}
 \end{center}
 \end{figure}
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=\textwidth]{photos/noQueerMenGPlot2.pdf}
+\includegraphics[width=0.8\textwidth]{photos/men-gplot-2.pdf}
 \caption{Considering the case where we have queer interactions but keep men in one group, we induce 50\% vaccination in girls only.}
 \end{center}
 \end{figure}
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=\textwidth]{photos/noQueerGPlot2.pdf}
+\includegraphics[width=0.8\textwidth]{photos/noQueer-gplot-2.pdf}
 \caption{Considering the case where we have no queer interactions, we induce 50\% vaccination in girls only.}
 \end{center}
 \end{figure}
@@ -197,7 +201,7 @@ M=\left[\begin{array}{c c}
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=\textwidth]{photos/baseGPlot3.pdf}
+\includegraphics[width=0.8\textwidth]{photos/queer-gplot-3.pdf}
 \caption{In the case where we have queer interactions and queer men as a separate group, we also consider 50\% vaccination in girls and 10\% vaccination in queer boys only.  This to represent the targeted vaccine strategies including at-risk boys, but also considers limited uptake in this at-risk group.}
 \end{center}
 \end{figure}
@@ -205,21 +209,21 @@ M=\left[\begin{array}{c c}
 %------------------------------------
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=\textwidth]{photos/baseGPlot4.pdf}
+\includegraphics[width=0.8\textwidth]{photos/queer-gplot-4.pdf}
 \caption{Considering the case where we have queer interactions and queer men as a separate group, we induce 50\% vaccination in girls and boys.}
 \end{center}
 \end{figure}
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=\textwidth]{photos/noQueerMenGPlot3.pdf}
+\includegraphics[width=0.8\textwidth]{photos/men-gplot-4.pdf}
 \caption{Considering the case where we have queer interactions but keep men in one group, we induce 50\% vaccination in girls and boys.}
 \end{center}
 \end{figure}
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=\textwidth]{photos/noQueerGPlot3.pdf}
+\includegraphics[width=0.8\textwidth]{photos/noQueer-gplot-4.pdf}
 \caption{Considering the case where we have no queer interactions, we induce 50\% vaccination in girls and boys.}
 \end{center}
 \end{figure}
