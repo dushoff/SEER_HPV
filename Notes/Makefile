@@ -2,7 +2,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: Makefile
+target pngtarget pdftarget vtarget acrtarget: test.pdf 
 
 ##################################################################
 
@@ -16,7 +16,15 @@ include stuff.mk
 
 ## Content
 
-Sources += $(wildcard *.tex)
+## Pushing from here does not work yet!
+
+# Sources += $(wildcard *.tex)
+
+Notes.pdf: Notes.tex
+
+test.pdf: test.tex
+
+test.Rout: test.R
 
 ######################################################################
 
@@ -28,5 +36,5 @@ Sources += $(wildcard *.tex)
 -include $(ms)/git.mk
 -include $(ms)/visual.mk
 
-# -include $(ms)/wrapR.mk
+-include $(ms)/wrapR.mk
 -include $(ms)/newlatex.mk

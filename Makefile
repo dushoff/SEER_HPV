@@ -58,6 +58,10 @@ seerdic:
 
 ######################################################################
 
+## Notes subdirectory (don't use this for now, we will make a better subdirectory structure soon)
+
+Sources += Notes/Makefile Notes/stuff.mk $(wildcard Notes/*.R Notes/*.tex)
+
 ############## Sim stuff
 
 ### Older stuff
