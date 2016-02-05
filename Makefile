@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: base.gPlot.Rout
+target pngtarget pdftarget vtarget acrtarget: base.gplots.pdf 
 
 ##################################################################
 
@@ -13,6 +13,7 @@ Sources = Makefile .gitignore README.md LICENSE mac.mk
 
 ms = ../makestuff
 # -include $(ms)/git.def
+-include $(ms)/os.mk
 
 Dropbox = ~/Dropbox
 -include ../local.def
@@ -72,6 +73,8 @@ model.Rout: parameterTest.Rout model.R
 
 ## Transmission parameters
 
+base.men.Rout:
+
 RMatrixFunction.Rout: RMatrixFunction.R
 	$(run-R)
 
@@ -83,8 +86,6 @@ paramVacc.Rout: base.Trans.Rout paramVacc.R
 
 base.%.Rout: base.Trans.Rout paramVacc.Rout base.%.R
 	$(run-R)
-	
-
 
 naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
 
@@ -100,23 +101,32 @@ naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
 ## Pipeline: make betas from mixing and transmission assumptions
 ## Beta now refers to the matrix that we're going to use to transmit; it includes rate of effective mixing (contact plus partner switching), and transmission probabilities (-ish), which we will call taus.
 
-queer.model.Rout: base.queer.Rout simpleModel.R
-%.model.Rout: base.%.Rout simpleModel.R
+## .queer is the default scenario
+## .men lumps the two groups of men together
+## .noQueer ignores queer behaviour entirely
+scen = queer men noQueer
+base_scen = $(scen:%=base.%)
+
+base.queer.model.Rout: base.queer.Rout simpleModel.R
+%.model.Rout: %.Rout simpleModel.R
 	$(run-R)
 
-queer.sim.Rout: queer.model.Rout sim.R
+base.gplots.pdf: $(base_scen:%=%.gPlot.Rout.pdf)
+	$(pdfcat)
+
+base.queer.sim.Rout: queer.model.Rout sim.R
 %.sim.Rout: %.model.Rout sim.R
 	$(run-R)
 
-queer.panelPlot.Rout: queer.sim.Rout panelPlot.R
+base.queer.panelPlot.Rout: queer.sim.Rout panelPlot.R
 %.panelPlot.Rout: %.sim.Rout panelPlot.R
 	$(run-R)
 
-queer.indiPlot.Rout: queer.sim.Rout indiPlot.R
+base.queer.indiPlot.Rout: queer.sim.Rout indiPlot.R
 %.indiPlot.Rout: %.sim.Rout indiPlot.R
 	$(run-R)
 
-queer.gPlot.Rout: queer.sim.Rout gPlot.R
+base.queer.gPlot.Rout: queer.sim.Rout gPlot.R
 %.gPlot.Rout: %.sim.Rout gPlot.R
 	$(run-R)
 
