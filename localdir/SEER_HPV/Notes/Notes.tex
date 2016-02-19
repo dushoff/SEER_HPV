@@ -1,0 +1,258 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath,amsthm,xspace,multirow}
+\usepackage[margin=1in]{geometry}
+\input{preamble.tex}
+\input{sirmodellingmacros.tex}
+
+%\newcommand{\D}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+%\newcommand{\ie}{\emph{i.e., }}
+%\newcommand{\eg}{\emph{e.g., }}
+
+\usepackage{tikz}
+\newdimen\mylw
+\tikzset{chemeq/.style={draw,thick,double distance=2pt,onearc-onearc,/chemeq/size={#1}}}
+\tikzset{chemeq/.default={.4pt 6pt}}
+\pgfkeys{/chemeq/size/.code={\pgfsetarrowoptions{onearc}{#1}}}
+\def\parseopts#1 #2{\xdef\myalw{#1}\xdef\myasize{#2}}
+\pgfarrowsdeclare{onearc}{onearc}{%
+  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
+  \mylw=\myalw
+  \pgfarrowsleftextend{-\myasize-.5\mylw}
+  \pgfarrowsrightextend{0pt}
+}{%
+  \pgfsetdash{}{0pt}
+  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
+  \mylw=\pgflinewidth
+  \pgfsetlinewidth{\myalw}
+  \pgfpathmoveto{\pgfpoint{-\myasize}{-\myasize-.5\mylw}}%
+  \pgfpatharc{180}{90}{\myasize}
+  \pgfusepathqstroke
+}
+
+\title{HPV Vaccination of Boys and Men}
+
+\begin{document}
+\maketitle
+
+\section*{Things to Do}
+\begin{itemize}
+\item Separate the model into three types
+	\begin{enumerate}
+	\item Including queer interactions and separate queer men into separate group
+	\item Including queer interactions but only two groups, men and women
+	\item Only considering heterosexual interactions between men and women. 
+	\end{enumerate}
+\item Consider separating the code to have basic transmission parameters (virological parameters, basic vitality parameters, etc.) and a separate script to run a script to make the mixing matrices, considering that is where the discrepancies between the models are. 
+I could probably get away with the \texttt{inclQueer} (about whether we separate queers from men) and then a separate check to determine whether we include queer interactions at all.  
+\item Start writing up the results
+\item Start writing up a section about ``next steps'' for grant proposals
+\item Start writing up the introduction
+\item Look into data sources; contact some people (JD)
+\item Look into Canadian sexual mixing papers
+\end{itemize}
+
+\section{Introduction}
+
+The human papillomavirus (HPV) is a virus which infects epithelial and mucosal cells.  There are over 100 different types of HPV, over 40 of which are sexually transmitted.  HPV types are categorized as high-risk or low-risk based on their association with various cancers.  HPV-16 and HPV-18 are two of the most oncogenic HPV types and are associated with a number of cancers in the anogenital and oropharyngeal tracts.  To combat the burden of these two HPV types, two vaccines have been developed to protect against these two types.  Cervarix is a bivalent vaccine (HPV2) manufactured by GlaxoSmithKlein.  Gardasil is a quadravalent vaccine (HPV4), and in addition to protecting against HPV-16 and -18, it also protects against HPV-6 and -11, two HPV types highly associated with genital warts.  While these vaccines are relatively young, studies show that these vaccines have high efficacy in protecting against these specific HPV types and are believed to relieve the burden of cervical cancer and other associated cancers.  
+
+According to the Canada Communicable Disease Report developed by the Public Health Agency of Canada, Health Canada has authorized the use of HPV4 and HPV2 in female populations aged 9-26 years to protect against cancers associated with HPV-16 and -18.  HPV4 has reported protective effects against vaginal, vulvar, and cervical cancers and precursors up to age 45 in women.  Only HPV4 (Gardasil) approved for use in males (9-26 years) to protect against infections of HPV types 6, 11, 16, and 18.  Furthermore, vaccination recommendations from PHAC include vaccinating females aged 9-13 years  with either vaccine to protect against these HPV types before the onset of sexual activity.  The PHAC also recommends vaccinating males with HPV4 between the ages of 9 and 26 years to prevent associated anal and penile diseases.  PHAC also makes a specific recommendation to vaccinate MSM greater than 9 years of age.  
+
+While the PHAC has recommended vaccinating men with HPV4 to protect against diseases associated with HPV types 6, 11, 16, and 18, only few provinces have included boys in their routine vaccination programme.  Currently, only three provinces administer the HPV vaccine routinely to both boys and girls.  In 2016, Manitoba will include boys in their routine HPV vaccination schedule of grade 6 students, with a catch-up vaccination of boys in grade 9.  Some provinces provide vaccination of boys with HIV such as Quebec and British Columbia.  As of September 2015, British Columbia include at risk males in their vaccination programme.  This includes boys who identify as MSM or questioning, boys who are street-involved, or those who have HIV. While this particular program targets at risk boys, vaccine uptake will be based on self-reported identification within these groups, and thus could result in significant under vaccination.  Moreover, many boys who may identify as MSM or questioning their sexuality may not realize at this age and could miss the vaccine entirely.  See Table~\ref{tab:ImmuneSched} for the entire list of HPV vaccination procedures for each province and territory.  
+
+Studies have shown that the HPV4 vaccine has significant and efficacious protective effects against HPV infection and related diseases in men.  Despite federal, provincial, and territorial government health organizations recommending boys be vaccinated with HPV4, only three provinces currently include all boys in their routine immunization schedule (4 provinces starting in September 2016).  While British Columbia is included at-risk boys in their routine schedule, the potential for low vaccine uptake is high, given that many boys are not comfortable disclosing information of this kind at that age, or could even be unaware at that point in their sexual development.  
+
+We develop a simple transmission model for HPV, including both boys and girls in the transmission mechanism.  We also consider a queer perspective in this model by including same-sex transmission of HPV.  To disentangle the specific effects of HPV transmission of MSM, we have separated the males into exclusive heterosexual (denoted $h$) and queer (denoted $q$).  We consider a variety of vaccination strategies with variable vaccine efficacy to examine these effects on HPV prevalence.  
+ 
+
+\section*{The Model}
+
+As previously mentioned we separate the men into straight men $M$ and queer men $Q$.  Queer men have sexual interactions with both men and and women.  The proportion of same-sex interactions in men is $p$ and the proportion of same-sex interactions in women is $q$.  In this way we set up three different HPV transmission terms:
+
+We examine the transmission of HPV in straight males.  These individuals can be infected by women solely.  
+\begin{equation}
+S_M\left(\frac{(1-q)\beta_{mf}I_W}{N_W}\right)
+\end{equation}
+Queer men can be infected by both other MSM and also women.
+\begin{equation}
+S_Q\left(\frac{p^2\beta_{mm}I_Q}{N_Q}+\frac{(1-p)(1-q)\beta_{mf}I_W}{N_W}\right)
+\end{equation}
+Women can be infected by both straight and queer men, and we also consider same sex interactions in women. 
+\begin{equation}
+S_W\left(\frac{(1-q)\beta_{fm}I_M}{N_M}+\frac{(1-q)(1-p)\beta_{fm}I_Q}{N_Q}+\frac{q^2\beta_{ff}I_W}{N_W}\right)
+\end{equation}
+We set up the entire model as a flow diagram.  The flow diagram for straight men is illustrated in Figure~\ref{fig:flowMen} and in MSM in Figure~\ref{fig:flowQueer}.  
+\begin{figure}[h!]
+\begin{center}
+\resizebox{0.7\textwidth}{!}{
+\begin{tikzpicture}
+%compartments
+\node (S)[bigcompartment, bottom color=blue!30] {{$S_i$}};
+\node (SI) [right=of S,xshift=3cm]{{}};
+\node (SV) [above=of S]{};
+
+\node (I) [bigcompartment,right=of SI,bottom color=red!30]{{$I_i$}};
+\node (V) [bigcompartment,above=of SV,bottom color=green!30]{{$V_i$}};
+\node (leftS) [left=of S]{{}};
+\node (leftV) [left=of V]{};
+
+%arrows
+\draw[very thick, ->] (leftS) node[left]{$(1-v_i)b_iN_i$} to  (S);
+\draw[very thick, ->] (leftV) node[left]{$v_ib_iN_i$} to  (V);
+
+\draw[very thick,->] (V) to node[left]{$w_i$} (S);
+
+\draw[very thick,->] (S) to node[above]{$\Lambda_i$} (I);
+\draw[very thick,->] (V) to[bend left=35] node[above,yshift=3ex]{$\eps\Lambda_i$} (I);
+\draw[very thick,->] (I) to[bend left=45] node[below] {$\gamma_i$} (S);
+\end{tikzpicture}
+}% end resize box
+\end{center}
+\caption{HPV Transmission flow diagram for straight men.}
+\label{fig:flowMen}
+\end{figure}
+
+\begin{align}
+\D{S_i}{t}&=(1-v_i)d_iN_i + w_iV_I - \lambda_iS_i + \gamma_iI_i - d_iS_i,\\
+\D{I_i}{t}&= \lambda_iS_i - \gamma_iI_i- d_iI_i,\\
+\D{V_i}{t}&= v_id_iN_i - w_iV_i - \eps \lambda_iV_i - d_iV_i.
+\end{align}
+where $i$ refers to either straight men, queer men, or women.  The parameter $\lambda_i$ is the force of transmission and is a function of mixing rates.  
+
+\subsection*{Sexual Mixing}
+
+In our model, we consider both straight and queer individuals.  Because women are vaccinated against HPV in the current immunization program, we combine straight women and queer women in the same group, referred to as women.  Because men are not included in the immunization program, and because queer men may not benefit from women-vaccinated herd immunity, we keep these two groups separate, denoted as heterosexual men and queer men.  Queer men have sex with both men and women, while heterosexual men have sex with solely women.  
+
+We set up a mixing rate of an individual in group $i$ with those in group $j$ as $m_{ij}$.  Mixing here must be symmetrical; that is $m_{ij}=m_{ji}$.  The mixing rate is calculated as such
+\begin{equation}
+m_{ij} = c_i n_i p_{ij}
+\end{equation}
+where $c_i$ is the average contact rate of group $i$, $n_i$ is the relative number of individuals in group $i$, and $p_{ij}$ is the probability of and individual in group $i$ mixing with someone from group $j$.  Because mixing is symmetric, we have the following constraint
+\begin{equation}
+m_{ij} = c_i n_i p_{ij} = c_j n_j p_{ji} = m_{ji}
+\end{equation}
+We also have the following constraint in that the sum of the mixing probabilities over all groups $j$ must equal 1. 
+\begin{equation}
+\sum_j p_{ij} = 1
+\end{equation}
+To simplify solving the this system, we set $r_{ij}=c_ip_{ij}$ and choose values of $r_{ij}$ that work based on given values of $n_i$.  Then from the previous constraint we have:
+\begin{equation}\label{eq:ContRateEq}
+\sum_j r_{ij} = c_i \sum_j p_{ij} = c_i
+\end{equation}
+And thus we have that 
+\begin{equation}\label{eq:ProbEq}
+p_{ij}=\frac{r_{ij}}{c_i}
+\end{equation}
+
+\subsection*{Dummy Value Example}
+
+The following is a dummy example calculation.  I consider the proportional number of individuals.  That is that $n_w=n_m=0.5$ where the number of men $n_m=n_h+n_q$ is the sum of all heterosexual and queer men.  Under the assumption that about 20\% of men are queer, we solve for $n_h$ and $n_q$ accordingly
+\begin{align}
+n_h&=0.8n_m = 0.8(0.5) = 0.4\\
+n_q&=0.2n_m = 0.2(0.5) = 0.1
+\end{align}
+Because we know that $m_{ij}=m_{ji}$ so we can solve for some values of $r_{ij}$ by choosing other values.  Based on the structure of our model, we separate men into heterosexual exclusive and queer men.  Thus heterosexual men only sexually interact with women, and not other heterosexual men or queer men. Thus, $r_{hh}=r_{hq}=r_{qh}=0$.  We also start setting some $r_{ij}$ values and solving for others that maintain $m_{ij}=m_{ji}$, that is
+\begin{equation}
+r_{ji}=\frac{n_ir_{ij}}{n_j}
+\end{equation}
+So I chose $r_{hw}=3$, $r_{qq}=5$, and $r_{qw}=1$, and $r_{ww}=0.25$.  Then I solved for the $R$ matrix
+\begin{equation}
+R=\left(\begin{array}{c c c}
+0 & 0 & 3 \\
+0 & 5 & 1 \\
+2.4 & 0.2 & 0.25
+\end{array}\right)
+\end{equation}
+which gives a mixing matrix of 
+\begin{equation}
+M=\left(\begin{array}{c c c}
+0 & 0 & 1.2 \\
+0 & 0.5 & 0.1 \\
+1.2 & 0.1 & 0.125
+\end{array}\right)
+\end{equation}
+We can then solve for the contact rates for each group using Equation \eqref{eq:ContRateEq}, which gives $c_h=3$, $c_q=6$, and $c_w=2.85$. And we can use Equation \eqref{eq:ProbEq} and we obtain the matrix $P$ which gives the probability of interaction of someone from group $i$ mixing with someone in group $j$. 
+\begin{equation}
+P=\left(\begin{array}{c c c}
+0 & 0 & 1 \\
+0 & 0.833 & 0.167 \\
+0.842 & 0.070 & 0.088
+\end{array}\right)
+\end{equation}
+
+\spenny{I don't really know if this is what you had in mind.  We would most likely calculate this from data, so I would like to see how this model translates to data and then try to figure out how to calculate it back.  That is what I would like to discuss.  }
+
+\subsection{No Queer Men - Sexual Mixing}
+
+To compare our simple model to previous results we consider the case where we track exclusively heterosexual contacts.  This includes sexual interactions between straight couples, but also opposite-sex interactions between queer men and women. To account for this, we examine the mixing rate between men and women from the previous model, and set this to be the mixing rate.  We consider the overall mixing rate of men and women. To maintain symmetry we set the mixing rate of males with females to be the same as females with males, then we break-down the mixing into interactions with straight males and interactions with queer males.
+\begin{align}
+m_{mf} &= m_{fm}\\
+m_{hf} + m_{qf} &= m_{fh} + m_{fq}\\
+n_hr_{hf} + n_qr_{qf} &= n_f(r_{fh} + r_{fq})\\
+n_m(n_{m_h}r_{hf} + n_{m_q}r_{qf}) &= n_f(r_{fh} + r_{fq})
+\end{align}
+where $r_{ij}$ is the effective contact rate of individual $i$ with individual $j$ discussed above: $r_{ij}=c_ip_{ij}$.  Furthermore, $n_{m_i}$ is the proportion of men who identify with sexuality $i$.  In our particular model the left hand side is 
+\begin{equation}
+0.5(0.8(2.5) + 0.2(0.75)) = 0.5(2.15)
+\end{equation}
+And thus the effective contact rate of men with women is 2.15.  Because we set the proportion of men and women to be the same, the effective contact rate of women with men $r_{fm}=r_{fh}+r_{fq}$ is also 2.15.  Thus when we consider the ``no queer'' model, we set the mixing rates to be $0.5(2.15) = 1.075$, and run the model.  When we consider this case, we have 
+
+
+\section*{Parameter Values}
+
+I have taken the parameter values from the model that Marek et al. used in their project, and adapted them slightly. They set the parameter $\gamma$ based on prior knowledge about HPV clearance times, and fit the model to data to estimate $\beta$. They let vaccination parameters $v$, $w$, and $\eps$ be variable parameters in the model to examine the effects of various vaccination strategies on the prevalence of HPV in the population.
+
+Most HPV infections are fully cleared after an average of 16 months.  Thus they set $\gamma=1/16$ month\textsuperscript{-1}.  By fitting the model to population level data in Ontario they estimate a $\beta=0.0845$ month\textsuperscript{-1}.  They don't differentiate between male-to-female or female-to-male transmission, so I assume that this is male-to-female transmission, and thus $\beta_{fm}=0.0845$ in the dummy model.  Because we consider various sexual mixing scenarios, I altered the transmission rates based on prior knowledge about HPV disease dynamics.  It has been shown that female-to-male HPV transmission is less common (apart from oropharyngeal HPV) thus I set $\beta_{mf}=0.0800$ month\textsuperscript{-1}.  Furthermore, female-to-female transmission is thought to be even less common, so I set $\beta_{ff}=0.0700$.  It is also thought that male-to-male transmission is greater than that of $\beta_{fm}$ so I set this value to be $\beta_{mm}=0.0900$ month\textsuperscript{-1}.  Because these values are anecdotal guesses, not much weight should be put into the accuracy of these values.  They purely provide a means by which to develop a skeletal model for fitting at a later date. 
+
+In terms of sexual mixing, I have also anecdotally guess the proportion of same-sex interactions for women and queer men. 
+
+
+\section*{Additional Information}
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{l | l | l }
+Province/Territory & Routine &  As of (year)\\
+\hline
+\hline
+\multirow{2}{*}{British Columbia} & Grade 6 girls & \multirow{2}{*}{2015}\\
+& At Risk Boys\textsuperscript{*} & \\
+\hline
+Alberta & Grade 5 girls and boys & 2014\\
+\hline
+Saskatchewan & Grade 6 girls & 2015\\
+\hline
+\multirow{2}{*}{Manitoba} & Grade 6 girls & 2015\\
+& Grade 6 girls and boys & Starting 2016\\
+\hline 
+Ontario & Grade 8 girls & 2015\\
+\hline
+Qu\'{e}bec & Grade 4 girls & 2015\\
+\hline 
+New Brunswick & Grade 7 girls & 2015 \\
+\hline 
+Nova Scotia & Grade 7 girls and boys & 2015\\
+\hline
+Prince Edward Island & Grade 8 girls and boys & 2015\\
+\hline
+NFLD and Labrador & Grade 6 girls & 2015\\
+\hline
+Yukon & Grade 6 girls & 2014\\
+\hline
+Northwest Territories & Grade 4-6 girls & 2015\\
+\hline 
+Nunavut & Grade 6 girls & NA\\
+\hline
+\end{tabular}
+
+\caption{Current immunization schedule by province and territory for HPV.  Gathered from provincial and territorial health websites.  \newline
+{\footnotesize \textsuperscript{*} At risk boys includes MSM or those questioning their sexuality, street-involved, or HIV-infected}}
+\label{tab:ImmuneSched}
+\end{center}
+\end{table}
+
+\end{document}
+\newpage
+\bibliographystyle{plain}
+\bibliography{NotesBib}
+
+\end{document}

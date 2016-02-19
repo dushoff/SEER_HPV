@@ -1,0 +1,266 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath,amsthm,xspace,multirow}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx,grffile}
+\input{preamble.tex}
+\input{sirmodellingmacros.tex}
+
+\usepackage{tikz}
+\newdimen\mylw
+\tikzset{chemeq/.style={draw,thick,double distance=2pt,onearc-onearc,/chemeq/size={#1}}}
+\tikzset{chemeq/.default={.4pt 6pt}}
+\pgfkeys{/chemeq/size/.code={\pgfsetarrowoptions{onearc}{#1}}}
+\def\parseopts#1 #2{\xdef\myalw{#1}\xdef\myasize{#2}}
+\pgfarrowsdeclare{onearc}{onearc}{%
+  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
+  \mylw=\myalw
+  \pgfarrowsleftextend{-\myasize-.5\mylw}
+  \pgfarrowsrightextend{0pt}
+}{%
+  \pgfsetdash{}{0pt}
+  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
+  \mylw=\pgflinewidth
+  \pgfsetlinewidth{\myalw}
+  \pgfpathmoveto{\pgfpoint{-\myasize}{-\myasize-.5\mylw}}%
+  \pgfpatharc{180}{90}{\myasize}
+  \pgfusepathqstroke
+}
+
+\title{Exploring the Effects of Vaccinating Men and Including Queer Interactions in HPV Transmission Models}
+\author{Spencer Hunt and Dr. Jonathan Dushoff}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\begin{itemize}
+\item brief HPV background: virus that infects the epithelium; many different types spread sexually; associated with cervical cancer and other cancers.
+\item Go into the history of vaccination: Gardasil and Cervarix, protected types, vaccination strategies in Canada (girls only)
+\item Discuss some of the possible holes in this strategy: increased prevalence of oropharyngeal cancer in men with HPV, limited to no protection of queer men. 
+\item Discuss some models previous results
+\end{itemize}
+
+\section{Methods}
+\begin{itemize}
+\item Introduce the model, flow and system of ODEs
+\item Discuss the various types of sexual mixing models:
+	\begin{enumerate}
+	\item Separate men into heterosexual and queer, considers queer interactions
+	\item Include queer men and heterosexual men into one group, still consider queer interactions 
+	\item Only include men and women and heterosexual interactions
+	\end{enumerate}	
+\end{itemize}
+
+\subsection{The Model}
+We set up a mathematical model to illustrate the transmission of HPV.  Our model considers three different infection states: susceptible $S$, infected $I$, and vaccinated $V$.  Individuals are assigned to a state based on their infection status and move through the states due to transmission, vaccination, and recovery.  We consider a variety of different groups including men, women, queer men, and heterosexual men.  We illustrate the movement through the different classes as a flow diagram in figure~\ref{fig:flowDiag}.
+\begin{figure}[h!]
+\begin{center}
+\begin{tikzpicture}
+%compartments
+\node (S)[bigcompartment, bottom color=green!30] {{$S_i$}};
+\node (SI) [right =of S] {{}};
+\node (I) [bigcompartment,right=of SI, bottom color=red!30] {{$I_i$}};
+\node (SV) [above = of S] {{}};
+\node (V) [bigcompartment,above=of SV, bottom color=blue!30] {{$V_i$}};
+
+\node (leftS) [left=of S] {{}};
+\node (leftV) [left=of V] {{}};
+\node (downI) [below=of I] {{}};
+\node (downS) [below=of S] {{}};
+\node (upV) [above=of V] {{}};
+
+%arrows
+\draw[->,very thick] (S) to node[above] {$\Lambda_i$} (I);
+\draw[->,very thick] (leftS) node[left] {$(1-v_i)b_iN_i$}  to (S);
+\draw[->,very thick] (leftV) node[left] {$v_ib_iN_i$} to (V);
+\draw[->,very thick] (V) to node[right] {$w_i$} (S);
+
+\draw[->,very thick] (I) to[bend left=45] node[below] {$\gamma_i$} (S);
+\draw[->, very thick] (V) to[bend left=45] node[right] {$(1-\eps_i)\Lambda_i$} (I);
+\draw[->, very thick] (V) to (upV) node[yshift=1ex] {$d_i$};
+\draw[->, very thick] (S) to (downS) node[yshift=-1ex] {$d_i$};
+\draw[->, very thick] (I) to (downI) node[yshift=-1ex] {$d_i$};
+
+\end{tikzpicture}
+\caption{Flow diagram of the HPV transmsission model.}
+\label{fig:flowDiag}
+\end{center}
+\end{figure}
+The biological parameters $\Lambda_i$ and $\gamma_i$ represent the force of transmission for individuals and the recovery from HPV in group $i$, respectively.  We consider an SIS model here because natural infection with HPV does not prevent reinfection with the same type.  Vital parameters $b_i$ and $d_i$ represent the birth and death rates, respectively.  To simplify our model we consider a constant population and set $b_i=d_i$ for all groups $i$.  The population size of group $i$ is $N_i=S_i+I_i+V_i$.  We also consider various vaccination parameters.  The value of $v_i$ is the proportion of the population that is vaccinated entering the system.  The parameter $w_i$ represents the rate at which vaccination wanes.  Because the HPV vaccines are relatively new, it is not quite clear for how long they provide protection.  Therefore, $1/w_i$ is the average time that the vaccine provides protection.  Lastly, the parameter $\eps_i$ is the protective effects of the vaccine. This values ranges from 0 (no protection) to 1 (complete protection).  This model can also be represented as a system of differential equations below:
+\begin{subequations}
+\begin{align}
+\dot{S_i} &= (1-v_i)b_iN_i + w_iV_i - \Lambda_iS_i + \gamma_i I_i - d_iS_i,\\
+\dot{V_i} &= v_ib_iN_i - w_iV_i - (1-\eps_i)\Lambda_iV_i  - d_iV_i,\\
+\dot{I_i} &=  \Lambda_i(S_i+(1-\eps_i)V_i) - \gamma_i I_i - d_iI_i.\end{align}
+\end{subequations}
+
+
+\subsection{Sexual Mixing}
+
+In our paper, we set up three different scenarios for considering sexual mixing.
+
+In the first scenario, we separate the men group into straight men $h$ and queer men $q$. The straight men have sex with women $w$ and queer men have sex with both other queer men and women.  We include queer women in the same group as straight women. Because vaccination strategies already target women, queer women benefit the greatest from the current vaccination strategies.  For this reason, we do not disentangle sexual interactions of queer women from straight women.  This scenario considers same-sex interactions and also actively tracts the infection of queer men.  We set up a sexual mixing scenario where group $i$ mixes with $j$ at a rate $m_{ij}$ defined as such
+\begin{equation}
+m_{ij} = n_ic_i p_{ij}
+\end{equation}
+where $n_i$ is the proportion of individuals in group $i$, $c_i$ is the contact rate for group $i$, and $p_{ij}$ is the probability of an individual in group $i$ mixing with an individual in group $j$.  We observe two restrictions in this model.  The first being symmetry as an individual in group $i$ mixes with individual in group $j$ at the same rate as an individual in group $j$ with someone in group $i$. That is
+\begin{equation}
+m_{ij}=m_{ji}.
+\end{equation}
+The second restriction is that the sum of all mixing probabilities for group $i$ must equal 1
+\begin{equation}
+\sum_j p_{ij} = 1.
+\end{equation}
+To simplify this problem, we set $r_{ij}=c_ip_{ij}$ as the effective contact rate of an individual in group $i$ with an individual in group $j$.  Thus we have that 
+\begin{equation}
+\sum_j r_{ij} = c_i.
+\end{equation}
+
+\subsubsection{Case 1: Queer and Straight Men Separated}
+
+In the first case, where we track the interactions of queer men separately from straight men, we have three different groups: heterosexual men $h$, queer men $q$, and women $w$.  We set the proportion of men and women to be the same $n_m=n_w=0.5$, and set the proportion of queer men to 20\% of all men.  Considering a basic example we set $n_w=0.5$ and $n_m=0.5$.  The proportion of men who are queer is 20\% and thus $n_q=0.1$ and $n_h=0.4$.  Solve for the following mixing matrix:
+\begin{equation}
+M = \left[\begin{array}{c c c}
+0 & 0 & 1 \\
+0 & 0.8 & 0.075 \\
+1 & 0.075 & 0.0625 
+\end{array}\right]
+\end{equation}
+where heterosexual men is the first row/column, queer men is the second, and women is the third.  We solve for the contact rates $c_h=2.5$, $c_q=8.75$, and $c_w=2.275$.  
+
+The second scenario still considers same-sex interactions, but queer men and straight men are contained within the same group, just referred to as men $m$.  Thus we have that the mixing rate between men and men comes solely from the queer men interactions:
+\begin{equation}
+m_{mm} = m_{qq} = 0.8
+\end{equation}
+and thus the effective contact rate of a man with another man is $r_{mm} = \dfrac{n_q}{n_m} r_{qq} = 8(0.2) = 1.6$.  The mixing rate of men with women come from both the straight men and the queer men. 
+\begin{equation}
+m_{mw} = m_{hw} + m_{qw}
+\end{equation}
+and thus the effective contact rate of a man with a women is $r_{mw} = \frac{n_h}{n_m}r_{hw} + \frac{n_q}{n_m}r_{rq} = 0.8(2.5)+0.2(0.75) = 2.15$.  Therefore, the over all contact rate for men is $c_m=3.75$.  This gives the final mixing matrix in this case
+\begin{equation}
+M = \left[\begin{array}{c c}
+0.8 & 1.075 \\
+1.075 & 0.0625 
+\end{array}\right]
+\end{equation}
+where the first row/column refers to men and the second refers to women.  
+
+The last scenario only considers two groups, men and women, and only considers opposite-sex interactions.  Many HPV models up to this point only consider opposite-sex interactions, and this scenario in our paper is used to parallel the results to previous work.  Both groups of men and women here include queer and straight men and women, but we only consider opposite-sex interactions in the transmission of HPV. And thus the mixing matrix in this case only considers the opposite-sex mixing rates.  And thus the mixing matrix for this scenario is just:
+\begin{equation}
+M=\left[\begin{array}{c c}
+0 & 1.075 \\
+1.075 & 0
+\end{array}\right]
+\end{equation}
+\section{Results}
+\begin{itemize}
+\item Discuss main results for each scenario of mixing and various vaccine coverage scenarios
+\item Show pictures
+\end{itemize}
+
+In the first scenario, we consider men and women, separating the group of men into two groups, straight and queer men.  Queer men may have sex with both women and other queer men, straight men have sex with women exclusively.  Because women are already scheduled to take the HPV vaccine and to simplify our model, we do not separate the group of women into straight and queer women. Instead the group of women can interact with both straight and queer men, and other women. We run this system to equilibrium without any vaccine program to provide baseline infection estimates.  This is visualized in Figure \ref{fig:QueerNoVacc}.  Here we see that the number of infected women (red line) is approximately 200,000 individuals, the number of infected straight men (blue line) is approximately 160,000 individuals, and the number of infected queer men (magenta line) is approximately 20,000 individuals.  
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../queer.gPlot.Rout.pdf}
+\caption{This is the equilibrium for the model that considers queer interactions in men and women, but separates the queer men out as a separate group.}
+\label{fig:QueerNoVacc}
+\end{center}
+\end{figure}
+
+When we introduce vaccination strategies into these populations we see some interesting trends.  The first strategy considers vaccinating women and girls exclusively.  The first scenario considers 50\% vaccine coverage in women.  When we introduce this vaccine strategy (vertical, dotted grey line) we see a reduction in HPV cases in all groups, and significant reductions in women and straight men.  This is because as more women become vaccinated, they provide herd immunity for men.  This has been documented and discussed significantly in the area of HPV vaccination research.  We observe a decrease in the prevalence of HPV in the queer men.  Again, vaccinating women provides some herd immunity to the queer men during sexual intercourse between these queer men and women.  Because queer men predominately have sexual interactions with other queer men, they do not benefit completely from the vaccination of women exclusively.  More importantly, it seems that queer men have the potential to sustain HPV given this vaccination strategy.
+
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{photos/queer.gPlot.2.pdf}
+\caption{This scenario considers queer interactions between men and women, but separates the male group into straight and queer men.  Here we apply a fully effective vaccine program covering 50\% of women exclusively}
+\end{figure}
+
+We also consider a vaccination scenario where queer men are also vaccinated alongside women.  British Columbia has recently revised its HPV vaccination strategy, including queer and questioning boys and other high-risk boys in the HPV vaccination group.  We reduce the effective coverage from 50\% in girls to 10\% in queer men because of an increased risk of missing individuals.  During the time of vaccination many queer boys may not feel comfortable coming forth or may not have come to terms with their queer identity.  As such, there is likely to be a reduced vaccine coverage rate in this group.
+
+Running the model under this scenario has  
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/queer.gPlot.3.pdf}
+\caption{In the case where we have queer interactions and queer men as a separate group, we also consider 50\% vaccination in girls and 10\% vaccination in queer boys only.  This to represent the targeted vaccine strategies including at-risk boys, but also considers limited uptake in this at-risk group.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/queer.gPlot.4.pdf}
+\caption{Considering the case where we have queer interactions and queer men as a separate group, we induce 50\% vaccination in girls and boys.}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{photos/noQueer-gplot-1.pdf}
+\caption{This is the equilibrium for the model that considers no queer interactions in men or women.  It only considers heterosexual interactions.}
+\end{figure}
+%------------------------------------
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/queer-gplot-2.pdf}
+\caption{Considering the case where we have queer interactions and queer men as a separate group, we induce 50\% vaccination in girls only.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/men-gplot-2.pdf}
+\caption{Considering the case where we have queer interactions but keep men in one group, we induce 50\% vaccination in girls only.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/noQueer-gplot-2.pdf}
+\caption{Considering the case where we have no queer interactions, we induce 50\% vaccination in girls only.}
+\end{center}
+\end{figure}
+
+%------------------------------------------------
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/queer-gplot-3.pdf}
+\caption{In the case where we have queer interactions and queer men as a separate group, we also consider 50\% vaccination in girls and 10\% vaccination in queer boys only.  This to represent the targeted vaccine strategies including at-risk boys, but also considers limited uptake in this at-risk group.}
+\end{center}
+\end{figure}
+
+%------------------------------------
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/queer-gplot-4.pdf}
+\caption{Considering the case where we have queer interactions and queer men as a separate group, we induce 50\% vaccination in girls and boys.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/men-gplot-4.pdf}
+\caption{Considering the case where we have queer interactions but keep men in one group, we induce 50\% vaccination in girls and boys.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{photos/noQueer-gplot-4.pdf}
+\caption{Considering the case where we have no queer interactions, we induce 50\% vaccination in girls and boys.}
+\end{center}
+\end{figure}
+
+
+
+\section{Discussion}
+
+\section{Next Steps}
+\begin{itemize}
+\item access data to estimate transmission parameters, fit to our model
+\item perform a sensitivity analysis on  
+\end{itemize}
+
+
+
+
+\end{document}

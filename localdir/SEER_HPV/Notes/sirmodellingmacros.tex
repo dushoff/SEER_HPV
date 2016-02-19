@@ -1,0 +1,89 @@
+
+
+\usepackage{tikz}
+\usetikzlibrary{
+arrows,decorations.pathmorphing,backgrounds,positioning,fit,calc,scopes,shapes.misc
+}
+
+
+\tikzset{
+	auto,
+	compartment/.style={
+		rectangle, minimum size=9mm, rounded corners=2mm,
+		thick, draw=black!15, top color=white,bottom color=black!30
+	},
+	%
+	bigcompartment/.style={
+		rectangle, minimum size=24mm, rounded corners=5mm,
+		thick, draw=black!15, top color=white,bottom color=black!20
+	},
+	%
+	point/.style={
+		circle, inner sep=2pt, fill=black!5
+	},
+	%
+	mytextbox/.style={
+		rectangle, text=black!50, thin, 
+		draw=white, top color=white,bottom color=white, fill=white
+	}
+	
+}
+
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+cross/.default={5pt}}
+
+\newcommand{\SIRboxes}
+{
+\node (S) [bigcompartment,bottom color=blue!30]{{S}};
+\node (SI) [right=of S]{};
+\node (I) [bigcompartment,right=of SI,bottom color=red!30]{I};
+\node (IR) [right=of I]{};
+\node (R) [bigcompartment,right=of IR,bottom color=green!30]{R};
+}
+\newcommand{\sirvec}[2]{ 
+	\draw[->, very thick] (S) to node[midway]{#1}(I) ;
+	%\node (SIparam) [above of= SI]{#1}; 
+	\draw[->, very thick] (I) to node[midway]{#2}(R);
+	%\node (IRparam) [above of=IR]{#2}; 
+}
+
+
+\newcommand{\sirs}[1]{ 
+	\draw[->, very thick] (R) 
+		to  [bend left=45] node[midway] {#1} (S) ;
+		 
+}
+
+
+\newcommand{\SIboxes}
+{
+\node (S) [bigcompartment,bottom color=blue!30]{{S}};
+\node (SI) [right=of S]{};
+\node (I) [bigcompartment,right=of SI,bottom color=red!30]{I};
+}
+
+\newcommand{\sivec}[1]{ 
+	\draw[->, very thick] (S) to node[midway]{#1}(I) ;
+	%\node (SIparam) [above of= SI]{#1};  
+}
+
+\newcommand{\sis}[1]
+{
+	\draw[->, very thick] (I) 
+		to  [bend left=45] node[midway] {#1} (S) ;
+}
+
+\newcommand{\SILboxes}
+{
+\node (S) [bigcompartment,bottom color=blue!30]{S};
+\node (SI) [right= of S]{};
+\node (I) [bigcompartment,right=of SI,bottom color=red!30]{I};
+\node (IL) [right=of I]{};
+\node (L) [bigcompartment,right=of IL,bottom color=yellow!30]{L};
+}
+
+
+
+
+
