@@ -81,5 +81,4 @@ tmax <- 4000
 nstep <- 300
 times <- seq(0,tmax,by=tmax/nstep)
 
-
-
+N<- NG+NB+NQ

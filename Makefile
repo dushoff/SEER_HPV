@@ -64,35 +64,6 @@ Sources += Notes/Makefile Notes/stuff.mk $(wildcard Notes/*.R Notes/*.tex)
 
 ############## Sim stuff
 
-### Older stuff
-
-parameterTest.Rout: parameterTest.R
-	$(run-R)
-
-test.initPlot.Rout: test.sim.Rout initPlot.R
-	$(run-R)
-
-model.Rout: parameterTest.Rout model.R
-	$(run-R)
-
-## Transmission parameters
-
-base.men.Rout:
-
-RMatrixFunction.Rout: RMatrixFunction.R
-	$(run-R)
-
-base.Trans.Rout: RMatrixFunction.Rout base.Trans.R
-	$(run-R)
-
-paramVacc.Rout: base.Trans.Rout paramVacc.R
-	$(run-R)
-
-base.%.Rout: base.Trans.Rout paramVacc.Rout base.%.R
-	$(run-R)
-
-naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
-
 ## Terminology.
 ## Base refers to a set of parameters, not to an implementation.
 ## Current base would be base.queers...
@@ -108,29 +79,40 @@ naive.model.Rout: naiveTrans.Rout paramVacc.Rout simpleModel.R
 ## .queer is the default scenario
 ## .men lumps the two groups of men together
 ## .noQueer ignores queer behaviour entirely
+
 scen = queer men noQueer
 base_scen = $(scen:%=base.%)
 
+## Transmission parameters
+
+
+RMatrixFunction.Rout: RMatrixFunction.R
+	$(run-R)
+
+base.Trans.Rout: RMatrixFunction.Rout base.Trans.R
+	$(run-R)
+
+paramVacc.Rout: base.Trans.Rout paramVacc.R
+	$(run-R)
+
+
+## run the simulations
+
+%.Rout: paramVacc.Rout %.R
+	$(run-R)
+
 base.queer.model.Rout: base.queer.Rout simpleModel.R
-%.model.Rout: %.Rout simpleModel.R
+%.model.Rout: %.Rout  simpleModel.R
 	$(run-R)
 
 base.gplots.pdf: $(base_scen:%=%.gPlot.Rout.pdf)
 	$(pdfcat)
 
-base.queer.sim.Rout: queer.model.Rout sim.R
+base.queer.sim.Rout: base.queer.model.Rout sim.R
 %.sim.Rout: %.model.Rout sim.R
 	$(run-R)
 
-base.queer.panelPlot.Rout: queer.sim.Rout panelPlot.R
-%.panelPlot.Rout: %.sim.Rout panelPlot.R
-	$(run-R)
-
-base.queer.indiPlot.Rout: queer.sim.Rout indiPlot.R
-%.indiPlot.Rout: %.sim.Rout indiPlot.R
-	$(run-R)
-
-base.queer.gPlot.Rout: queer.sim.Rout gPlot.R
+base.queer.gPlot.Rout: base.queer.sim.Rout gPlot.R
 %.gPlot.Rout: %.sim.Rout gPlot.R
 	$(run-R)
 

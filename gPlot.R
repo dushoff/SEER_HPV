@@ -53,7 +53,7 @@ for (i in scenario){
 		)
 		+ geom_hline(yintercept=inf.max,size=2,color=col.pal)
 		+ geom_vline(xintercept=vaccStart*month,size=1,color="gray",linetype=3)
-		+ xlim(equil.time*month, tmax*month) #omits the first part of the function
+		+ xlim((vaccStart*0.95)*month, tmax*month) #omits the first part of the function
 	)
 	# dev.off()
 }

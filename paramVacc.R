@@ -10,7 +10,7 @@ vaccStart<-1500		# in months (125 years)
 	v.list<-list(
 		c(0,0,0),
 		c(0,0,0.5),
-		c(0,0,0.5),
+		c(0,0.1,0.5),
 		c(0.5,0.5,0.5)
 	)
 	w.list<-list(

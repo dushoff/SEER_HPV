@@ -13,3 +13,5 @@ c<-apply(R.mat,1,sum)
 P.mat<-apply(R.mat,2,function(x){x/c})
 
 betaM<-tau.mat*M.mat
+
+print(plot.queer)
