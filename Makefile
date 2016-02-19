@@ -1,19 +1,18 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: base.gplots.pdf 
+target pngtarget pdftarget vtarget acrtarget: Notes/test.pdf
 
 ##################################################################
 
 # make files
 
-Sources = Makefile .gitignore README.md LICENSE mac.mk
+Sources = Makefile .gitignore README.md LICENSE mac.mk stuff.mk
 
 ######################################################################
 
-ms = ../makestuff
 # -include $(ms)/git.def
--include $(ms)/os.mk
+-include stuff.mk
 
 Dropbox = ~/Dropbox
 -include ../local.def
@@ -122,22 +121,7 @@ Sources += SEERdicDescription.txt
 
 ### Makestuff
 
-gitroot=../
-
-Makefile: start.makestuff
-
-repo = https://github.com/dushoff
-%.makestuff:
-	-cd $(dir $(ms)) && mv -f $(notdir $(ms)) .$(notdir $(ms))
-	cd $(dir $(ms)) && git clone $(repo)/$(notdir $(ms)).git
-	-cd $(dir $(ms)) && rm -rf $(ms) .$(notdir $(ms))
-	touch $@
-
--include local.mk
--include $(gitroot)/local.mk
 -include $(ms)/git.mk
-
 -include $(ms)/visual.mk
-
 -include $(ms)/wrapR.mk
 # -include $(ms)/oldlatex.mk
