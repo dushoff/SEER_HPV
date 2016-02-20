@@ -115,6 +115,13 @@ base.queer.gPlot.Rout: base.queer.sim.Rout gPlot.R
 %.gPlot.Rout: %.sim.Rout gPlot.R
 	$(run-R)
 
+#############
+## Make the PDF using latex
+#############
+
+#FirstDraft.pdf: FirstDraft.tex
+
+
 Sources += SEERdicDescription.txt
 
 ##################################################################
@@ -125,3 +132,4 @@ Sources += SEERdicDescription.txt
 -include $(ms)/visual.mk
 -include $(ms)/wrapR.mk
 # -include $(ms)/oldlatex.mk
+-include $(ms)/newlatex.mk
