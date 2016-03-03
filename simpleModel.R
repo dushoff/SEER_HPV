@@ -7,8 +7,8 @@ disdyn <- function(S, I, V, N
 	Lam <- sum(betaV*iProp)
 	return(c(
 		Sdot = (1-v)*d*N + w*V - Lam*S + gam*I - d*S
-		, Idot = Lam*(S+eps*V) - gam*I - d*I
-		, Vdot = v*d*N - w*V - Lam*eps*V - d*V
+		, Idot = Lam*(S+(1-eps)*V) - gam*I - d*I
+		, Vdot = v*d*N - w*V - Lam*(1-eps)*V - d*V
 	))
 }
 

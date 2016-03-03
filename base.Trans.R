@@ -31,9 +31,9 @@ d<-rep(1/L, 3) #death rate (boy, queer, girl) = birth rate
 
 # transmission parameters
 # transmission matrix (why so specific, where did you get them?)
-tau.mf<- 0.0795     #transmission from female to male
-tau.fm<- 0.0845     #transmission from male to female
-tau.mm<- 0.09     #transmission from male to male
+tau.mf<- 0.08     #transmission from female to male
+tau.fm<- 0.09     #transmission from male to female
+tau.mm<- 0.1     #transmission from male to male
 tau.ff<- 0.07   #transmission from female to female
 
 tau.b<-c(tau.mm,tau.mm,tau.mf)
@@ -77,7 +77,7 @@ VG <- 0
 SG <- NG-IG-VG
  
 # time parameters
-tmax <- 4000
+tmax <- 5000
 nstep <- 300
 times <- seq(0,tmax,by=tmax/nstep)
 
