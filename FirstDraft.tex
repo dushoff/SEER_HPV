@@ -40,6 +40,14 @@
 \item Discuss some models previous results
 \end{itemize}
 
+The human papillomavirus (HPV) is a virus that infects the epithelium.  There are many types of HPV and these types are classified as high-risk or low-risk based on the association with the development of cancerous and pre-cancerous lesions.  The role of HPV infections in the development of cervical cancers has been studied extensively.  It is now know that infections with high-risk HPV types is the cause of almost all cases of cervical cancer.  However, HPV infections with these high-risk types are also associated with other cancers such as vaginal, anal, penile, and oropharyngeal cancers.  To combat the effects of HPV on cervical cancer cases, two HPV vaccines have been developed to protect against the HPV types most highly associated with pre-cancerous and cancerous lesions. Cervarix is a bivalent vaccine, which protects against HPV types -16 and -18, the two types most highly associated with cancerous development.  Gardasil is a quadravalent vaccine that protects against two low-risk HPV types -6 and -11 (most highly associated with genital warts) in addition to protecting against HPV-16 and HPV-18.  Both of these vaccines have been marketed toward girls and have been included in the routine vaccination programs for girls in many Canadian provinces and territories.  Because HPV is also highly associated with cancer in men---penile, anal, and oropharyngeal cancers---there has been a debate about whether to include boys in the routine immunization programs.  
+
+The risk of HPV associated cancers in men has increased. In particular, the rate of oropharyngeal cancers in men has increased substantially.  This has led researchers to consider the cost-effectiveness of including boys in the routine immunization programs.  A number of studies have developed models to examine this question, and many of the results from these studies are consistent.  If vaccination rates in girls remains high, then they provide sufficient herd immunity for boys and thus can minimize the cost of administering the vaccine and reducing negative health outcomes.  However, many of these models neglect to consider the effects on queer boys and men.  Because queer men benefit very little if at all from the herd immunity effects of women, then not only these individuals may be at risk of infection with high-risk HPV types but may in fact act as a reservoir for HPV in the population overall.  
+
+In this research study we develop three different HPV transmission models that consider different interacting populations.  In the first model, we consider groups of men and women and separate the group of men into two separate groups: queer men and straight men.  We still allow for queer interactions within the group of women, but we do not separate this group because we are concerned with the effects of including queer men in this transmission model.  Furthermore, at this point queer women are still included in current immunization program and thus receive direct protection from the vaccine. In the second model, we collapse the groups of queer and straight men into one group, still allowing for queer sexual interactions between men and between women.  The last model considers only heterosexual interactions and does not consider any queer interactions.  This technique is often employed in sexual transmission models.
+
+After developing the models, we simulate results using parameter estimates from previous research.  We show that when only girls are vaccinated, queer men can act as a reservoir for HPV.  We also consider the case where queer men are targeted alongside women in HPV immunizations, a technique currently being initiated in British Columbia.  We show that this can reduce HPV prevalence in the population, but much more slowly than vaccinating all boys.  We also discuss some of the practical limitations to this technique.  Lastly, we show that by not including queer interactions, specifically queer interactions in men, then the positive effects of herd immunity on men may be over estimated. 
+
 \section{Methods}
 \begin{itemize}
 \item Introduce the model, flow and system of ODEs
@@ -52,9 +60,10 @@
 \end{itemize}
 
 \subsection{The Model}
-We set up a mathematical model to illustrate the transmission of HPV.  Our model considers three different infection states: susceptible $S$, infected $I$, and vaccinated $V$.  Individuals are assigned to a state based on their infection status and move through the states due to transmission, vaccination, and recovery.  We consider a variety of different groups including men, women, queer men, and heterosexual men.  We illustrate the movement through the different classes as a flow diagram in figure~\ref{fig:flowDiag}.
+We set up a mathematical model to illustrate the transmission of HPV.  We first develop a basic underlying transmission model.  Our model considers three different infection states: susceptible $S$, infected $I$, and vaccinated $V$.  Individuals are assigned to a state based on their infection status and move through the states due to transmission, vaccination, and recovery.  We consider a variety of different groups including men, women, queer men, and heterosexual men.  We illustrate the movement through the different classes as a flow diagram in figure~\ref{fig:flowDiag}.
 \begin{figure}[h!]
 \begin{center}
+\resizebox{0.5\textwidth}{!}{
 \begin{tikzpicture}
 %compartments
 \node (S)[bigcompartment, bottom color=green!30] {{$S_i$}};
@@ -82,6 +91,7 @@ We set up a mathematical model to illustrate the transmission of HPV.  Our model
 \draw[->, very thick] (I) to (downI) node[yshift=-1ex] {$d_i$};
 
 \end{tikzpicture}
+}
 \caption{Flow diagram of the HPV transmission model.}
 \label{fig:flowDiag}
 \end{center}
@@ -97,9 +107,7 @@ The biological parameters $\Lambda_i$ and $\gamma_i$ represent the force of tran
 
 \subsection{Sexual Mixing}
 
-In our paper, we set up three different scenarios for considering sexual mixing.
-
-In the first scenario, we separate the men group into straight men $h$ and queer men $q$. The straight men have sex with women $w$ and queer men have sex with both other queer men and women.  We include queer women in the same group as straight women. Because vaccination strategies already target women, queer women benefit the greatest from the current vaccination strategies.  For this reason, we do not disentangle sexual interactions of queer women from straight women.  This scenario considers same-sex interactions and also actively tracts the infection of queer men.  We set up a sexual mixing scenario where group $i$ mixes with $j$ at a rate $m_{ij}$ defined as such
+In our paper, we set up three different scenarios for considering sexual mixing. In the first scenario, we separate the men group into straight men $h$ and queer men $q$. The straight men have sex with women $w$ and queer men have sex with both other queer men and women.  We include queer women in the same group as straight women. Because vaccination strategies already target women, queer women benefit the greatest from the current vaccination strategies.  For this reason, we do not disentangle sexual interactions of queer women from straight women.  This scenario considers same-sex interactions and also actively tracts the infection of queer men.  We set up a sexual mixing scenario where group $i$ mixes with $j$ at a rate $m_{ij}$ defined as such
 \begin{equation}
 m_{ij} = n_ic_i p_{ij}
 \end{equation}
@@ -119,6 +127,7 @@ To simplify this problem, we set $r_{ij}=c_ip_{ij}$ as the effective contact rat
 \subsubsection{Case 1: Queer and Straight Men Separated}
 
 In the first case, where we track the interactions of queer men separately from straight men, we have three different groups: heterosexual men $h$, queer men $q$, and women $w$.  We set the proportion of men and women to be the same $n_m=n_w=0.5$, and set the proportion of queer men to 20\% of all men.  Considering a basic example we set $n_w=0.5$ and $n_m=0.5$.  The proportion of men who are queer is 20\% and thus $n_q=0.1$ and $n_h=0.4$.  Solve for the following mixing matrix:
+\spenny{I don't think we'll actually include these basic calculations in the real paper, but I just wrote it here so it's more clear what I did to solve them.}
 \begin{equation}
 M = \left[\begin{array}{c c c}
 0 & 0 & 1 \\
@@ -128,6 +137,7 @@ M = \left[\begin{array}{c c c}
 \end{equation}
 where heterosexual men is the first row/column, queer men is the second, and women is the third.  We solve for the contact rates $c_h=2.5$, $c_q=8.75$, and $c_w=2.275$.  
 
+\subsection{Scenario 2 - Queer and Straight Men Collapsed}
 The second scenario still considers same-sex interactions, but queer men and straight men are contained within the same group, just referred to as men $m$.  Thus we have that the mixing rate between men and men comes solely from the queer men interactions:
 \begin{equation}
 m_{mm} = m_{qq} = 0.8
@@ -145,6 +155,7 @@ M = \left[\begin{array}{c c}
 \end{equation}
 where the first row/column refers to men and the second refers to women.  
 
+\subsection{Scenario 3 - No Queer Interactions}
 The last scenario only considers two groups, men and women, and only considers opposite-sex interactions.  Many HPV models up to this point only consider opposite-sex interactions, and this scenario in our paper is used to parallel the results to previous work.  Both groups of men and women here include queer and straight men and women, but we only consider opposite-sex interactions in the transmission of HPV. And thus the mixing matrix in this case only considers the opposite-sex mixing rates.  And thus the mixing matrix for this scenario is just:
 \begin{equation}
 M=\left[\begin{array}{c c}
@@ -293,11 +304,6 @@ Lastly we consider the scenario where all queer interactions are ignored, a comm
 Previous cost-effectiveness analyses that consider only heterosexual interactions may be overestimating the effects of herd immunity when vaccinating only women.  Thus girls only immunization programs may not be as cost-effective as previously thought.  Moreover, the at-risk group of queer men may will not benefit from a girls only vaccination strategy.  
 
 
-\section{Next Steps}
-\begin{itemize}
-\item access data to estimate transmission parameters, fit to our model
-\item perform a sensitivity analysis on  
-\end{itemize}
 
 
 

@@ -1,7 +1,4 @@
 
-
-
-
 make.R.matrix <- function(fProp=0.5,qProp=0.2,
 	r.hw=2.5,r.qq=8,r.qw=0.75,r.ww=0.125){
 

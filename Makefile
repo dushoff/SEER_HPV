@@ -115,6 +115,9 @@ base.queer.gPlot.Rout: base.queer.sim.Rout gPlot.R
 %.gPlot.Rout: %.sim.Rout gPlot.R
 	$(run-R)
 
+%.gPlotProp.Rout: %.sim.Rout gPlotProp.R
+	$(run-R)
+
 #############
 ## Make the PDF using latex
 #############

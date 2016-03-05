@@ -8,7 +8,7 @@ day <- year/365.25
 week <- day*7
 
 L <- 200 # They stay in our population for 200 months
-D <- 16 # Average infection period
+D <- 16 # Average infection period in months
 
 fProp <- 0.5
 qProp<- 0.2
@@ -31,10 +31,10 @@ d<-rep(1/L, 3) #death rate (boy, queer, girl) = birth rate
 
 # transmission parameters
 # transmission matrix (why so specific, where did you get them?)
-tau.mf<- 0.08     #transmission from female to male
-tau.fm<- 0.09     #transmission from male to female
-tau.mm<- 0.1     #transmission from male to male
-tau.ff<- 0.07   #transmission from female to female
+tau.mf<- 0.0845     #transmission from female to male
+tau.fm<- 0.0845     #transmission from male to female
+tau.mm<- 0.0845     #transmission from male to male
+tau.ff<- 0.0845   #transmission from female to female
 
 tau.b<-c(tau.mm,tau.mm,tau.mf)
 tau.q<-tau.b
@@ -54,8 +54,10 @@ n<-c(n.h,n.q,n.w)
 
 # Initial conditions
 
+N <- 2000000
+
 #boy initial conditions
-NB<-1000000
+NB<-N*(1-fProp)
 
 
 #MSM initial conditions
@@ -71,7 +73,7 @@ VB <- 0
 SB <- NB-IB-VB
 
 # girl initial conditions
-NG <- 1000000
+NG <- N*fProp
 IG <- 1
 VG <- 0
 SG <- NG-IG-VG
