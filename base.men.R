@@ -27,9 +27,8 @@ r.wm<-r.mw*n.m/n.w
 R.mat[q,]<-rep(0,3)
 R.mat[,q]<-rep(0,3)
 
-diag(R.mat)<-rep(0,3)
-
 R.mat[g,b]<-r.wm
+R.mat[b,b]<-r.mm
 
 
 

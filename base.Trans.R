@@ -15,9 +15,9 @@ qProp<- 0.2
 
 #contact rates between groups
 r.qq <- 8
-r.qw <- 0.125
+r.qw <- 0.25
 r.hw<- 2.5
-r.ww<-0.125
+r.ww<-0.25
 
 
 #define the position of each group in the model
@@ -33,7 +33,7 @@ d<-rep(1/L, 3) #death rate (boy, queer, girl) = birth rate
 # transmission matrix (why so specific, where did you get them?)
 tau.mf<- 0.0845     #transmission from female to male
 tau.fm<- 0.0845     #transmission from male to female
-tau.mm<- 0.0845     #transmission from male to male
+tau.mm<- 0.09     #transmission from male to male
 tau.ff<- 0.0845   #transmission from female to female
 
 tau.b<-c(tau.mm,tau.mm,tau.mf)

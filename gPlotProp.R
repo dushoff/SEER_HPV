@@ -19,6 +19,7 @@ if(plot.queer){
 	labs<-c("boys", "girls")
 	anno.lab<-lapply(v.list,function(x) paste(c("v_b","v_g"),"=",x[c(1,3)]))
 	xvals <- rep((tmax-(tmax-equil.time)/10)*month,2)
+	
 }
 
 base <- as.data.frame(soln[[1]][,inf])
@@ -32,7 +33,9 @@ for (i in scenario){
 	#filename<-paste0(script.dir,"/test.gPlot.",i,".png")
 	sol.inf <- as.data.frame(soln[[i]][,inf])
 	sol.inf <- sweep(sol.inf,2,PropVec,"/")
+	
 	inf.max<-apply(sol.inf[,inf[-1]],2,max)
+
 
 	sol.plot <- sol.inf %>% gather(key=Group,value=Num,-time)
 

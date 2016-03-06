@@ -27,11 +27,9 @@ base <- base %>% gather(key=Group,value=Num,-time)
 
 for (i in scenario){
 
-	#hardcode for now
-	# filename <- paste0("~/Desktop/test.gPlot.",i,".png")
-	#filename<-paste0(script.dir,"/test.gPlot.",i,".png")
 	sol.inf <- as.data.frame(soln[[i]][,inf])
 	inf.max<-apply(sol.inf[,inf[-1]],2,max)
+	
 
 	sol.plot <- sol.inf %>% gather(key=Group,value=Num,-time)
 
@@ -51,7 +49,7 @@ for (i in scenario){
 			y=inf.max+max(inf.max)/20,
 			label=anno.lab[[i]]
 		)
-		+ geom_hline(yintercept=inf.max,size=2)
+		+ geom_hline(yintercept=inf.max,size=2,colour=col.pal)
 		+ geom_vline(xintercept=vaccStart*month,size=1,color="gray",linetype=3)
 		+ xlim((vaccStart*0.95)*month, tmax*month) #omits the first part of the function
 	)
