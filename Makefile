@@ -20,6 +20,7 @@ Dropbox = ~/Dropbox
 ##################################################################
 
 Sources += $(wildcard *.R)
+Sources += $(wildcard *.tex)
 
 ## description reads the Positions file and saves a data frame called desc, which describes the variable names and widths
 Sources += SEERPositions.txt
