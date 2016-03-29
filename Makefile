@@ -1,7 +1,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: Notes/test.pdf
+target pngtarget pdftarget vtarget acrtarget: FirstDraft.pdf
 
 ##################################################################
 
@@ -20,6 +20,7 @@ Dropbox = ~/Dropbox
 ##################################################################
 
 Sources += $(wildcard *.R)
+Sources += $(wildcard *.tex)
 
 ## description reads the Positions file and saves a data frame called desc, which describes the variable names and widths
 Sources += SEERPositions.txt
