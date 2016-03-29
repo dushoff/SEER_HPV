@@ -14,7 +14,7 @@ for(i in scenario){
 	soln[[i]]<-ode(y=init,times=times,
 				func=HPV.vf,
 				parms=c(NB=NB,NQ=NQ,NG=NG,
-						betaM=betaM,gam=gam,d=d,
+						betaM=betaM,gam=gam,alpha=alpha,d=d,
 						v=v,w=w,eps=eps,vaccStart=vaccStart
 					)
 	)

@@ -7,8 +7,12 @@ month <- year/12
 day <- year/365.25
 week <- day*7
 
-L <- 200 # They stay in our population for 200 months
-D <- 16 # Average infection period in months
+#define the position of each group in the model
+b <- 1
+q <- 2
+g <- 3
+
+group<-c(b,q,g)
 
 fProp <- 0.5
 qProp<- 0.2
@@ -19,15 +23,6 @@ r.qw <- 0.25
 r.hw<- 2.5
 r.ww<-0.25
 
-
-#define the position of each group in the model
-b <- 1
-q <- 2
-g <- 3
-
-group<-c(b,q,g)
-
-d<-rep(1/L, 3) #death rate (boy, queer, girl) = birth rate
 
 # transmission parameters
 # transmission matrix (why so specific, where did you get them?)
@@ -42,7 +37,16 @@ tau.g<-c(tau.fm,tau.fm,tau.ff)
 
 tau.mat<-matrix(c(tau.b,tau.q,tau.g),nrow=3)
 
+# Vitality/Duration parameters
+L <- 200 # They stay in our population for 200 months
+D <- 16 # Average infection period in months
+
+d<-rep(1/L, 3) #death rate (boy, queer, girl) = birth rate
 gam<-rep(1/D,3)   #recovery rate of HPV 
+
+# Phenomenological heterogeneity parameter
+alpha <- 2
+
 
 #proportion of groups
 n.w <- fProp

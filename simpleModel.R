@@ -1,14 +1,14 @@
 
 
 disdyn <- function(S, I, V, N
-	, v, d, w, gam, eps
+	, v, d, w, gam, eps, alpha
 	, iProp, betaV
 ){
 	Lam <- sum(betaV*iProp)
 	return(c(
-		Sdot = (1-v)*d*N + w*V - Lam*S + gam*I - d*S
-		, Idot = Lam*(S+(1-eps)*V) - gam*I - d*I
-		, Vdot = v*d*N - w*V - Lam*(1-eps)*V - d*V
+		Sdot = (1-v)*d*N + w*V - Lam*S*exp(-alpha*I/N) + gam*I - d*S
+		, Idot = Lam*(S+(1-eps)*V)*exp(-alpha*I/N) - gam*I - d*I
+		, Vdot = v*d*N - w*V - Lam*(1-eps)*V*exp(-alpha*I/N) - d*V
 	))
 }
 
@@ -25,17 +25,17 @@ HPV.vf<-function(t,y,parms,...){
 		}
 			
 		bvec <- disdyn(S=SB, I=IB, V=VB, N=NB
-			, v=v[b], d=d[b], w=w[b], gam=gam[b], eps=eps[b]
+			, v=v[b], d=d[b], w=w[b], gam=gam[b], eps=eps[b], alpha=alpha
 			, iProp=iProp, betaV = betaM[b, ]
 		)
 
 		qvec <- disdyn(S=SQ, I=IQ, V=VQ, N=NQ
-			, v=v[q], d=d[q], w=w[q], gam=gam[q], eps=eps[q]
+			, v=v[q], d=d[q], w=w[q], gam=gam[q], eps=eps[q], alpha=alpha
 			, iProp=iProp, betaV = betaM[q, ]
 		)
 
 		gvec <- disdyn(S=SG, I=IG, V=VG, N=NG
-			, v=v[g], d=d[g], w=w[g], gam=gam[g], eps=eps[g]
+			, v=v[g], d=d[g], w=w[g], gam=gam[g], eps=eps[g], alpha=alpha
 			, iProp=iProp, betaV = betaM[g, ]
 		)
 	
