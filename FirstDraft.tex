@@ -6,26 +6,6 @@
 \input{preamble.tex}
 \input{sirmodellingmacros.tex}
 
-\usepackage{tikz}
-\newdimen\mylw
-\tikzset{chemeq/.style={draw,thick,double distance=2pt,onearc-onearc,/chemeq/size={#1}}}
-\tikzset{chemeq/.default={.4pt 6pt}}
-\pgfkeys{/chemeq/size/.code={\pgfsetarrowoptions{onearc}{#1}}}
-\def\parseopts#1 #2{\xdef\myalw{#1}\xdef\myasize{#2}}
-\pgfarrowsdeclare{onearc}{onearc}{%
-  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
-  \mylw=\myalw
-  \pgfarrowsleftextend{-\myasize-.5\mylw}
-  \pgfarrowsrightextend{0pt}
-}{%
-  \pgfsetdash{}{0pt}
-  {\edef\x{\pgfgetarrowoptions{onearc}}\expandafter\parseopts\x}
-  \mylw=\pgflinewidth
-  \pgfsetlinewidth{\myalw}
-  \pgfpathmoveto{\pgfpoint{-\myasize}{-\myasize-.5\mylw}}%
-  \pgfpatharc{180}{90}{\myasize}
-  \pgfusepathqstroke
-}
 
 \title{Exploring the Effects of Vaccinating Men and Including Queer Interactions in HPV Transmission Models}
 \author{Spencer Hunt and Dr. Jonathan Dushoff}
@@ -36,7 +16,7 @@
 
 The human papillomavirus (HPV) is a virus that infects the epithelium.  There are many types of HPV and these types are classified as high-risk or low-risk based on the association with the development of cancerous and pre-cancerous lesions.  The role of HPV infections in the development of cervical cancers has been studied extensively.  It is now know that infections with high-risk HPV types is the cause of almost all cases of cervical cancer.  However, HPV infections with these high-risk types are also associated with other cancers such as vaginal, anal, penile, and oropharyngeal cancers.  To combat the effects of HPV on cervical cancer cases, two HPV vaccines have been developed to protect against the HPV types most highly associated with pre-cancerous and cancerous lesions. Cervarix is a bivalent vaccine, which protects against HPV types -16 and -18, the two types most highly associated with cancerous development.  Gardasil is a quadravalent vaccine that protects against two low-risk HPV types -6 and -11 (most highly associated with genital warts) in addition to protecting against HPV-16 and HPV-18.  Both of these vaccines have been marketed toward girls and have been included in the routine vaccination programs for girls in many Canadian provinces and territories.  Because HPV is also highly associated with cancer in men---penile, anal, and oropharyngeal cancers---there has been a debate about whether to include boys in the routine immunization programs.  
 
-The risk of HPV associated cancers in men has increased. In particular, the rate of oropharyngeal cancers in men has increased substantially.  This has led researchers to consider the cost-effectiveness of including boys in the routine immunization programs.  A number of studies have developed models to examine this question, and many of the results from these studies are consistent.  If vaccination rates in girls remains high, then they provide sufficient herd immunity for boys and thus can minimize the cost of administering the vaccine and reducing negative health outcomes.  However, many of these models neglect to consider the effects on queer boys and men.  Because queer men benefit very little if at all from the herd immunity effects of women, then not only these individuals may be at risk of infection with high-risk HPV types but may in fact act as a reservoir for HPV in the population overall.  
+The risk of HPV associated cancers in men has increased. In particular, the rate of oropharyngeal cancers in men has increased substantially~\cite{}.  This has led researchers to consider the cost-effectiveness of including boys in the routine immunization programs.  A number of studies have developed models to examine this question, and many of the results from these studies are consistent.  If vaccination rates in girls remains high, then they provide sufficient herd immunity for boys and thus can minimize the cost of administering the vaccine and reducing negative health outcomes.  However, many of these models neglect to consider the effects on queer boys and men.  Because queer men benefit very little if at all from the herd immunity effects of women, then not only these individuals may be at risk of infection with high-risk HPV types but may in fact act as a reservoir for HPV in the population overall.  
 
 In this research study we develop three different HPV transmission models that consider different interacting populations.  In the first model, we consider groups of men and women and separate the group of men into two separate groups: queer men and straight men.  We still allow for queer interactions within the group of women, but we do not separate this group because we are concerned with the effects of including queer men in this transmission model.  Furthermore, at this point queer women are still included in current immunization program and thus receive direct protection from the vaccine. In the second model, we collapse the groups of queer and straight men into one group, still allowing for queer sexual interactions between men and between women.  The last model considers only heterosexual interactions and does not consider any queer interactions.  This technique is often employed in sexual transmission models.
 
@@ -54,7 +34,7 @@ We set up a basic transmission model for the spread of HPV.  \spenny{this needs 
 \item Show pictures
 \end{itemize}
 
-We first run the model to match pre-vaccination HPV prevalence rates.  According to the CDC, the prevalence of HPV types protected by the quadravalent vaccine (HPV-6, -11, -16, and -18) prior to vaccination was 11.5 (9.2--14.4)\% for girls aged 14-19.  Following vaccination, a 2007-2010 survey was analyzed and the prevalence for these types of HPV in this postvaccination period was 5.1 (3.8--6.6)\%
+We first run the model to match pre-vaccination HPV prevalence rates.  According to the CDC, the prevalence of HPV types protected by the quadravalent vaccine (HPV-6, -11, -16, and -18) prior to vaccination was 11.5 (9.2--14.4)\% for girls aged 14-19~\cite{Markowitz:2013}.  Following vaccination, a 2007-2010 survey was analyzed and the prevalence for these types of HPV in this postvaccination period was 5.1 (3.8--6.6)\%~\cite{Markowitz:2013}.
 
 \begin{figure}[h!]
 \begin{center}
@@ -96,39 +76,6 @@ When we target vaccination to all children, boys and girls, we can assume all gr
 \end{center}
 \end{figure}
 
-\subsubsection{Queer Men and Straight Men Collapsed}
-
-In this series of models we collapse the group of straight and queer men into one group, which we refer to as just men.  When calculating the contact rates of the group of men with women and other men, we take the weighted average of the contact rates from the separated straight and queer men groups.  
-
-Running the base model with no vaccination (Figure~\ref{fig:menNoVacc}) we observe a significantly higher prevalence of HPV in both men and women when compared to the previous model that separated the queer and straight men into different groups.  A possibility for this phenomenon could be that by collapsing the group of queer men with other straight men, we have increased the overall contact rate between men.  In the previous case, most queer men were having sex with each other, and these individuals were contacting each other.  By expanding the group, there are more opportunities for queer interactions between more men, and this could increase the overall spread of the infection.  One possible way to address this could be to implement a sort of heterogeneity, where net queer interactions occurred less often in the collapsed group of men due double counting interactions between similar individuals.
-
-When we introduce a vaccination strategy where only girls are vaccinated at a coverage rate of 50\%, we observe a significant decrease in the prevalence of HPV in both men and women (dashed line, Figure~\ref{fig:menGirlVacc50}).  However, we see that the infection is sustained.  This is because men are not directly protected from HPV, and thus they are able to proliferate the infection within the group of males through homosexual interactions, which also sustains the infection in women from heterosexual interactions.  Because of this, heard immunity from women exclusively is not able to eliminate HPV from the population. 
-
-When expanding the vaccination strategy to both men and women, again at 50\% coverage for both groups, we observe a sharper decline in HPV prevalence (dashed line, Figure~\ref{fig:menAllVacc50}).  This decline is more pronounced under this strategy than when women were solely vaccinated.  Clearance is obtained under this vaccination strategy.  
-
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{base.men.gPlotProp.Rout-0.pdf}
-\caption{In this scenario, we collapse queer and straight men into one group.  We run the model with no immunization strategy to obtain baseline HPV prevalence values for both boys (blue) and girls (red).}
-\label{fig:menNoVacc}
-\end{center}
-\end{figure}
-%------------------------------------
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{base.men.gPlotProp.Rout-1.pdf}
-\caption{This scenario also considers one group of men, but introduces a vaccination strategy where girls are vaccinated at an effective coverage of 50\% (dashed lines).  In this scenario, we see a sharp decline in the prevalence of HPV, but it is sustained.}
-\label{fig:menGirlVacc50}
-\end{center}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{base.men.gPlotProp.Rout-3.pdf}
-\caption{We again consider the scenario with queer and straight men combined into one group, but we expand the vaccination strategy to both girls and boys (effective coverage of 50\%).  Here we see a sharp decline in prevalence and eventual clearance of HPV (dashed lines).}
-\label{fig:menAllVacc50}
-\end{center}
-\end{figure}
 
 
 
@@ -174,10 +121,9 @@ By expanding the vaccination strategy to both girls and boys with an effective c
 
 \section{Discussion}
 
-In this report, we observe the effects of various vaccination strategies on three different HPV transmission models.  These models focus on the effects of homosexual interactions of queer men and women on the dynamics of HPV transmission.  We consider three different models that take into account these queer interactions.  The first model separates the group of men into queer and straight men.  Queer men can have sexual interactions with both other queer men and women, while straight men only have interactions with women.  We consider queer interactions in women as well.  Because we are concerned with how male-male sexual interactions affect disease dynamics of HPV transmission, we do no separate the group of women into two separate groups.  
+In this report, we observe the effects of various vaccination strategies on the prevalence of HPV under two different modelling scenarios.  Firstly we examine the effects on the model that considers heterosexual interactions within the population.  
 
-Under this scenario, we observed that vaccination strategies that only target women still result in HPV infections being sustained in the population.  This is because queer men are able to act as reservoir for HPV as they only benefit minimally from the heard immunity induced by vaccinating only women.  We are able to obtain clearance of HPV when queer boys are targeted alongside girls in vaccination strategies, but clearance is slow when compared to vaccinating all three groups.  Furthermore, vaccination in exclusively queer men presents some issues surrounding access to health care and confidentiality.  If vaccination strategies require boys to opt in if they are at-risk for HPV (queer or questioning) then they may be required to disclose their sexuality before they are ready or before they come to terms with it.  Thus, vaccine coverage in this group is likely to be low, putting these boys at risk for future HPV infections.  
-
+ 
 When we expand the HPV vaccination strategy to all three groups, we observe clearance at a much faster rate.  This is because while vaccinating solely girls can provide some herd immunity effects for those who have sex with women, vaccinating boys as well provides herd immunity for all groups.  
 
 The second scenario we consider is where queer interactions are permitted in both men and women, but the groups of queer men and straight men are collapsed into one group.  Under this scenario and using the same contact parameters as the previous model, we observe a significant increase in HPV prevalence.  This is likely due to the increase in the number of queer interactions in the larger group of men.  As HPV spreads within the group of men due to the increase in queer interactions amongst all men, HPV also spreads into group of women through heterosexual interactions.  To correct for this, the contact rates must be changed, or the majority of queer interactions could be restricted to a smaller proportion of the group of men. 
@@ -187,6 +133,11 @@ When we implement the girls only vaccination strategy at 50\% coverage, we obser
 Lastly we consider the scenario where all queer interactions are ignored, a common technique in modelling sexually transmitted infections such as HPV.  Under this scenario, we observe a sharp decrease in HPV prevalence and clearance when we vaccinate only girls at 50\% coverage.  This is because men are not able to act as effectively as a reservoir because queer interactions are ignored.  
 
 Previous cost-effectiveness analyses that consider only heterosexual interactions may be overestimating the effects of herd immunity when vaccinating only women.  Thus girls only immunization programs may not be as cost-effective as previously thought.  Moreover, the at-risk group of queer men may will not benefit from a girls only vaccination strategy. 
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{FirstDraftBib}
+\newpage
 
 \section*{Appendix} 
 
@@ -294,7 +245,6 @@ M=\left[\begin{array}{c c}
 1.075 & 0
 \end{array}\right]
 \end{equation}
-
 
 
 

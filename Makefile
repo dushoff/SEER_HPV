@@ -123,8 +123,13 @@ base.queer.gPlot.Rout: base.queer.sim.Rout gPlot.R
 ## Make the PDF using latex
 #############
 
-## FirstDraft.pdf: FirstDraft.tex
+FirstDraft.pdf: FirstDraft.tex
+	pdflatex FirstDraft
+	bibtex FirstDraft
+	pdflatex FirstDraft
+	pdflatex FirstDraft
 
+FirstDraftBib.bib:	
 
 Sources += SEERdicDescription.txt
 
