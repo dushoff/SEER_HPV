@@ -28,11 +28,11 @@ After developing the models, we simulate results using parameter estimates from 
 We set up a basic transmission model for the spread of HPV. We set model parameters to HPV prevalence data.  
 
 \subsection{The Model}
-We develop a simple transmission model of HPV using a compartmental model, organizing individuals of different sex groups into compartments based on infection status: susceptible, infected, and vaccinated.  Transmission of HPV is determined based on per contact rates of HPV transmission and mixing rates between individuals of different sex groups.  We also introduce phenomenological heterogeneity into the model, which decreases the force of transmission as HPV becomes more prevalent in the population.  We made the assume that individuals become susceptible following natural infection based on low seroprevalence rates following natural infection and because it is not clear to what extent previous infection provides cross-protection from other vaccine types.  As such, following infection with one type of HPV does not necessary confer protection from other vaccine types.  
+We develop a simple HPV transmission model, organizing individuals into different sex groups based on gender and sexual orientation.  Transmission of HPV is calculated based on per contact rates of HPV transmission and mixing rates between individuals of different sex groups.  We also introduce phenomenological heterogeneity parameter into the model, which decreases the force of transmission as HPV becomes more prevalent in the population.  We made the assume that individuals become susceptible following natural infection based on low seroprevalence rates following natural infection and because it is not clear to what extent previous infection provides cross-protection from other vaccine types.  As such, following infection with one type of HPV does not necessary confer protection from other vaccine types.  More information of the model derivation and analysis can be found in the supplemental material. 
 
-We first consider heterosexual transmission between men and women solely.  This is a straight forward transmission model where men exclusively mix with women and vice versa.  We compare these model results with a model that includes infection between MSM and WSW.  In this model we separate queer men from straight men to examine the extent queer transmission has on the dynamics of HPV transmission.  We include queer women and straight women into one group of women.  We do not separate these two groups because under the current vaccination strategy, girls are routinely vaccinated and benefit most. 
+We first consider exclusively heterosexual transmission between men and women.  This is a straight forward transmission model where men exclusively mix with women and vice versa.  We compare these model results with a model that includes both heterosexual and homosexual transmission in both men and women.  In this latter model we separate queer men from straight men to examine the extent queer transmission has on the dynamics of HPV transmission.  We include queer women and straight women into one group of women because under the current vaccination strategy, girls are routinely vaccinated and benefit most. Therefore, we are less concerned with parsing the effects queer women have on HPV transmission from women in general.
 
-We fit these models without vaccine interventions to pre-vaccine prevalence data to obtain baseline parameter values.  We then implement various different vaccination strategies and perform a sensitivity analysis on the transmission parameters.  
+We fit these models to pre-vaccine prevalence data to obtain baseline transmission parameter values.  We then implement various different vaccination strategies and perform a sensitivity analysis on the transmission parameters to determine. 
 
 
 \section{Results}
@@ -194,7 +194,11 @@ The biological parameters $\Lambda_i$ and $\gamma_i$ represent the force of tran
 \dot{I_i} &=  \Lambda_i(S_i+(1-\eps_i)V_i) - \gamma_i I_i - d_iI_i.\end{align}
 \end{subequations}
 
-
+The force of transmission parameter $\Lambda_i$ is evaluated as such:
+\begin{equation}
+\Lambda_i = \text{e}^{-\alpha I_i/N_i}\sum_j \beta_{ji}m_{ji}\frac{I_j}{N_j}
+\end{equation}
+where $\beta_{ji}$ is the transmission per contact from an infected individual in sex group $j$ infecting an susceptible individual from sex group $i$, $m_{ji}$ is the mixing rates between individuals in sex groups $j$ and $i$, and the exponential term refers to phenomenological heterogeneity term which decreases HPV transmission as prevalence increases.  
 \subsection{Sexual Mixing}
 
 In our paper, we set up three different scenarios for considering sexual mixing. In the first scenario, we separate the men group into straight men $h$ and queer men $q$. The straight men have sex with women $w$ and queer men have sex with both other queer men and women.  We include queer women in the same group as straight women. Because vaccination strategies already target women, queer women benefit the greatest from the current vaccination strategies.  For this reason, we do not disentangle sexual interactions of queer women from straight women.  This scenario considers same-sex interactions and also actively tracts the infection of queer men.  We set up a sexual mixing scenario where group $i$ mixes with $j$ at a rate $m_{ij}$ defined as such
