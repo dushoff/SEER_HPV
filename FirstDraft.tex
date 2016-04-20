@@ -25,8 +25,14 @@ In this research study we develop three different HPV transmission models that c
 After developing the models, we simulate results using parameter estimates from previous research.  We show that when only girls are vaccinated, queer men can act as a reservoir for HPV.  We also consider the case where queer men are targeted alongside women in HPV immunizations, a technique currently being initiated in British Columbia.  We show that this can reduce HPV prevalence in the population, but much more slowly than vaccinating all boys.  We also discuss some of the practical limitations to this technique.  Lastly, we show that by not including queer interactions, specifically queer interactions in men, then the positive effects of herd immunity on men may be over estimated. 
 
 \section{Methods}
-We set up a basic transmission model for the spread of HPV.  \spenny{this needs to be written later}
+We set up a basic transmission model for the spread of HPV. We set model parameters to HPV prevalence data.  
 
+\subsection{The Model}
+We develop a simple transmission model of HPV using a compartmental model, organizing individuals of different sex groups into compartments based on infection status: susceptible, infected, and vaccinated.  Transmission of HPV is determined based on per contact rates of HPV transmission and mixing rates between individuals of different sex groups.  We also introduce phenomenological heterogeneity into the model, which decreases the force of transmission as HPV becomes more prevalent in the population.  We made the assume that individuals become susceptible following natural infection based on low seroprevalence rates following natural infection and because it is not clear to what extent previous infection provides cross-protection from other vaccine types.  As such, following infection with one type of HPV does not necessary confer protection from other vaccine types.  
+
+We first consider heterosexual transmission between men and women solely.  This is a straight forward transmission model where men exclusively mix with women and vice versa.  We compare these model results with a model that includes infection between MSM and WSW.  In this model we separate queer men from straight men to examine the extent queer transmission has on the dynamics of HPV transmission.  We include queer women and straight women into one group of women.  We do not separate these two groups because under the current vaccination strategy, girls are routinely vaccinated and benefit most. 
+
+We fit these models without vaccine interventions to pre-vaccine prevalence data to obtain baseline parameter values.  We then implement various different vaccination strategies and perform a sensitivity analysis on the transmission parameters.  
 
 
 \section{Results}
